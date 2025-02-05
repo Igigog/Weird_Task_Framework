@@ -50,7 +50,8 @@ function get_all_quests()
 			for j=0, files:Size()-1 do
 				local quest_name = string.match(files:GetAt(j), "(.*)%.json$")
 				if quest_name then
-					IGI_QUESTS[prefix][quest_name] = get_task_table(quest_name, prefix)
+					local ok, task_table = pcall(get_task_table, quest_name, prefix)
+					IGI_QUESTS[prefix][quest_name] = ok and task_table or nil
 				end
 			end
 		end
@@ -60,7 +61,8 @@ end
 
 function supported_wtf_versions()
 	return {
-		["4.0"] = true
+		["4.0"] = true,
+		["4.1"] = true,
 	}
 end
 
