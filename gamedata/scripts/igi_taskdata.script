@@ -66,17 +66,26 @@ function supported_wtf_versions()
 	}
 end
 
+function is_supported_version(task_tbl)
+	return supported_wtf_versions()[task_tbl.WTF_VERSION]
+end
+
+function supported_versions_list()
+	local list = {}
+	for k in pairs(supported_wtf_versions()) do
+		list[#list+1] = k
+	end
+	table.sort(list)
+	return list
+end
+
 local function get_task_data(quest_id)
 	local prefix, task_name = igi_helper.get_task_name(quest_id)
 	local task_tbl = get_task_table(task_name, prefix)
 	trace_assert(task_tbl, "No such task: " .. tostring(quest_id or "nil"))
-	if not supported_wtf_versions()[task_tbl.WTF_VERSION] then
-		local list = {}
-		for k in pairs(supported_wtf_versions()) do
-			list[#list+1] = k
-		end
+	if not is_supported_version(task_tbl) then
 		igi_helper.trace_error("[" .. prefix .. ":" .. task_name .. 
-						']: Unsupported WTF_VERSION! Supported are: \\n"' .. table.concat(list, '", "') .. '"')
+						']: Unsupported WTF_VERSION! Supported are: \\n"' .. table.concat(supported_versions_list(), '", "') .. '"')
 		assert(nil)
 	end
 

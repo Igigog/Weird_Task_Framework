@@ -102,4 +102,7 @@
 	<string id="ui_mcm_igi_tasks_Options_cancel_task">
 		<text>Cancel task</text>
 	</string>
+	<string id="igi_task_text_mcm_unsupported_wtf_version">
+		<text>WARNING! This quest is not supported in this version of WTF. Maybe try updating WTF?</text>
+	</string>
 </string_table>

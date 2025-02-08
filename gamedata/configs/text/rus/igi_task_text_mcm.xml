@@ -103,4 +103,7 @@
 	<string id="ui_mcm_igi_tasks_Options_cancel_task">
 		<text>Отменить задание</text>
 	</string>
+	<string id="igi_task_text_mcm_unsupported_wtf_version">
+		<text>БИП-БУП! Этот квест не поддерживается текущей версией WTF. Попробуй обновить WTF, вдруг повезет.</text>
+	</string>
 </string_table>

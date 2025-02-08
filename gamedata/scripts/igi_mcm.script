@@ -32,22 +32,23 @@ function reset_all_tasks(task, prefix)
 	end
 end
 
-local function build_task_page(task, prefix)
+local function build_task_page(task, prefix, task_data)
 	local page = Page.new(task):text("igi_task_text_"..prefix.."_"..task.."_name")
 	page:add(Title.new(task):text("igi_task_text_"..prefix.."_"..task.."_name"))
+
+	if (type(task_data.CREDITS) == "string") then
+		page:add(igi_mcm_builder.Description.new(task):text("Credits: " .. task_data.CREDITS))
+	end
+
+	if (not igi_taskdata.is_supported_version(task_data)) then
+		page:add(igi_mcm_builder.Description.new("unsupported"):text("igi_task_text_mcm_unsupported_wtf_version"))
+	end
+
 	page:add(
 		Checkbox.new("disabled")
 			:hint("igi_tasks_disable_task")
 	)
 	return page
-end
-
-local function build_task_pack_tree(prefix, names)
-	local tree = Tree.new(prefix):text(prefix)
-	for task_name in pairs(names) do
-		tree:add_page(build_task_page(task_name, prefix))
-	end
-	return tree
 end
 
 local function get_options_page()
@@ -118,7 +119,11 @@ function on_mcm_load()
 	tree:add_page(get_options_page())
 
 	for prefix, names in pairs(igi_taskdata.get_all_quests()) do
-		tree:add_subtree(build_task_pack_tree(prefix, names))
+		local subtree = Tree.new(prefix):text(prefix)
+		for task_name, task_data in pairs(names) do
+			subtree:add_page(build_task_page(task_name, prefix, task_data))
+		end
+		tree:add_subtree(subtree)
 	end
 	return tree:build()
 end
