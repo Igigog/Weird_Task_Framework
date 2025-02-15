@@ -104,3 +104,11 @@ function defaultdict(factory)
 	setmetatable(tbl, metatbl)
 	return tbl
 end
+
+function table_find(tbl, elem)
+	for k, v in pairs(tbl) do
+		if v == elem then
+			return k
+		end
+	end
+end

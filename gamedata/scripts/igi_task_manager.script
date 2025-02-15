@@ -202,7 +202,9 @@ IgiTask = {
 			icon			= task_table.icon,
 			storyline		= task_table.storyline,
 			update_delay	= task_table.update_delay,
-			task_giver_id	= task_table.task_giver_id
+			task_giver_id	= task_table.task_giver_id,
+			temp_tasks		= {},
+			all_targets		= {},
 		}
 		if task_table.storyline then
 			t.spot = "storyline_task_location"
@@ -231,6 +233,7 @@ IgiTask = {
 			return
 		end
 		self.status = "selected"
+		self.prior = get_prior(self.prior, self.id, 0)
 
 		local t = CGameTask()
 		t:set_id(self.id)
@@ -288,19 +291,27 @@ IgiTask = {
 			self.t:set_description(t_descr)
 		end
 
-		local ok, t_target = pcall(Igi.quest_target, self.id)
+		local ok, t_targets = pcall(Igi.quest_target, self.id)
 		if not ok then
-			on_task_crashed(t_target, self.id)
+			on_task_crashed(t_targets, self.id)
 			return
 		end
-		if (self.current_target ~= t_target) then
+		if (self.current_target ~= t_targets[1]) then
 			task_updated = true
-			if not t_target then
+			self.current_target = t_targets[1]
+			if not self.current_target then
 				self.t:remove_map_locations(false)
 			else
-				self.t:change_map_location(self.spot, t_target)
+				self.t:change_map_location(self.spot, self.current_target)
 			end
-			self.current_target = t_target
+		end
+
+		if self:update_temp_tasks(t_targets) then
+			task_updated = true
+		end
+
+		if task_updated then
+			self:sync_temp_tasks()
 		end
 
 		if task_updated and not self.dont_send_update_news then
@@ -316,6 +327,50 @@ IgiTask = {
 		if t == "complete" or t == "fail" or t == "reversed" then
 			self.last_check_task = t
 		end
+	end,
+
+	sync_temp_tasks = function (self)
+		for _, task_id in pairs(self.temp_tasks) do
+			local tsk = task_manager.get_task_manager().task_info[task_id]
+			if not tsk then
+				on_task_crashed("Can't find temporary task object", self.id)
+				return
+			end
+
+			TmpTask.update(tsk, self)
+		end
+	end,
+
+	update_temp_tasks = function (self, new_targets)
+		local changed = false
+		self.all_targets = self.all_targets or {}
+		self.temp_tasks = self.temp_tasks or {}
+		if #new_targets ~= #self.all_targets then
+			changed = true
+		end
+		for k, id in pairs(self.all_targets) do
+			if new_targets[k] ~= id then
+				changed = true
+			end
+		end
+
+		if changed then
+			for id, task_id in pairs(self.temp_tasks) do
+				if new_targets[1] == id or not igi_utils.table_find(new_targets, id) then
+					task_manager.get_task_manager():set_task_cancelled(task_id)
+				end
+			end
+
+			for k, id in pairs(new_targets) do
+				if k ~= 1 and not self.temp_tasks[id] then
+					local prior = get_prior(self.prior, self.id, k)
+					self.temp_tasks[id] = give_temp_task(self.id, id, prior)
+				end
+			end
+		end
+
+		self.all_targets = new_targets
+		return changed
 	end,
 
 	deactivate_task = function (self, tsk)
@@ -369,16 +424,92 @@ IgiTask = {
 }
 IgiTask._mt = {__index = IgiTask}
 
+TEMP_TASKS = {}
+TmpTask = {
+	stage			= 0,
+	title			= "TITLE_DOESNT_EXIST",
+	descr			= "DESCR_DOESNT_EXIST",
+	icon			= "ui_pda2_mtask_overlay",
+	prior			= 2000,
+	update_delay	= 1000,
+	last_update_time = 0,
+	condlist = {},
+	status = "normal",
+	spot = "secondary_task_location",
+	dont_send_update_news = true,
+
+	new = function (id, target_id, prior)
+		local t = {
+			type			= "wtf_tmp",
+			id				= id,
+			task_giver_id	= 0,
+			current_target  = target_id,
+			prior			= prior
+		}
+		return setmetatable(t, {__index = TmpTask})
+	end,
+
+	get_title = function (self)
+		return self.title
+	end,
+
+	get_icon_name = function (self)
+		return self.icon
+	end,
+
+	give_task             = function(self)
+		local t = CGameTask()
+		t:set_id(self.id)
+		---@diagnostic disable-next-line: undefined-field
+		t:set_type(self.storyline and task.storyline or task.additional)
+		t:set_title(self.current_title)
+		t:set_description(self.current_descr)
+		t:set_priority(self.prior)
+		t:set_icon_name(self.icon)
+		t:add_complete_func("task_manager.task_complete")
+		t:add_fail_func("task_manager.task_fail")
+
+		if self.current_target ~= nil then
+			t:set_map_location(self.spot)
+			t:set_map_object_id(self.current_target)
+		end
+		db.actor:give_task(t, 0, false, 0)
+	end,
+
+	update = function (self, tsk)
+		local t = db.actor:get_task(self.id,true)
+		if not t then
+			on_task_crashed("Temporary task has no task object", self.id)
+			return
+		end
+		t:set_type(tsk.storyline and task.storyline or task.additional)
+		t:set_title('<+> ' .. tsk.current_title)
+		t:set_description(tsk.current_descr)
+		t:set_priority(tsk.prior)
+		t:set_icon_name(tsk.icon)
+	end,
+
+	check_task = function() end,
+	deactivate_task = function() end,
+	save_state = function() end,
+	give_reward = function() end,
+	save = function () end,
+	load = function () end,
+}
+
 function task_manager.save_state(m_data)
 	m_data.task_info = {}
 	m_data.task_objects = {}
 	m_data.igi_task_objects = {}
+	m_data.wtf_temp_task_objects = {}
 
 	local tm = task_manager.get_task_manager()
 
 	for k,v in pairs(tm.task_info) do
 		if (v.type == "igi") then
 			m_data.igi_task_objects[k] = v:save_state(m_data)
+		elseif v.type == "wtf_tmp" then
+			m_data.wtf_temp_task_objects[k] = v
 		else
 			m_data.task_info[k] = true
 			tm.task_info[k]:save_state(m_data)
@@ -400,8 +531,21 @@ function task_manager.load_state(m_data)
 		tm.task_info[task_id] = setmetatable(tbl, IgiTask._mt)
 	end
 
+	for task_id, tbl in pairs(m_data.wtf_temp_task_objects or {}) do
+		tm.task_info[task_id] = setmetatable(tbl, {__index = TmpTask})
+	end
+
 	m_data.task_info = nil
 	m_data.igi_task_objects = nil
+	m_data.wtf_temp_task_objects = nil
+end
+
+function give_temp_task(task_id, target_id, prior)
+	local tmp_task_id = "__wtf_temp." .. task_id .. "." .. tostring(target_id)
+	local task = TmpTask.new(tmp_task_id, target_id, prior)
+	task_manager.get_task_manager().task_info[tmp_task_id] = task
+	task:give_task()
+	return tmp_task_id
 end
 
 old_give_task = task_manager.CRandomTask.give_task
@@ -489,4 +633,30 @@ function on_task_crashed(err, task_id)
 			return true
 		end)
 	end
+end
+
+actor_on_task_callback_before = bind_stalker_ext.actor_on_task_callback
+function bind_stalker_ext.actor_on_task_callback(binder, _task, _state)
+	local id = _task:get_id()
+	
+	local rtask = id and task_manager.get_task_manager().task_info[id]
+	if rtask and rtask.type == "wtf_tmp" then
+		return
+	end
+	actor_on_task_callback_before(binder, _task, _state)
+end
+
+give_task_before = task_objects.CGeneralTask.give_task
+function task_objects.CGeneralTask.give_task(self)
+	self.prior = get_prior(self.prior, self.id, 0)
+	give_task_before(self)
+end
+
+function get_prior(prior, task_id, count)
+	local id_hash = 0
+	function a(h)
+		id_hash = id_hash + string.byte(h)
+	end
+	string.gsub(task_id, ".", a)
+	return (prior * 512 * 512) + ((id_hash % 512) * 512) + (512 - (count % 512))
 end
