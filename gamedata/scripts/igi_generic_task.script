@@ -124,7 +124,7 @@ function quest_target(task_id)
 		end
 	end ]]
 
-	return {CACHE.current_target_id, 0}
+	return CACHE.quest_targets
 end
 --< Text >--------------------------------------------------
 function quest_text(task_id,field)

@@ -20,9 +20,9 @@ end
 function update_current_map_target(CACHE)
 	if CACHE.status == TASK_STATUSES.COMPLETED
 		or CACHE.status == TASK_STATUSES.READY_TO_FINISH then
-		CACHE.current_target_id = CACHE.task_giver_id
+		CACHE.quest_targets = {CACHE.task_giver_id}
 	else
-		CACHE.current_target_id = get_quest_target(CACHE.entities, CACHE)
+		CACHE.quest_targets = get_quest_target(CACHE.entities, CACHE)
 	end
 end
 
@@ -46,14 +46,19 @@ function process_subtasks(CACHE)
 end
 
 function get_quest_target(entities, CACHE)
-	for _, entity in pairs(entities) do
+	local got_first = false
+	local targets = {}
+	for _, entity in ipairs(entities) do
 		local controller = igi_taskdata.get_controller(entity, CACHE)
 		if controller.status and controller.quest_target
 			and entity.status == TASK_STATUSES.RUNNING then
-
-			return controller.quest_target(entity)
+				if (not got_first or entity.subtask) then
+					got_first = true
+					targets[#targets+1] = controller.quest_target(entity)
+				end
 		end
 	end
+	return targets
 end
 
 function get_task_status(entities, CACHE)
