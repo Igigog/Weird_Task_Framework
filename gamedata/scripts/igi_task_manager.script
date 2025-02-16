@@ -651,7 +651,7 @@ end
 
 give_task_before = task_objects.CGeneralTask.give_task
 function task_objects.CGeneralTask.give_task(self)
-	self.prior = get_prior(self.prior, self.id, 0)
+	self.prior = get_prior(self.prior, 0)
 	give_task_before(self)
 end
 
