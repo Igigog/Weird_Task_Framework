@@ -59,6 +59,7 @@ end
 
 REPEAT_TIMEOUT = 16200
 FINISHED_QUESTS = {}
+PRIOR_COUNTER = 0
 
 NPC_QUESTS = {}
 function get_all_quests_for_npc(npc)
@@ -226,14 +227,13 @@ IgiTask = {
 			Igi.quest_status(id) -- run once to setup current target
 			self.current_title = Igi.quest_text(id, "name")
 			self.current_descr = Igi.quest_text(id, "text")
-			self.current_target = Igi.quest_target(id)
+			self.current_target = Igi.quest_target(id)[1]
 		end, self.id)
 		if not ok then
 			on_task_crashed(err)
 			return
 		end
 		self.status = "selected"
-		self.prior = get_prior(self.prior, self.id, 0)
 
 		local t = CGameTask()
 		t:set_id(self.id)
@@ -241,7 +241,7 @@ IgiTask = {
 		t:set_type(self.storyline and task.storyline or task.additional)
 		t:set_title(self.current_title)
 		t:set_description(self.current_descr)
-		t:set_priority(self.prior)
+		t:set_priority(get_prior(self.prior, 0))
 		t:set_icon_name(self.icon)
 		t:add_complete_func("task_manager.task_complete")
 		t:add_fail_func("task_manager.task_fail")
@@ -358,12 +358,13 @@ IgiTask = {
 			for id, task_id in pairs(self.temp_tasks) do
 				if new_targets[1] == id or not igi_utils.table_find(new_targets, id) then
 					task_manager.get_task_manager():set_task_cancelled(task_id)
+					self.temp_tasks[id] = nil
 				end
 			end
 
 			for k, id in pairs(new_targets) do
 				if k ~= 1 and not self.temp_tasks[id] then
-					local prior = get_prior(self.prior, self.id, k)
+					local prior = get_prior(self.prior, k)
 					self.temp_tasks[id] = give_temp_task(self.id, id, prior)
 				end
 			end
@@ -483,7 +484,7 @@ TmpTask = {
 			return
 		end
 		t:set_type(tsk.storyline and task.storyline or task.additional)
-		t:set_title('<+> ' .. tsk.current_title)
+		t:set_title('\149 ' .. tsk.current_title)
 		t:set_description(tsk.current_descr)
 		t:set_priority(tsk.prior)
 		t:set_icon_name(tsk.icon)
@@ -541,7 +542,7 @@ function task_manager.load_state(m_data)
 end
 
 function give_temp_task(task_id, target_id, prior)
-	local tmp_task_id = "__wtf_temp." .. task_id .. "." .. tostring(target_id)
+	local tmp_task_id = "__wtf_temp-" .. task_id .. "-" .. tostring(target_id)
 	local task = TmpTask.new(tmp_task_id, target_id, prior)
 	task_manager.get_task_manager().task_info[tmp_task_id] = task
 	task:give_task()
@@ -603,10 +604,12 @@ end
 
 function save_state(m_data)
 	m_data.igi_finished_quests = FINISHED_QUESTS
+	m_data.wtf_prior_counter = PRIOR_COUNTER
 end
 
 function load_state(m_data)
 	FINISHED_QUESTS = m_data.igi_finished_quests or FINISHED_QUESTS
+	PRIOR_COUNTER = m_data.wtf_prior_counter or 0
 end
 
 crash_count = 0
@@ -652,11 +655,8 @@ function task_objects.CGeneralTask.give_task(self)
 	give_task_before(self)
 end
 
-function get_prior(prior, task_id, count)
-	local id_hash = 0
-	function a(h)
-		id_hash = id_hash + string.byte(h)
-	end
-	string.gsub(task_id, ".", a)
-	return (prior * 512 * 512) + ((id_hash % 512) * 512) + (512 - (count % 512))
+function get_prior(prior, count)
+	PRIOR_COUNTER = (PRIOR_COUNTER + 1) % 1024
+	local ending = 63 - (count % 64)
+	return (prior * 1024 * 64) + (PRIOR_COUNTER * 64) + ending
 end
