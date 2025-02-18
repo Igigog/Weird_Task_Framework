@@ -92,3 +92,79 @@ function update_entity_status(entity, CACHE)
 	entity.status = new_status
 	return true
 end
+
+function update_entities(CACHE)
+	if not CACHE._queue then return end
+	for _, v in ipairs(CACHE._queue.add) do
+		enable_entities(v, CACHE)
+		init_entities(v, CACHE)
+	end
+
+	for _, v in ipairs(CACHE._queue.rem) do
+		disable_entities(v, CACHE)
+	end
+
+	CACHE._queue = nil
+end
+
+function enable_entities(key, CACHE)
+    igi_helper.trace_assert(key ~= nil and type(CACHE[key]) == "table", "Can't enable entities: No table for key " .. tostring(key) .. ".")
+
+    igi_helper.trace_dbg("Enable: enable entities", key, CACHE[key])
+
+    local to_add = CACHE[key]
+
+	-- Add and generate
+    for k, entity in ipairs(to_add) do
+        igi_helper.trace_dbg("Enable: Processing entity", entity)
+        entity._group = key
+
+        local link_context = igi_text_processor.get_link_context(CACHE, entity)
+        local new_entities = igi_generate.generate(entity, link_context)
+
+        for _, new_entity in ipairs(new_entities) do
+            CACHE.entities[#CACHE.entities+1] = new_entity
+        end
+        to_add[k] = nil
+    end
+
+    CACHE[key] = nil
+    igi_helper.trace_dbg("Enable: after run", key, CACHE)
+end
+
+function disable_entities(key, CACHE)
+	-- De-initialize
+	for _, v in pairs(CACHE.entities) do
+		if v._group == key then
+			local link_context = igi_text_processor.get_link_context(CACHE)
+			igi_text_processor.resolve_table(v, link_context, "del")
+		end
+	end
+
+	-- Remove from table
+	for _ = 1, #CACHE.entities, 1 do
+		local rem_k
+		for k, v in pairs(CACHE.entities) do
+			if v._group == key then
+				rem_k = k
+				break
+			end
+		end
+		if not rem_k then
+			break
+		end
+
+		CACHE._removed = CACHE._removed or {}
+		CACHE._removed[#CACHE._removed+1] = table.remove(CACHE.entities, rem_k)
+	end
+end
+
+function init_entities(key, CACHE)
+	-- Initialize
+	for _, v in pairs(CACHE.entities) do
+		if v._group == key then
+			local link_context = igi_text_processor.get_link_context(CACHE, v)
+			igi_text_processor.resolve_table(v, link_context, "init")
+		end
+	end
+end
