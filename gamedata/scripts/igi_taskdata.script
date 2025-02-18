@@ -63,6 +63,7 @@ function supported_wtf_versions()
 	return {
 		["4.0"] = true,
 		["4.1"] = true,
+		["4.2"] = true,
 	}
 end
 
@@ -85,7 +86,8 @@ local function get_task_data(quest_id)
 	trace_assert(task_tbl, "No such task: " .. tostring(quest_id or "nil"))
 	if not is_supported_version(task_tbl) then
 		igi_helper.trace_error("[" .. prefix .. ":" .. task_name .. 
-						']: Unsupported WTF_VERSION! Supported are: \\n"' .. table.concat(supported_versions_list(), '", "') .. '"')
+						'] - Unsupported WTF_VERSION (' .. tostring(task_tbl.WTF_VERSION) 
+						.. ')! Supported are: \\n"' .. table.concat(supported_versions_list(), '", "') .. '"')
 		assert(nil)
 	end
 
