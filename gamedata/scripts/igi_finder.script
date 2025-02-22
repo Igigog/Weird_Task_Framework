@@ -9,26 +9,24 @@ function on_game_start()
 end
 
 function actor_on_first_update()
-    sort_levels_by_distance()
+    levels_by_distance, distance_by_level = sort_levels_by_distance(level.name())
 	sort_smarts_by_level()
 end
 
-WorldState = {
-	levels_by_distance = igi_utils.defaultdict(function () return {} end),
-	smarts_by_level = igi_utils.defaultdict(function () return {} end),
-	distance_by_level = {},
-}
+levels_by_distance = igi_utils.defaultdict(function () return {} end)
+distance_by_level = {}
+smarts_by_level = igi_utils.defaultdict(function () return {} end)
 
 ------------------------------
 
-function sort_levels_by_distance()
-	local actor_level = level.name()
-    local levels_by_distance = WorldState.levels_by_distance
-    local distance_by_level = WorldState.distance_by_level
+function sort_levels_by_distance(start_level)
+    local levels_by_distance = igi_utils.defaultdict(function () return {} end)
+    local distance_by_level = {}
 
-	levels_by_distance[0] = {[actor_level] = true}
-	distance_by_level[actor_level] = 0
-	local visited = {[actor_level] = true}
+	local connections = txr_routes.list_map(false, true, false)
+
+	levels_by_distance[0] = {[start_level] = true}
+	distance_by_level[start_level] = 0
 
 	local cur_distance = 0
 	local changes = true
@@ -37,12 +35,15 @@ function sort_levels_by_distance()
 		changes = false
 
 		for start_level in pairs(levels_by_distance[cur_distance-1]) do
-			local connected_levels = simulation_objects.config:r_value(
-				start_level, "target_maps", 0, "")
+			local map = txr_routes.get_map(start_level)
+			local connected_maps = connections[map] or {}
 
-			for con_level in connected_levels:gmatch("[^ ,]+") do
-				if not visited[con_level] then
-					visited[con_level] = true
+			for _, con_map in pairs(connected_maps) do
+				local con_level = txr_routes.get_section(con_map)
+				if (con_level == '') then
+					igi_helper.trace_dbg("empty section", con_map, map)
+				end
+				if con_level ~= '' and not distance_by_level[con_level] then
 					changes = true
 					levels_by_distance[cur_distance][con_level] = true
 					distance_by_level[con_level] = cur_distance
@@ -50,12 +51,13 @@ function sort_levels_by_distance()
 			end
 		end
 	end
+
+	return levels_by_distance, distance_by_level
 end
 
 function sort_smarts_by_level()
 	local sim = alife()
 	local gg = game_graph()
-    local smarts_by_level = WorldState.smarts_by_level
 
 	for name, smart in pairs(SIMBOARD.smarts_by_names) do
 		local smart_level = sim:level_name(gg:vertex(smart.m_game_vertex_id):level_id())
@@ -63,12 +65,10 @@ function sort_smarts_by_level()
 	end
 end
 
-local function is_smart_good(smart_name, smart_level)
-	local in_blacklist = smart_blacklist[smart_name] or
-		(smart_level ~= level.name() and blacklist[smart_level])
+local function is_smart_good(smart_id, smart_level)
+	local smart_name = SIMBOARD.smarts[smart_id].smrt:name()
+	local in_blacklist = smart_blacklist[smart_name] or blacklist[smart_level]
 	local is_base = simulation_objects.base_smarts[smart_name]
-
-	local smart_id = SIMBOARD.smarts_by_names[smart_name].id
 	local is_available = simulation_objects.available_by_id[smart_id]
 
 	return is_available and not (is_base or in_blacklist)
@@ -79,9 +79,9 @@ local function check_location(se_obj, lower_bound, higher_bound)
 	local obj_level = alife():level_name(igi_helper.get_object_level_id(se_obj))
 	if blacklist[obj_level] then return false end
 
-	local dist = WorldState.distance_by_level[obj_level]
+	local dist = distance_by_level[obj_level]
 	if not dist then
-		igi_helper.trace_error("igi_finder: map not connected?", obj_level)
+		igi_helper.trace_dbg("igi_finder: map not connected?", obj_level)
 		return false
 	end
 	return dist >= lower_bound and dist <= higher_bound
@@ -135,14 +135,33 @@ function find_items_in_enemy(lower_bound, higher_bound, sections)
 	return out
 end
 
+function get_smarts_by_lvl(lvl, buf)
+	local out = buf or {}
+	for smart_name in pairs(smarts_by_level[lvl]) do
+		local smart_id = SIMBOARD.smarts_by_names[smart_name].id
+		if is_smart_good(smart_id, lvl) then
+			out[#out+1] = smart_id
+		end
+	end
+	return out
+end
+
+function get_levels(lower_bound, higher_bound)
+	local out = {}
+	for i=lower_bound, higher_bound do
+		for lvl in pairs(levels_by_distance[i]) do
+			out[#out+1] = lvl
+		end
+	end
+	return out
+end
+
 function get_smarts(lower_bound, higher_bound)
 	local smart_list = {}
-	for i=lower_bound, higher_bound do
-		for level in pairs(WorldState.levels_by_distance[i]) do
-			for smart_name in pairs(WorldState.smarts_by_level[level]) do
-				if is_smart_good(smart_name, level) then
-					smart_list[#smart_list+1] = SIMBOARD.smarts_by_names[smart_name].id
-				end
+	for _, lvl in pairs(get_levels(lower_bound, higher_bound)) do
+		for _, smart_id in pairs(get_smarts_by_lvl(lvl)) do
+			if is_smart_good(smart_id, lvl) then
+				smart_list[#smart_list+1] = smart_id
 			end
 		end
 	end
