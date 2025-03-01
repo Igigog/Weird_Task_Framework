@@ -1,0 +1,67 @@
+function on_xml_read()
+    RegisterScriptCallback("on_xml_read", function(xml_file_name, xml_obj)
+        if xml_file_name == [[gameplay\dialogs.xml]] then
+			for xml in pairs(get_dialog_xmls()) do
+				printf("wtf xml %s", xml)
+				xml_obj:insertFromXMLFile(xml)
+			end
+        end
+    end)
+end
+
+function on_game_start()
+    RegisterScriptCallback("on_specific_character_dialog_list", function(character_id, dialog_list)
+		for dialog in pairs(get_dialogs().dialogs) do
+			dialog_list:add(dialog)
+		end
+    end)
+end
+
+DIALOGS = {}
+function get_dialogs()
+    if not next(DIALOGS) then
+		local parser = slaxml.SLAXML()
+		local parser_options = {stripWhitespace = true}
+	
+		for xml in pairs(get_dialog_xmls()) do
+			local out = getFS():r_open('$game_config$', xml):r_stringZ()
+	
+			local ok, xml_table = pcall(parser.dom, parser, out, parser_options)
+			if ok then
+				collect_dialog_data(xml_table)
+			end
+			
+		end
+    end
+
+	return DIALOGS
+end
+
+function get_dialog_xmls()
+	local out = {}
+	local files = getFS():file_list_open(
+			"$game_config$", "igi_tasks\\dialogs\\", bit_or(FS.FS_ListFiles,FS.FS_RootOnly))
+	for i = 0, files:Size() - 1 do
+		local xml_name = files:GetAt(i)
+		out["igi_tasks\\dialogs\\"..xml_name] = true
+	end
+
+	return out
+end
+
+function collect_dialog_data(tbl)
+	if tbl.name == 'action' or tbl.name == 'precondition' then
+		local task, data_key = string.match(tbl.kids[1].value, "igi_dialogs%.data%.([^%.]*)%.(.*)")
+		if task and data_key then
+			DIALOGS.funcs = DIALOGS.funcs or {}
+			DIALOGS.funcs[#DIALOGS.funcs+1] = {task, data_key}
+		end
+	elseif tbl.name == 'dialog' then
+		DIALOGS.dialogs = DIALOGS.dialogs or {}
+		DIALOGS.dialogs[tbl.attr.id] = true
+	end
+
+	for _, v in pairs(tbl.kids or {}) do
+		collect_dialog_data(v)
+	end
+end
