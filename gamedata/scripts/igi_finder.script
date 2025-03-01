@@ -135,8 +135,8 @@ function find_items_in_enemy(lower_bound, higher_bound, sections)
 	return out
 end
 
-function get_smarts_by_lvl(lvl, buf)
-	local out = buf or {}
+function get_smarts_by_lvl(lvl)
+	local out = {}
 	for smart_name in pairs(smarts_by_level[lvl]) do
 		local smart_id = SIMBOARD.smarts_by_names[smart_name].id
 		if is_smart_good(smart_id, lvl) then
@@ -146,10 +146,11 @@ function get_smarts_by_lvl(lvl, buf)
 	return out
 end
 
-function get_levels(lower_bound, higher_bound)
+function get_levels(lower_bound, higher_bound, start_level)
+	local lbd = start_level == nil and levels_by_distance or sort_levels_by_distance(start_level)
 	local out = {}
 	for i=lower_bound, higher_bound do
-		for lvl in pairs(levels_by_distance[i]) do
+		for lvl in pairs(lbd[i]) do
 			out[#out+1] = lvl
 		end
 	end
@@ -157,16 +158,8 @@ function get_levels(lower_bound, higher_bound)
 end
 
 function get_smarts(lower_bound, higher_bound)
-	local smart_list = {}
-	for _, lvl in pairs(get_levels(lower_bound, higher_bound)) do
-		for _, smart_id in pairs(get_smarts_by_lvl(lvl)) do
-			if is_smart_good(smart_id, lvl) then
-				smart_list[#smart_list+1] = smart_id
-			end
-		end
-	end
-
-	return smart_list
+	local levels = get_levels(lower_bound, higher_bound)
+	return wtf.flat_map(levels, get_smarts_by_lvl)
 end
 
 function get_stashes(lower_bound, higher_bound)
