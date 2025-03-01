@@ -118,7 +118,7 @@ local function resolve_links_in_str(str, link_context)
 	return str
 end
 
-local function resolve_in_str(str, level, link_context)
+function resolve_in_str(str, level, link_context)
 	local macro_level, macro = str_to_macro(str)
 	if macro and macro_level == level then
 		local without_links = resolve_links_in_str(macro, link_context)

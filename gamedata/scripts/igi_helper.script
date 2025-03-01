@@ -35,7 +35,6 @@ end
 
 function init_squad(id)
 	local se_obj = alife_object(id)
-	se_obj.stay_time = game.get_game_time()
 	se_obj.force_online = true
 	return true
 end
@@ -95,6 +94,16 @@ function pcall(f, ...)
 		return ok, debug.traceback(xf, res .. "\\n")
 	end
 	return ok, res
+end
+
+function safe(f)
+	return function (...)
+		local ok, out = pcall(f, ...)
+		if not ok then
+			trace_error("Function call failed!", out)
+		end
+		return ok and out
+	end
 end
 
 function trace_dbg(title, ...)
