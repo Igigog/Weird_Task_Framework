@@ -20,14 +20,12 @@ data = {}
 function lookup_data(quest_id, data_key, npc)
     if not npc then return end
 
-    igi_helper.trace_dbg("Looking up dialog data: ", quest_id, data_key, npc:id())
     local npc_id = npc:id()
     for _, CACHE in pairs(igi_generic_task.TASKS_CACHE) do
         if quest_id == CACHE.quest_id[1] .. '_' .. CACHE.quest_id[2] then
             for _, entity in ipairs(CACHE.entities) do
                 if entity.id == npc_id and entity[data_key] then
                     local out = entity[data_key]
-                    igi_helper.trace_dbg("Found entity!", entity, out, type(out))
                     if type(out) == "string" then
                         local link_context = igi_text_processor.get_link_context(CACHE, entity)
                         return igi_text_processor.resolve_in_str(out, "@", link_context)
