@@ -1,0 +1,58 @@
+function keys(tbl)
+    local out = {}
+    for k in pairs(tbl) do
+        out[#out+1] = k
+    end
+    return out
+end
+
+function values(tbl)
+    local out = {}
+    for _, v in pairs(tbl) do
+        out[#out+1] = v
+    end
+    return out
+end
+
+function flat_map(tbl, f)
+    local out = {}
+    for _, v in ipairs(tbl) do
+        local fout = f(v)
+        for _, v2 in ipairs(fout) do
+            out[#out+1] = v2
+        end
+    end
+    return out
+end
+
+function map(tbl, f)
+    local out = {}
+    for _, v in ipairs(tbl) do
+        out[#out+1] = f(v)
+    end
+    return out
+end
+
+function filter(tbl, f)
+    local out = {}
+    for _, v in ipairs(tbl) do
+        if f(v) then
+            out[#out+1] = v
+        end
+    end
+    return out
+end
+
+function set(tbl, k, v)
+    tbl[k] = v
+    return v
+end
+
+function shuffle(tbl)
+    local t = dup_table(tbl)
+    for i = 1, #t, 1 do
+        local index = igi_random.rand(i)
+        t[index], t[i] = t[i], t[index]
+    end
+    return t
+end

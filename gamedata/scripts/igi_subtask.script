@@ -95,16 +95,19 @@ end
 
 function update_entities(CACHE)
 	if not CACHE._queue then return end
+	igi_helper.trace_dbg("Update: updating entities", CACHE)
 	for _, v in ipairs(CACHE._queue.add) do
 		enable_entities(v, CACHE)
 		init_entities(v, CACHE)
 	end
 
+	igi_helper.trace_dbg("Update: After adding", CACHE)
 	for _, v in ipairs(CACHE._queue.rem) do
 		disable_entities(v, CACHE)
 	end
 
 	CACHE._queue = nil
+	igi_helper.trace_dbg("Update: finish", CACHE)
 end
 
 function enable_entities(key, CACHE)

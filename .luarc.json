@@ -443,6 +443,9 @@
         "alife_object",
         "TeleportObject",
         "TeleportSquad",
-        "flush"
+        "flush",
+        "wtf",
+        "igi_dialogs",
+        "modxml_wtf"
     ]
 }

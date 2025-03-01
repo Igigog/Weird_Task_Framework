@@ -1,5 +1,3 @@
-local trace_dbg = igi_helper.trace_dbg
-
 local callbacks = {
 	on_get_taskdata = {},
 	entity_on_get_taskdata = {},
@@ -61,7 +59,7 @@ local function send_custom_callbacks(callback_name, CACHE, ...)
 end
 
 function invoke_callbacks(callback_name, CACHE, ...)
-	trace_dbg(callback_name, CACHE)
+	-- igi_helper.trace_dbg(callback_name, CACHE)
 	send_target_callbacks(callback_name, CACHE, ...)
 	send_custom_callbacks(callback_name, CACHE, ...)
 end
