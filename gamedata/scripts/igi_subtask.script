@@ -103,7 +103,7 @@ function update_entities(CACHE)
 
 	igi_helper.trace_dbg("Update: After adding", CACHE)
 	for _, v in ipairs(CACHE._queue.rem) do
-		disable_entities(v, CACHE)
+		disable_entity(v, CACHE)
 	end
 
 	CACHE._queue = nil
@@ -135,31 +135,26 @@ function enable_entities(key, CACHE)
     igi_helper.trace_dbg("Enable: after run", key, CACHE)
 end
 
-function disable_entities(key, CACHE)
+function disable_entity(key, CACHE)
 	-- De-initialize
+	local target
 	for _, v in pairs(CACHE.entities) do
-		if v._group == key then
-			local link_context = igi_text_processor.get_link_context(CACHE)
-			igi_text_processor.resolve_table(v, link_context, "del")
-		end
-	end
-
-	-- Remove from table
-	for _ = 1, #CACHE.entities, 1 do
-		local rem_k
-		for k, v in pairs(CACHE.entities) do
-			if v._group == key then
-				rem_k = k
-				break
-			end
-		end
-		if not rem_k then
+		if v.link_id == key then
+			target = v
 			break
 		end
-
-		CACHE._removed = CACHE._removed or {}
-		CACHE._removed[#CACHE._removed+1] = table.remove(CACHE.entities, rem_k)
 	end
+
+	if not target then return end
+
+	local link_context = igi_text_processor.get_link_context(CACHE)
+	igi_text_processor.resolve_table(target, link_context, "del")
+
+	target["-CONTROLLER"] = target.CONTROLLER
+	target["-actions"] = target.actions
+
+	target.CONTROLLER = nil
+	target.actions = nil
 end
 
 function init_entities(key, CACHE)
