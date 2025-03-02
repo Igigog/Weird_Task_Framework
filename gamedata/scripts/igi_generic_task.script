@@ -59,22 +59,29 @@ function process_macros(task_id, macro_level)
 	return CACHE
 end
 
-function update_entities(task_id, args)
-	trace_assert(type(args) == "table", "update_entities: invalid argument", args)
-	trace_assert(args.add == nil or type(args.add) == "table", "update_entities: invalid argument add", args)
-	trace_assert(args.rem == nil or type(args.rem) == "table", "update_entities: invalid argument add", args)
-
+function add_entities(task_id, ...)
 	local CACHE = get_cache(task_id)
 	trace_assert(CACHE ~= nil, "update_entities: CACHE not found for task_id", task_id)
 
+	local args = {...}
 	CACHE._queue = CACHE._queue or {add = {}, rem = {}}
-	for _, v in ipairs(args.add or {}) do
+	for _, v in ipairs(args) do
 		trace_assert(type(CACHE[v]) == "table", "update_entities: entity table not found: ", v)
 		CACHE._queue.add[#CACHE._queue.add+1] = v
 	end
-	for _, v in ipairs(args.rem or {}) do
+	return #args
+end
+
+function remove_entities(task_id, ...)
+	local CACHE = get_cache(task_id)
+	trace_assert(CACHE ~= nil, "update_entities: CACHE not found for task_id", task_id)
+
+	local args = {...}
+	CACHE._queue = CACHE._queue or {add = {}, rem = {}}
+	for _, v in ipairs(args) do
 		CACHE._queue.rem[#CACHE._queue.rem+1] = v
 	end
+	return #args
 end
 ---------------------------< Precondition >---------------------------
 function try_prepare_quest(task_id, task_data, tg_id)
