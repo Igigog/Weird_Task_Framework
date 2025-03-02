@@ -118,12 +118,12 @@ local function resolve_links_in_str(str, link_context)
 	return str
 end
 
-function resolve_in_str(str, level, link_context)
+function resolve_in_str(str, level, link_context, log)
 	local macro_level, macro = str_to_macro(str)
 	if macro and macro_level == level then
 		local without_links = resolve_links_in_str(macro, link_context)
 		if without_links then
-			igi_helper.trace_dbg("Resolving macro " .. macro)
+			if log then igi_helper.trace_dbg("Resolving macro " .. macro) end
 			return resolve_macro(without_links, link_context)
 		end
 	end
@@ -174,8 +174,8 @@ function resolve_and_link_cache(CACHE, level)
 	resolve_table(CACHE, link_context, level)
 end
 
-function eval_logic_macro(str, link_context)
-	local resolved = resolve_in_str(str, "@", link_context)
+function eval_logic_macro(str, link_context, log)
+	local resolved = resolve_in_str(str, "@", link_context, log)
 	trace_assert(resolved ~= str, "Not a @$ macro or not resolved", str)
 	return resolved
 end
