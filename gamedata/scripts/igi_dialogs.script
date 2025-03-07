@@ -28,7 +28,7 @@ function lookup_data(quest_id, data_key, npc)
                     local out = entity[data_key]
                     if type(out) == "string" then
                         local link_context = igi_text_processor.get_link_context(CACHE, entity)
-                        return igi_text_processor.resolve_in_str(out, "@", link_context)
+                        return igi_text_processor.resolve_linked_macro(out, "@", link_context)
                     end
 
                     return out
