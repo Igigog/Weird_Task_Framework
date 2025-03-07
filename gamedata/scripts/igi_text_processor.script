@@ -22,20 +22,28 @@ LinkContext  = {
 		for _, entity in pairs(CACHE.entities) do
 			if entity.link_id then
 				trace_assert(link_context[entity.link_id] == nil, "Entity already in context", link_context, entity)
-				link_context[entity.link_id] = entity
+				link_context[entity.link_id] = setmetatable({}, {__index = entity})
 			end
 		end
 		return setmetatable(link_context, { __index = self })
 	end,
 
 	with_this = function (self, entity)
-		return setmetatable({this = entity}, {__index = self})
+		return setmetatable({this = setmetatable({}, {__index = entity})}, {__index = self})
     end,
+
+    set_transient = function(self, link, val)
+        local table = self:get_table(link)
+		if link.link_id == 'this' and table.link_id then
+			self[table.link_id][link.field] = val
+		end
+		table[link.field] = val
+	end,
 
 	get = function (self, link)
         local tbl = self[link.link_id]
         igi_helper.trace_assert(tbl, "Linker can't find tbl for link:", self)
-		return tbl[link.field], link.link_id
+		return tbl[link.field]
 	end,
 
 	get_table = function (self, link)
@@ -108,7 +116,7 @@ function get_link_context(CACHE, entity)
 end
 
 function has_macro(str)
-	return Macro:new(str) ~= nil
+    return Macro:new(str) ~= nil
 end
 
 local function resolve_macros(tbl, level, link_context)
@@ -119,7 +127,7 @@ local function resolve_macros(tbl, level, link_context)
             local out = resolve_linked_macro(v, level, link_context)
             if out ~= v then
                 trace_assert(out ~= nil, "Macro returned nil", v)
-				trace_assert(type(out) ~= "userdata", "Macro returned userdata", v)
+                trace_assert(type(out) ~= "userdata", "Macro returned userdata", v)
                 tbl[k] = out
             end
         end
@@ -158,7 +166,8 @@ function resolve_all_links(links, level, link_context, log)
         end
 
         igi_helper.trace_assert(macro.level == level, "Macro is of wrong level", level, before)
-		if log then igi_helper.trace_dbg("Resolving macro", before) end
+        if log then igi_helper.trace_dbg("Resolving macro", before) end
+		-- TODO: set fields in one place
 		tbl[link.field] = macro:resolve(link_context:with_this(tbl))
 	end
 end
