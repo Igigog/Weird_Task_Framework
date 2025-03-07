@@ -1,7 +1,17 @@
 local trace_assert  = igi_helper.trace_assert
 
+local fCache = {}
+local function eval(v)
+	local f = fCache[v]
+	if f == nil then
+		f = loadstring("return " .. v)
+		fCache[v] = f
+	end
+	assert(f, "Function cannot be compiled: " .. (v or nil))
+	return f()
+end
+
 LinkContext  = {
-	_link_prefix = "__igi__link_",
 	_NO_THIS = {},
 
 	new = function(self, CACHE)
@@ -16,18 +26,6 @@ LinkContext  = {
 			end
 		end
 		return setmetatable(link_context, { __index = self })
-	end,
-
-	set_this = function(self, entity)
-		self.this = entity or self._NO_THIS
-	end,
-
-	to_env = function (self)
-		local env = {}
-		for k, v in pairs(self) do
-			env[LinkContext._link_prefix .. k] = v
-		end
-		return env
 	end,
 
 	with_this = function (self, entity)
@@ -55,11 +53,13 @@ Link = {
 		}
 
 		return setmetatable(t, {__index = Link})
-	end,
-
-	as_variable = function (self)
-		return LinkContext._link_prefix .. self.link_id .. "." .. self.field
     end,
+	
+	from_str = function (self, str)
+		local link_id, field = str:match("%|([^%.]+)%.(.+)%|")
+		trace_assert(link_id and field, "Link can't be resolved: " .. str)
+		return Link.new(link_id, field)
+	end,
 	
 	remap_this = function (self, mapping)
         if mapping and self.link_id == "this" then
@@ -69,56 +69,46 @@ Link = {
 	end
 }
 
-local fCache = {}
-local function eval(v, env)
-	local f = fCache[v]
-	if f == nil then
-		f = loadstring("return " .. v)
-		fCache[v] = f
-	end
-	assert(f, "Function cannot be compiled: " .. (v or nil))
+Macro       = {
+	link_context = {},
 
-	setfenv(f, setmetatable(env or {}, {__index = _G}))
-	return f()
-end
+    new = function(self, str)
+        local level, is_auto, macro = string.match(str, "([^%$%@]*)(%@?)%$(.*)")
+        if not macro then return end
+
+        local t = {
+            level = level,
+            is_auto = is_auto ~= '',
+            macro = macro
+        }
+
+        return setmetatable(t, { __index = self })
+    end,
+
+	_without_links = function (self)
+        return string.gsub(self.macro, "%b||", function(dep)
+			local link = Link:from_str(dep)
+			return "igi_text_processor.Macro.link_context." .. link.link_id .. '.' .. link.field
+		end)
+	end,
+
+    resolve = function(self, link_context)
+		Macro.link_context = link_context
+		return eval(self:_without_links())
+    end,
+
+	link_iterator = function (self)
+        return string.gmatch(self.macro, "%b||")
+	end
+}
 
 -- Careful if you want to cache it: generate step invalidates link context
 function get_link_context(CACHE, entity)
-	local link_context = LinkContext:new(CACHE)
-	link_context:set_this(entity)
-	return link_context
-end
-
-function escape_pattern(text)
-    return text:gsub("([^%w])", "%%%1")
-end
-
-local function str_to_link(str)
-	local link_id, field = str:match("%|([^%.]+)%.(.+)%|")
-	trace_assert(link_id and field, "Link can't be resolved: " .. str)
-	return Link.new(link_id, field)
-end
-
-local function link_iterator(str)
-	return str:gmatch("%b||")
-end
-
-local function str_to_macro(str)
-	return string.match(str, "([^%$]*)%$(.*)")
+	return LinkContext:new(CACHE):with_this(entity)
 end
 
 function has_macro(str)
-	return str_to_macro(str) ~= nil
-end
-
-local function resolve_macro(macro, link_context)
-	return eval(macro, link_context:to_env())
-end
-
-local function resolve_links_in_str(str)
-	return string.gsub(str, "%b||", function (dep)
-		return str_to_link(dep):as_variable()
-	end)
+	return Macro:new(str) ~= nil
 end
 
 local function resolve_macros(tbl, level, link_context)
@@ -129,70 +119,72 @@ local function resolve_macros(tbl, level, link_context)
             local out = resolve_linked_macro(v, level, link_context)
             if out ~= v then
                 trace_assert(out ~= nil, "Macro returned nil", v)
+				trace_assert(type(out) ~= "userdata", "Macro returned userdata", v)
                 tbl[k] = out
             end
         end
     end
 end
 
-function collect_links(macro, link_context, buf, this_mapping)
-    for dep in link_iterator(macro) do
-        local link = str_to_link(dep):remap_this(this_mapping)
-        buf[#buf + 1] = link
-        local val, link_id = link_context:get(link)
+function collect_links(macro, link_context, buf, visited, this_mapping)
+    for dep in macro:link_iterator() do
+        local link = Link:from_str(dep):remap_this(this_mapping)
 
-        local macro = str_to_macro(val)
+        local repr = link.link_id .. '.' .. link.field
+        igi_helper.trace_assert(not visited[repr], "Circular dependency found! ", dep, macro)
+		visited[repr] = true
+
+		buf[#buf + 1] = link
+        local val = link_context:get(link)
+
+        local macro = Macro:new(val)
         if macro then
-            collect_links(macro, link_context, buf, link_id)
+            collect_links(macro, link_context, buf, visited, link.link_id)
         end
     end
     return buf
 end
 
-function resolve_all_links(links, level, link_context)
+function resolve_all_links(links, level, link_context, log)
 	for i = #links, 1, -1 do
         local link = links[i]
         local tbl = link_context:get_table(link)
         local before = tbl[link.field]
         igi_helper.trace_assert(before ~= nil, "Link is nil", link)
-		
-        local macro, macro_level = str_to_macro(before)
+
+        local macro = Macro:new(before)
         if not macro then
             return before
         end
-		
-        igi_helper.trace_assert(macro_level == level, "Macro is of wrong level", level, before)
-		if log then igi_helper.trace_dbg("Resolving macro " .. macro) end
-        local without_links = resolve_links_in_str(macro)
-		tbl[link.field] = resolve_macro(without_links, link_context:with_this(tbl))
+
+        igi_helper.trace_assert(macro.level == level, "Macro is of wrong level", level, before)
+		if log then igi_helper.trace_dbg("Resolving macro", before) end
+		tbl[link.field] = macro:resolve(link_context:with_this(tbl))
 	end
 end
 
-function resolve_linked_macro(val, level, link_context)
-    local macro, macro_level = str_to_macro(val)
-	if not macro or macro_level ~= level then
+function resolve_linked_macro(val, level, link_context, log)
+    local macro = Macro:new(val)
+	if (not macro) or macro.level ~= level then
 		return val
 	end
-    local links = collect_links(macro, link_context, {})
-    resolve_all_links(links, level, link_context)
-	return resolve_macro(macro, link_context)
-end
-
-local function resolve_macros_and_link_variables(CACHE, link_context, level)
-	for _, entity in pairs(CACHE.entities) do
-		link_context:set_this(entity)
-		resolve_macros(entity, link_context, level)
-	end
+    local links = collect_links(macro, link_context, {}, {})
+    resolve_all_links(links, level, link_context, log)
+	return macro:resolve(link_context)
 end
 
 function resolve_and_link_cache(CACHE, level)
-	local link_context = igi_text_processor.get_link_context(CACHE)
-	resolve_macros_and_link_variables(CACHE, link_context, level)
+    local link_context = igi_text_processor.get_link_context(CACHE)
+
+    for _, entity in pairs(CACHE.entities) do
+        resolve_macros(entity, link_context:with_this(entity), level)
+    end
+
 	resolve_macros(CACHE, link_context, level)
 end
 
 function eval_logic_macro(str, link_context, log)
-	local resolved = resolve_linked_macro(str, "@", link_context)
+	local resolved = resolve_linked_macro(str, "@", link_context, log)
 	trace_assert(resolved ~= str, "Not a @$ macro or not resolved", str)
 	return resolved
 end
