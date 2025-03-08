@@ -17,19 +17,22 @@ LinkContext  = {
 	new = function(self, CACHE)
 		local link_context = {
 			CACHE = CACHE,
-			this = self._NO_THIS
+			this = self._NO_THIS,
+			__tables = {}
 		}
 		for _, entity in pairs(CACHE.entities) do
+			link_context.__tables[entity] = setmetatable({}, {__index = entity})
 			if entity.link_id then
 				trace_assert(link_context[entity.link_id] == nil, "Entity already in context", link_context, entity)
-				link_context[entity.link_id] = setmetatable({}, {__index = entity})
+				link_context[entity.link_id] = link_context.__tables[entity]
 			end
 		end
 		return setmetatable(link_context, { __index = self })
 	end,
 
 	with_this = function (self, entity)
-		return setmetatable({this = setmetatable({}, {__index = entity})}, {__index = self})
+		local this = self.__tables[entity] or setmetatable({}, {__index = entity})
+		return setmetatable({this = this}, {__index = self})
     end,
 
     set_transient = function(self, link, val)
@@ -50,7 +53,9 @@ LinkContext  = {
 		local tbl = self[link.link_id]
         igi_helper.trace_assert(tbl, "Linker can't find tbl for link:", self)
 		return tbl
-	end
+	end,
+
+	
 }
 
 Link = {
@@ -62,13 +67,13 @@ Link = {
 
 		return setmetatable(t, {__index = Link})
     end,
-	
+
 	from_str = function (self, str)
 		local link_id, field = str:match("%|([^%.]+)%.(.+)%|")
 		trace_assert(link_id and field, "Link can't be resolved: " .. str)
 		return Link.new(link_id, field)
 	end,
-	
+
 	remap_this = function (self, mapping)
         if mapping and self.link_id == "this" then
             self.link_id = mapping
@@ -87,7 +92,8 @@ Macro       = {
         local t = {
             level = level,
             is_auto = is_auto ~= '',
-            macro = macro
+            macro = macro,
+			orig = str
         }
 
         return setmetatable(t, { __index = self })
@@ -100,10 +106,22 @@ Macro       = {
 		end)
 	end,
 
-    resolve = function(self, link_context)
+    resolve = function(self, link_context, log)
+		if log then igi_helper.trace_dbg("Resolving macro", self.orig) end
+
 		Macro.link_context = link_context
-		return eval(self:_without_links())
+		local out = eval(self:_without_links())
+
+		trace_assert(out ~= nil, "Macro returned nil", self.orig)
+		trace_assert(type(out) ~= "userdata", "Macro returned userdata", self.orig)
+
+		return out
     end,
+
+	assert_level = function (self, level)
+		igi_helper.trace_assert(self.level == level, "Macro is of wrong level", level, self.orig)
+		return self
+	end,
 
 	link_iterator = function (self)
         return string.gmatch(self.macro, "%b||")
@@ -165,10 +183,8 @@ function resolve_all_links(links, level, link_context, log)
             return before
         end
 
-        igi_helper.trace_assert(macro.level == level, "Macro is of wrong level", level, before)
-        if log then igi_helper.trace_dbg("Resolving macro", before) end
-		-- TODO: set fields in one place
-		tbl[link.field] = macro:resolve(link_context:with_this(tbl))
+		macro:assert_level(level)
+        tbl[link.field] = macro:resolve(link_context:with_this(tbl), log)
 	end
 end
 
