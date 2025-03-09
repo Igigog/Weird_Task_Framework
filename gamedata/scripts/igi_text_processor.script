@@ -18,29 +18,28 @@ LinkContext  = {
 		local link_context = {
 			CACHE = CACHE,
 			this = self._NO_THIS,
-			__tables = {}
+			__transient = {}
 		}
 		for _, entity in pairs(CACHE.entities) do
-			link_context.__tables[entity] = setmetatable({}, {__index = entity})
+			link_context.__transient[entity] = {}
 			if entity.link_id then
 				trace_assert(link_context[entity.link_id] == nil, "Entity already in context", link_context, entity)
-				link_context[entity.link_id] = link_context.__tables[entity]
+				link_context[entity.link_id] = entity
 			end
 		end
 		return setmetatable(link_context, { __index = self })
 	end,
 
-	with_this = function (self, entity)
-		local this = self.__tables[entity] or setmetatable({}, {__index = entity})
-		return setmetatable({this = this}, {__index = self})
+	set_this = function (self, entity)
+		self.this = entity or LinkContext._NO_THIS
+		return self
     end,
 
-    set_transient = function(self, link, val)
-        local table = self:get_table(link)
-		if link.link_id == 'this' and table.link_id then
-			self[table.link_id][link.field] = val
-		end
-		table[link.field] = val
+    set_transient = function(self, tbl, key, val)
+		local transient_fields = self.__transient[tbl]
+		if not transient_fields then return end
+		transient_fields[key] = tbl[key]
+		tbl[key] = val
 	end,
 
 	get = function (self, link)
@@ -55,7 +54,13 @@ LinkContext  = {
 		return tbl
 	end,
 
-	
+	reset_transient = function (self)
+		for tbl, tr_tbl in pairs(self.__transient) do
+			for k, v in pairs(tr_tbl) do
+				tbl[k] = v
+			end
+		end
+	end
 }
 
 Link = {
@@ -184,7 +189,7 @@ function resolve_all_links(links, level, link_context, log)
         end
 
 		macro:assert_level(level)
-        tbl[link.field] = macro:resolve(link_context:with_this(tbl), log)
+        tbl[link.field] = macro:resolve(link_context:set_this(tbl), log)
 	end
 end
 
@@ -202,10 +207,11 @@ function resolve_and_link_cache(CACHE, level)
     local link_context = igi_text_processor.get_link_context(CACHE)
 
     for _, entity in pairs(CACHE.entities) do
-        resolve_macros(entity, link_context:with_this(entity), level)
+        resolve_macros(entity, link_context:set_this(entity), level)
     end
 
 	resolve_macros(CACHE, link_context, level)
+	link_context:reset_transient()
 end
 
 function eval_logic_macro(str, link_context, log)
