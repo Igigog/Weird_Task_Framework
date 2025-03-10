@@ -18,10 +18,8 @@ LinkContext  = {
 		local link_context = {
 			CACHE = CACHE,
 			this = self._NO_THIS,
-			__transient = {}
 		}
 		for _, entity in pairs(CACHE.entities) do
-			link_context.__transient[entity] = {}
 			if entity.link_id then
 				trace_assert(link_context[entity.link_id] == nil, "Entity already in context", link_context, entity)
 				link_context[entity.link_id] = entity
@@ -35,17 +33,8 @@ LinkContext  = {
 		return self
     end,
 
-    set_transient = function(self, tbl, key, val)
-		local transient_fields = self.__transient[tbl]
-		if not transient_fields then return end
-		transient_fields[key] = tbl[key]
-		tbl[key] = val
-	end,
-
 	get = function (self, link)
-        local tbl = self[link.link_id]
-        igi_helper.trace_assert(tbl, "Linker can't find tbl for link:", self)
-		return tbl[link.field]
+		return self:get_table(link)[link.field]
 	end,
 
 	get_table = function (self, link)
@@ -53,14 +42,6 @@ LinkContext  = {
         igi_helper.trace_assert(tbl, "Linker can't find tbl for link:", self)
 		return tbl
 	end,
-
-	reset_transient = function (self)
-		for tbl, tr_tbl in pairs(self.__transient) do
-			for k, v in pairs(tr_tbl) do
-				tbl[k] = v
-			end
-		end
-	end
 }
 
 Link = {
@@ -106,7 +87,8 @@ Macro       = {
 
 	_without_links = function (self)
         return string.gsub(self.macro, "%b||", function(dep)
-			local link = Link:from_str(dep)
+            local link = Link:from_str(dep)
+			igi_helper.trace_assert(LinkContext.get(Macro.link_context, link) ~= nil, "Value for a link can't be found!", dep, Macro.link_context)
 			return "igi_text_processor.Macro.link_context." .. link.link_id .. '.' .. link.field
 		end)
 	end,
@@ -118,7 +100,7 @@ Macro       = {
 		local out = eval(self:_without_links())
 
 		trace_assert(out ~= nil, "Macro returned nil", self.orig)
-		trace_assert(type(out) ~= "userdata", "Macro returned userdata", self.orig)
+		trace_assert(self.is_auto or type(out) ~= "userdata", "Macro returned userdata", self.orig)
 
 		return out
     end,
@@ -135,24 +117,22 @@ Macro       = {
 
 -- Careful if you want to cache it: generate step invalidates link context
 function get_link_context(CACHE, entity)
-	return LinkContext:new(CACHE):with_this(entity)
+	return LinkContext:new(CACHE):set_this(entity)
 end
 
 function has_macro(str)
     return Macro:new(str) ~= nil
 end
 
-local function resolve_macros(tbl, level, link_context)
+local function resolve_macros(tbl, level, link_context, transient_fields)
     for k, v in pairs(tbl) do
         if type(v) == 'table' then
-            resolve_macros(v, level, link_context)
+            resolve_macros(v, level, link_context, transient_fields)
         elseif type(v) == 'string' then
-            local out = resolve_linked_macro(v, level, link_context)
-            if out ~= v then
-                trace_assert(out ~= nil, "Macro returned nil", v)
-                trace_assert(type(out) ~= "userdata", "Macro returned userdata", v)
-                tbl[k] = out
-            end
+            local macro = Macro:new(v)
+			if (macro and macro.level == level and (not macro.is_auto)) then
+				tbl[k] = _resolve_linked_macro(macro, level, link_context, transient_fields)
+			end
         end
     end
 end
@@ -162,7 +142,7 @@ local function collect_links(macro, link_context, buf, visited, this_mapping)
         local link = Link:from_str(dep):remap_this(this_mapping)
 
         local repr = link.link_id .. '.' .. link.field
-        igi_helper.trace_assert(not visited[repr], "Circular dependency found! ", dep, macro)
+        igi_helper.trace_assert(not visited[repr], "Circular dependency found! ", dep, macro, visited)
 		visited[repr] = true
 
 		buf[#buf + 1] = link
@@ -176,7 +156,7 @@ local function collect_links(macro, link_context, buf, visited, this_mapping)
     return buf
 end
 
-local function resolve_all_links(links, level, link_context)
+local function resolve_all_links(links, level, link_context, transient_fields)
 	for i = #links, 1, -1 do
         local link = links[i]
         local tbl = link_context:get_table(link)
@@ -184,38 +164,51 @@ local function resolve_all_links(links, level, link_context)
         igi_helper.trace_assert(before ~= nil, "Link is nil", link)
 
         local macro = Macro:new(before)
-        if not macro then
-            return before
-        end
+        if macro then
+            macro:assert_level(level)
+			local out = macro:resolve(link_context:set_this(tbl))
 
-		macro:assert_level(level)
-        tbl[link.field] = macro:resolve(link_context:set_this(tbl))
+			if macro.is_auto then
+				transient_fields[tbl] = transient_fields[tbl] or {}
+				transient_fields[tbl][link.field] = before
+			end
+
+			tbl[link.field] = out
+        end
 	end
 end
 
-function resolve_linked_macro(val, level, link_context)
-    local macro = Macro:new(val)
-	if (not macro) or macro.level ~= level then
-		return val
-	end
+function _resolve_linked_macro(macro, level, link_context, transient_fields)
     local links = collect_links(macro, link_context, {}, {})
-    resolve_all_links(links, level, link_context)
-	return macro:resolve(link_context)
+    resolve_all_links(links, level, link_context, transient_fields)
+    return macro:resolve(link_context)
+end
+
+local function reset_transient_fields(transient_fields)
+	for tbl, fields in pairs(transient_fields) do
+		for k, v in pairs(fields) do
+			tbl[k] = v
+		end
+	end
 end
 
 function resolve_and_link_cache(CACHE, level)
     local link_context = igi_text_processor.get_link_context(CACHE)
+	local transient_fields = {}
 
     for _, entity in pairs(CACHE.entities) do
-        resolve_macros(entity, link_context:set_this(entity), level)
+        resolve_macros(entity, level, link_context:set_this(entity), transient_fields)
     end
 
-	resolve_macros(CACHE, link_context, level)
-	link_context:reset_transient()
+	resolve_macros(CACHE, level, link_context, transient_fields)
+	reset_transient_fields(transient_fields)
 end
 
 function eval_logic_macro(str, link_context)
-	local resolved = resolve_linked_macro(str, "@", link_context)
-	trace_assert(resolved ~= str, "Not a @$ macro or not resolved", str)
+    local macro = Macro:new(str)
+	trace_assert(macro and macro.is_auto and macro.level == '', "Not a @$ macro", str)
+	local transient_fields = {}
+    local resolved = _resolve_linked_macro(macro, '', link_context, transient_fields)
+	reset_transient_fields(transient_fields)
 	return resolved
 end
