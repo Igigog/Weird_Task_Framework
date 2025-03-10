@@ -1,4 +1,4 @@
-local trace_assert  = igi_helper.trace_assert
+trace_assert  = igi_helper.trace_assert
 
 local fCache = {}
 local function eval(v)
@@ -212,3 +212,35 @@ function eval_logic_macro(str, link_context)
 	reset_transient_fields(transient_fields)
 	return resolved
 end
+
+--------------- Testing --------------------------
+--[[
+igi_helper = {
+  trace_assert = function(...) return assert(...) end,
+  trace_dbg = print
+}
+
+loadstring = load
+
+_G.igi_text_processor = _G
+
+trace_assert  = igi_helper.trace_assert
+
+CACHE = {
+  entities = {
+    {
+    id = 1234,
+    huh = '@$ |this.id|',
+    br1 = "@$ |this.id|",
+    br3 = "$ |this.br2|",
+    br2 = "$ |this.br1|",
+    brbrbr = "$ |this.br3|",
+    str = "@$ |this.brbrbr|"
+  }
+  }
+}
+
+resolve_and_link_cache(CACHE, '')
+print(eval_logic_macro(CACHE.entities[1].str, get_link_context(CACHE, CACHE.entities[1])))
+print(CACHE.entities[1].br1)
+]]
