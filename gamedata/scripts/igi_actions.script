@@ -12,9 +12,9 @@ function process_actions(actions, link_context)
 	if type(actions) ~= "table" then return end
 	for _, action in pairs(actions) do
 		if (not action._done) then
-			if igi_text_processor.eval_logic_macro(action.when, link_context, true) then
+			if igi_text_processor.eval_logic_macro(action.when, link_context) then
 				trace_dbg("Run action", action)
-				action._done = not igi_text_processor.eval_logic_macro(action.run, link_context, true)
+				action._done = not igi_text_processor.eval_logic_macro(action.run, link_context)
 			end
 		end
 	end

@@ -111,8 +111,8 @@ Macro       = {
 		end)
 	end,
 
-    resolve = function(self, link_context, log)
-		if log then igi_helper.trace_dbg("Resolving macro", self.orig) end
+    resolve = function(self, link_context)
+		igi_helper.trace_dbg("Resolving macro", self.orig)
 
 		Macro.link_context = link_context
 		local out = eval(self:_without_links())
@@ -157,7 +157,7 @@ local function resolve_macros(tbl, level, link_context)
     end
 end
 
-function collect_links(macro, link_context, buf, visited, this_mapping)
+local function collect_links(macro, link_context, buf, visited, this_mapping)
     for dep in macro:link_iterator() do
         local link = Link:from_str(dep):remap_this(this_mapping)
 
@@ -176,7 +176,7 @@ function collect_links(macro, link_context, buf, visited, this_mapping)
     return buf
 end
 
-function resolve_all_links(links, level, link_context, log)
+local function resolve_all_links(links, level, link_context)
 	for i = #links, 1, -1 do
         local link = links[i]
         local tbl = link_context:get_table(link)
@@ -189,17 +189,17 @@ function resolve_all_links(links, level, link_context, log)
         end
 
 		macro:assert_level(level)
-        tbl[link.field] = macro:resolve(link_context:set_this(tbl), log)
+        tbl[link.field] = macro:resolve(link_context:set_this(tbl))
 	end
 end
 
-function resolve_linked_macro(val, level, link_context, log)
+function resolve_linked_macro(val, level, link_context)
     local macro = Macro:new(val)
 	if (not macro) or macro.level ~= level then
 		return val
 	end
     local links = collect_links(macro, link_context, {}, {})
-    resolve_all_links(links, level, link_context, log)
+    resolve_all_links(links, level, link_context)
 	return macro:resolve(link_context)
 end
 
@@ -214,8 +214,8 @@ function resolve_and_link_cache(CACHE, level)
 	link_context:reset_transient()
 end
 
-function eval_logic_macro(str, link_context, log)
-	local resolved = resolve_linked_macro(str, "@", link_context, log)
+function eval_logic_macro(str, link_context)
+	local resolved = resolve_linked_macro(str, "@", link_context)
 	trace_assert(resolved ~= str, "Not a @$ macro or not resolved", str)
 	return resolved
 end
