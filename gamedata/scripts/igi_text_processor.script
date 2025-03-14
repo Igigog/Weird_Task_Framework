@@ -72,6 +72,7 @@ Macro       = {
 	link_context = {},
 
     new = function(self, str)
+		if type(str) ~= "string" then return end
         local level, is_auto, macro = string.match(str, "([^%$%@]*)(%@?)%$(.*)")
         if not macro then return end
 
@@ -106,7 +107,8 @@ Macro       = {
     end,
 
 	assert_level = function (self, level)
-		igi_helper.trace_assert(self.level == level, "Macro is of wrong level", level, self.orig)
+		local is_empty_auto = self.is_auto and self.level == ""
+		igi_helper.trace_assert(self.level == level or is_empty_auto, "Macro is of wrong level", level, self.orig)
 		return self
 	end,
 
@@ -190,6 +192,12 @@ local function reset_transient_fields(transient_fields)
 			tbl[k] = v
 		end
 	end
+end
+
+function resolve_table_macros(tbl, level, link_context)
+	local transient_fields = {}
+	resolve_macros(tbl, level, link_context, transient_fields)
+	reset_transient_fields(transient_fields)
 end
 
 function resolve_and_link_cache(CACHE, level)
