@@ -148,7 +148,7 @@ function disable_entity(key, CACHE)
 	if not target then return end
 
 	local link_context = igi_text_processor.get_link_context(CACHE)
-	igi_text_processor.resolve_macros(target, link_context, "del")
+	igi_text_processor.resolve_table_macros(target, "del", link_context)
 
 	target["-CONTROLLER"] = target.CONTROLLER
 	target["-actions"] = target.actions
@@ -162,7 +162,7 @@ function init_entities(key, CACHE)
 	for _, v in pairs(CACHE.entities) do
 		if v._group == key then
 			local link_context = igi_text_processor.get_link_context(CACHE, v)
-			igi_text_processor.resolve_macros(v, link_context, "init")
+			igi_text_processor.resolve_table_macros(v, "init", link_context)
 		end
 	end
 end
