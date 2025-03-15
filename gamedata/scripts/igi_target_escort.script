@@ -17,7 +17,7 @@ function make_companion(entity)
 end
 
 Escort = {}
-function Escort.entity_on_first_run(entity)
+function Escort.on_init(entity)
 	trace_assert(type(entity.id) == "number", "Escort: entity.id is not a number", entity)
 	trace_assert(alife_object(entity.id), "Escort: no server object for this id", entity)
 	trace_assert(alife_object(entity.id):commander_id(), "Escort: entity.id is not a squad", entity)
@@ -27,7 +27,7 @@ function Escort.status(entity)
     return TASK_STATUSES.READY_TO_FINISH
 end
 
-function Escort.entity_on_finish(entity)
+function Escort.on_del(entity)
     local se_squad = alife_object(entity.id)
     local _ = se_squad and axr_companions.dismiss_special_squad(se_squad)
 end

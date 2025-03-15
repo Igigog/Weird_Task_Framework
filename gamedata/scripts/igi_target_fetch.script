@@ -84,7 +84,7 @@ function release_fetch_items(entity)
 end
 
 Fetch = {}
-function Fetch.entity_on_first_run(entity)
+function Fetch.on_init(entity)
 	trace_assert(type(entity.section_name) == "string", "Fetch: entity.section_name is not a string", entity)
 	---@diagnostic disable-next-line: undefined-field
 	trace_assert(ini_sys:section_exist(entity.section_name), "Fetch: entity section does not exist", entity)

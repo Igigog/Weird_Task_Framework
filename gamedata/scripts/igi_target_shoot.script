@@ -74,7 +74,7 @@ function ready_to_finish(obj_data)
 end
 
 Shoot = {}
-function Shoot.entity_on_first_run(entity)
+function Shoot.on_init(entity)
 	trace_assert(type(entity.id) == "number", "Shoot: entity.id is not a number", entity)
 	trace_assert(alife_object(entity.id), "Shoot: no server object for this id", entity)
 	trace_assert(alife_object(entity.id):commander_id(), "Shoot: entity.id is not a squad", entity)
@@ -86,7 +86,7 @@ function Shoot.status(entity)
     return TASK_STATUSES.RUNNING
 end
 
-function Shoot.entity_on_finish(obj_data)
+function Shoot.on_del(obj_data)
     local callback = callback_is_set[obj_data.id]
     if callback then
         UnregisterScriptCallback("npc_on_before_hit", callback)

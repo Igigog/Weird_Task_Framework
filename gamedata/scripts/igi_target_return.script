@@ -2,10 +2,9 @@ local TASK_STATUSES = igi_subtask.TASK_STATUSES
 local trace_assert = igi_helper.trace_assert
 
 Return = {}
-function Return.entity_on_first_run(entity)
+function Return.on_init(entity)
 	trace_assert(type(entity.id) == "number", "Return: entity.id is not a number", entity)
 	trace_assert(alife_object(entity.id), "Return: no server object for this id", entity)
-	-- dropdrop_ArtyContainer
 end
 
 function Return.status(entity)
