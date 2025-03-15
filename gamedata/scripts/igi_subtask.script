@@ -147,6 +147,11 @@ function disable_entity(key, CACHE)
 
 	if not target then return end
 
+	local controller = igi_taskdata.get_controller(target, CACHE)
+	if controller.on_del then
+		controller.on_del(target)
+	end
+
 	local link_context = igi_text_processor.get_link_context(CACHE)
 	igi_text_processor.resolve_table_macros(target, "del", link_context)
 
@@ -159,10 +164,15 @@ end
 
 function init_entities(key, CACHE)
 	-- Initialize
-	for _, v in pairs(CACHE.entities) do
-		if v._group == key then
-			local link_context = igi_text_processor.get_link_context(CACHE, v)
-			igi_text_processor.resolve_table_macros(v, "init", link_context)
+	for _, entity in pairs(CACHE.entities) do
+		if entity._group == key then
+			local link_context = igi_text_processor.get_link_context(CACHE, entity)
+			igi_text_processor.resolve_table_macros(entity, "init", link_context)
+
+			local controller = igi_taskdata.get_controller(entity, CACHE)
+			if controller.on_init then
+				controller.on_init(entity)
+			end
 		end
 	end
 end
