@@ -160,11 +160,14 @@ function disable_entity(key, CACHE)
 
 	target.CONTROLLER = nil
 	target.actions = nil
+
+	igi_callbacks.invoke_callbacks("on_entity_del", CACHE, target)
 end
 
 function init_entities(key, CACHE)
 	-- Initialize
-	for _, entity in pairs(CACHE.entities) do
+	for i=1, #CACHE.entities do
+		local entity = CACHE.entities[i]
 		if entity._group == key then
 			local link_context = igi_text_processor.get_link_context(CACHE, entity)
 			igi_text_processor.resolve_table_macros(entity, "init", link_context)
@@ -173,6 +176,8 @@ function init_entities(key, CACHE)
 			if controller.on_init then
 				controller.on_init(entity)
 			end
+
+			igi_callbacks.invoke_callbacks("on_entity_init", CACHE, entity)
 		end
 	end
 end
