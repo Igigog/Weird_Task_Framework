@@ -5,6 +5,12 @@ local callbacks = {
 	on_first_run = {},
 	entity_on_first_run = {},
 
+	on_entity_init = {},
+	entity_on_entity_init = {},
+
+	on_entity_del = {},
+	entity_on_entity_del = {},
+
 	on_task_update = {},
 	entity_on_task_update = {},
 

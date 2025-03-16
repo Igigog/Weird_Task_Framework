@@ -446,6 +446,8 @@
         "flush",
         "wtf",
         "igi_dialogs",
-        "modxml_wtf"
+        "modxml_wtf",
+        "igi_target_kill",
+        "igi_target_assault"
     ]
 }
