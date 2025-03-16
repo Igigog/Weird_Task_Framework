@@ -134,7 +134,7 @@ function Fetch.complexity(entity)
 	return get_item_base_cost(entity.section_name) * (entity.amount or 1)
 end
 
-function Fetch.entity_on_complete(entity)
+function Fetch.on_complete(entity)
 	release_fetch_items(entity)
 	news_manager.relocate_item(db.actor, "out", entity.section_name, entity.amount or 1)
 end
