@@ -46,6 +46,9 @@
 	<string id="ui_mcm_igi_tasks_Options_debug">
 		<text>Режим дебага</text>
 	</string>
+	<string id="ui_mcm_igi_tasks_Options_disable_preconditions">
+		<text>Отключить прекондишены</text>
+	</string>
 	<string id="ui_mcm_igi_tasks_Options_super_debug">
 		<text>Режим разработчика</text>
 	</string>

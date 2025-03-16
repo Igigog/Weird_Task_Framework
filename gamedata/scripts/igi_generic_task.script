@@ -98,7 +98,7 @@ function try_prepare_quest(task_id, task_data, tg_id)
 	igi_text_processor.resolve_and_link_cache(CACHE, "")
 
 	if igi_mcm.get_task_value(CACHE.quest_id, "disabled") then return end
-	if not igi_mcm.get_options_value("debug") then
+	if not igi_mcm.get_options_value("disable_preconditions") then
 		for _, val in pairs(CACHE.preconditions or {}) do
 			if not val then return end
 		end
