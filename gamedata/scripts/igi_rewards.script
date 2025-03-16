@@ -9,12 +9,18 @@ DEFAULT_REWARDER = {
 		return high.money > 0
 	end,
 
-	split_to_rewards = function (self, points)
+	split_to_rewards = function (self, points, quest_id)
 		local money = Money.points_to_value(points * 0.8)
 		local goodwill = Goodwill.points_to_value(points * 0.2)
 		return {
-			money = math.floor(money * igi_mcm.get_options_value("money_reward_coeff")),
-			goodwill = math.ceil(goodwill * igi_mcm.get_options_value("goodwill_reward_coeff")),
+			money = math.floor(money
+				* igi_mcm.get_options_value("money_reward_coeff")
+				* igi_mcm.get_task_value(quest_id, "money_reward_coeff")
+			),
+			goodwill = math.ceil(goodwill
+				* igi_mcm.get_options_value("goodwill_reward_coeff")
+				* igi_mcm.get_task_value(quest_id, "goodwill_reward_coeff")
+			),
 		}
 	end,
 
@@ -24,7 +30,7 @@ DEFAULT_REWARDER = {
 		if high == nil then
 			high = low
 		end
-		return self:split_to_rewards(low), self:split_to_rewards(high)
+		return self:split_to_rewards(low, CACHE.quest_id), self:split_to_rewards(high, CACHE.quest_id)
 	end
 }
 
@@ -36,7 +42,7 @@ _STATIC_REWARDER = {
 		return self.money > 0
 	end,
 
-	split_to_rewards = function (self, points)
+	split_to_rewards = function (self, points, quest_id)
 		-- Ignores points, manually adjust to economy
 		local multi = game_difficulties.get_eco_factor("rewards") or 1
 		return {
@@ -46,7 +52,7 @@ _STATIC_REWARDER = {
 	end,
 
 	guess_rewards = function(self, CACHE)
-		local s = self:split_to_rewards(0)
+		local s = self:split_to_rewards(0, CACHE.quest_id)
 		return s, s
 	end
 }
@@ -74,7 +80,7 @@ end
 
 function collect_and_give_rewards(CACHE)
 	local total = collect_rewards(CACHE.entities, CACHE)
-	local rewards = get_rewarder(CACHE):split_to_rewards(total)
+	local rewards = get_rewarder(CACHE):split_to_rewards(total, CACHE.quest_id)
 
 	trace_dbg("rewards", CACHE.rewarder or "DEFAULT_REWARDER", rewards)
 	igi_callbacks.invoke_callbacks("on_before_rewarding", CACHE, rewards)
