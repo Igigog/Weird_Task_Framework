@@ -65,7 +65,7 @@ function is_failed(obj_data)
     return (not is_shotted[obj_data.id]) and not alife_object(obj_data.id)
 end
 
-function ready_to_finish(obj_data)
+function is_complete(obj_data)
     if not is_shotted[obj_data.id] and not callback_is_set[obj_data.id] then
         igi_helper.trace_dbg("shoot: obj_data", obj_data)
         set_callback(obj_data.id, obj_data.weapon, obj_data.ammo_type, obj_data.only_commander)
@@ -82,7 +82,7 @@ end
 
 function Shoot.status(entity)
     if is_failed(entity) then return TASK_STATUSES.FAILED end
-    if ready_to_finish(entity) then return TASK_STATUSES.READY_TO_FINISH end
+    if is_complete(entity) then return TASK_STATUSES.COMPLETED end
     return TASK_STATUSES.RUNNING
 end
 
