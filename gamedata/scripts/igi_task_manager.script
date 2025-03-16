@@ -560,6 +560,16 @@ function task_manager.CRandomTask.give_task(self, task_id,task_giver_id)
 	end
 end
 
+old_set_task_cancelled = task_manager.CRandomTask.set_task_cancelled
+function task_manager.CRandomTask.set_task_cancelled(self, task_id,task_giver_id)
+	old_set_task_cancelled(self, task_id, task_giver_id)
+	local CACHE = Igi.get_cache(task_id)
+	if CACHE then
+		CACHE.status = igi_subtask.TASK_STATUSES.FAILED
+		Igi.finish_quest(task_id)
+	end
+end
+
 old_get_task_complete_text = axr_task_manager.get_task_complete_text
 function axr_task_manager.get_task_complete_text(task_id)
 	local CACHE = Igi.get_cache(task_id)
