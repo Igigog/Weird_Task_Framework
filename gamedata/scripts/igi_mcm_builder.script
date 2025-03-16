@@ -270,6 +270,8 @@ List = {
         return self
     end,
 
+    default = AbstractOption.default,
+    content_pairs = AbstractOption.content_pairs,
     input_type = AbstractOption.input_type,
     cmd = AbstractOption.cmd,
     dont_translate = AbstractOption.dont_translate,
@@ -294,6 +296,7 @@ InputField = {
         return t
     end,
 
+    default = AbstractOption.default,
     minmax = AbstractOption.minmax,
     input_type = AbstractOption.input_type,
     cmd = AbstractOption.cmd,
@@ -358,6 +361,13 @@ Trackbar = {
     end,
 
     step = function (self, step)
+        -- USE increment INSTEAD! THIS ONE WILL CRASH.
+        assert(type(step) == "number", "MCM Builder: step is not a number")
+        self.step = step
+        return self
+    end,
+
+    increment = function (self, step)
         -- Set step
         assert(type(step) == "number", "MCM Builder: step is not a number")
         self.step = step
