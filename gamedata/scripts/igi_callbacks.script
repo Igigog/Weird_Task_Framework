@@ -1,33 +1,14 @@
 local callbacks = {
 	on_get_taskdata = {},
-	entity_on_get_taskdata = {},
-
 	on_first_run = {},
-	entity_on_first_run = {},
-
 	on_entity_init = {},
-	entity_on_entity_init = {},
-
 	on_entity_del = {},
-	entity_on_entity_del = {},
-
 	on_task_update = {},
-	entity_on_task_update = {},
-
 	on_complete = {},
-	entity_on_complete = {},
-
 	on_fail = {},
-	entity_on_fail = {},
-
 	on_finish = {},
-	entity_on_finish = {},
-
 	on_subtask_status_change = {},
-	entity_on_subtask_status_change = {},
-
 	on_before_rewarding = {},
-	entity_on_before_rewarding = {},
 }
 
 function add_callback(name, func)
@@ -38,34 +19,9 @@ function remove_callback(name, func)
 	if callbacks[name] then callbacks[name][func] = nil end
 end
 
-local function send_target_callbacks(callback_name, CACHE, ...)
-	local entity_table = CACHE.entities
-
-	if callback_name == "on_get_taskdata" then return end
-	for k, entity in pairs(entity_table) do
-		local controller = igi_taskdata.get_controller(entity, CACHE)
-		-- callback for every entity with target
-		if controller['entity_'..callback_name] then
-			controller['entity_'..callback_name](entity, CACHE, ...)
-		end
-	end
-end
-
-
-local function send_custom_callbacks(callback_name, CACHE, ...)
+function invoke_callbacks(callback_name, CACHE, ...)
+	igi_helper.trace_dbg(callback_name, CACHE)
 	for callback in pairs(callbacks[callback_name]) do
 		callback(CACHE, ...)
 	end
-
-	for _, entity in pairs(CACHE.entities) do
-		for callback in pairs(callbacks['entity_'..callback_name]) do
-			callback(entity, CACHE, ...)
-		end
-	end
-end
-
-function invoke_callbacks(callback_name, CACHE, ...)
-	igi_helper.trace_dbg(callback_name, CACHE)
-	send_target_callbacks(callback_name, CACHE, ...)
-	send_custom_callbacks(callback_name, CACHE, ...)
 end

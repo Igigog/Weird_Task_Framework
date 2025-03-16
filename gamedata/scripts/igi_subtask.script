@@ -181,3 +181,12 @@ function init_entities(key, CACHE)
 		end
 	end
 end
+
+function invoke_controller(callback, CACHE, ...)
+	for _, entity in ipairs(CACHE.entities) do
+		local controller = igi_taskdata.get_controller(entity, CACHE)
+		if controller[callback] then
+			controller[callback](entity, ...)
+		end
+	end
+end
