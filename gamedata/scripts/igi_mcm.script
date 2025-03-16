@@ -157,7 +157,7 @@ end
 
 function autocomplete(CACHE)
 	if not get_options_value("autocomplete") then return end
-	if CACHE.status ~= "COMPLETED" then return end
+	if CACHE.status ~= igi_subtask.TASK_STATUSES.COMPLETED then return end
 	task_manager.get_task_manager():set_task_completed(CACHE.task_id)
 end
 
