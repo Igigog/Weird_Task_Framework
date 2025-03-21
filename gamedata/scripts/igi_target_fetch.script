@@ -11,7 +11,7 @@ function ready_to_finish(obj_data)
 		amount = amount - itm_amount
 	end
 	obj_data._ids = ids
-	obj_data._complexity = calculate_complexity(obj_data)
+	obj_data._complexity = calculate_complexity(obj_data) * 1.25
 	return amount <= 0
 end
 
@@ -131,7 +131,7 @@ end
 
 function Fetch.complexity(entity)
 	if entity._complexity then return entity._complexity end
-	return get_item_base_cost(entity.section_name) * (entity.amount or 1)
+	return calculate_complexity(entity) * 1.25
 end
 
 function Fetch.on_complete(entity)
