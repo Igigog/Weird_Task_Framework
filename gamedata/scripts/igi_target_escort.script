@@ -1,4 +1,3 @@
-local TASK_STATUSES = igi_subtask.TASK_STATUSES
 local trace_assert = igi_helper.trace_assert
 
 function make_companion(entity)
@@ -21,10 +20,8 @@ function Escort.on_init(entity)
 	trace_assert(type(entity.id) == "number", "Escort: entity.id is not a number", entity)
 	trace_assert(alife_object(entity.id), "Escort: no server object for this id", entity)
 	trace_assert(alife_object(entity.id):commander_id(), "Escort: entity.id is not a squad", entity)
-end
 
-function Escort.status(entity)
-    return TASK_STATUSES.READY_TO_FINISH
+	make_companion(entity)
 end
 
 function Escort.on_del(entity)
@@ -40,6 +37,5 @@ function Escort.test(entity)
 		assert_test(
 			se_load_var(se_npc.id, se_npc:name(), "companion"), "Not in actor's squad")
 	end
-	assert_test(entity.status == "READY_TO_FINISH", "Quest did not complete")
 	return true
 end
