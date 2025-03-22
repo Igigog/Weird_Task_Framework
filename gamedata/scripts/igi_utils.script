@@ -41,30 +41,16 @@ Set = {
 	end,
 }
 
-function random_table_element(tbl)
-	local keyset = {}
-	for k in pairs(tbl) do
-		table.insert(keyset, k)
-	end
-	-- now you can reliably return a random key
-	local random_key = keyset[igi_random.rand(#keyset)]
-	local random_elem = tbl[random_key]
-	return random_elem, random_key
-end
-
 function random_table_value(tbl)
-	local val, _ = random_table_element(tbl)
-	return val
+	return wtf.shuffle(wtf.values(tbl))[1]
 end
 
 function random_table_key(tbl)
-	local _, k = random_table_element(tbl)
-	return k
+	return wtf.shuffle(wtf.keys(tbl))[1]
 end
 
 function choose(...)
-	local list = { ... }
-	return list[igi_random.rand(#list)]
+	return wtf.shuffle({...})[1]
 end
 
 function get_random_items(orig_list, amount)

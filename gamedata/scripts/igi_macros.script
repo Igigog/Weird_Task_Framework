@@ -19,7 +19,7 @@ function Faction(tg_id, args_str)
 	local tokens = tokenize(args_str)
 	local factions = evaluate(tokens, 1, #tokens)
 	if type(factions) == 'table' then
-		local _, faction = igi_utils.random_table_element(factions)
+		local faction = igi_utils.random_table_value(factions)
 		return faction or 'stalker'
 	else
 		return get_faction(factions)
