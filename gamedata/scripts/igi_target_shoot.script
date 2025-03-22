@@ -81,6 +81,7 @@ function Shoot.on_init(entity)
 end
 
 function Shoot.status(entity)
+    if entity.status ~= TASK_STATUSES.RUNNING then return entity.status end
     if is_failed(entity) then return TASK_STATUSES.FAILED end
     if is_complete(entity) then return TASK_STATUSES.COMPLETED end
     return TASK_STATUSES.RUNNING
@@ -132,7 +133,7 @@ function Shoot.test(entity)
         level.release_action(DIK_keys.MOUSE_1)
 
     elseif entity._test_stage == 5 then
-		assert_test(entity.status == "READY_TO_FINISH", "Quest did not complete")
+		assert_test(entity.status == igi_subtask.TASK_STATUSES.COMPLETED, "Quest did not complete")
         ---@diagnostic disable-next-line: undefined-field
         alife():release(assert(alife_object(entity._test_wpn_id)))
 		return true

@@ -2,24 +2,11 @@ TASK_STATUSES = {
 	RUNNING = nil,	-- no value means running
 	COMPLETED = "complete",
 	FAILED = "fail",
-	READY_TO_FINISH = "READY_TO_FINISH",
+	READY_TO_FINISH = "READY_TO_FINISH", -- deprecated
 }
 
-function finish_all_subtasks(CACHE)
-	if CACHE.status ~= TASK_STATUSES.FAILED then
-		CACHE.status = TASK_STATUSES.COMPLETED
-	end
-
-	for _, entity in pairs(CACHE.entities) do
-		if entity.status == TASK_STATUSES.READY_TO_FINISH then
-			entity.status = CACHE.status
-		end
-	end
-end
-
 function update_current_map_target(CACHE)
-	if CACHE.status == TASK_STATUSES.COMPLETED
-		or CACHE.status == TASK_STATUSES.READY_TO_FINISH then
+	if CACHE.status == TASK_STATUSES.COMPLETED then
 		CACHE.quest_targets = {CACHE.task_giver_id}
 	else
 		CACHE.quest_targets = get_quest_target(CACHE.entities, CACHE)
@@ -29,8 +16,7 @@ end
 function process_subtasks(CACHE)
 	local updated = false
 	for _, entity in pairs(CACHE.entities) do
-		if entity.status == TASK_STATUSES.RUNNING
-				or entity.status == TASK_STATUSES.READY_TO_FINISH then
+		if entity.status ~= TASK_STATUSES.FAILED then
 			if update_entity_status(entity, CACHE) then
 				igi_callbacks.invoke_callbacks("on_subtask_status_change", CACHE, entity)
 				updated = true
@@ -62,25 +48,21 @@ function get_quest_target(entities, CACHE)
 end
 
 function get_task_status(entities, CACHE)
-	local ready_to_finish = false
 	local running = false
 	for _, entity in pairs(entities) do
 		local controller = igi_taskdata.get_controller(entity, CACHE)
 		if controller.status then
-			if entity.status == TASK_STATUSES.FAILED and not entity.optional then
+			if entity.status == TASK_STATUSES.FAILED then
 				return TASK_STATUSES.FAILED
 			end
 	
 			if entity.status == TASK_STATUSES.RUNNING then
 				running = true
-			elseif entity.status == TASK_STATUSES.READY_TO_FINISH then
-				ready_to_finish = true
 			end
 		end
 	end
 
 	if running then return TASK_STATUSES.RUNNING
-	elseif ready_to_finish then return TASK_STATUSES.READY_TO_FINISH
 	else return TASK_STATUSES.COMPLETED end
 end
 

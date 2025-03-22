@@ -1,7 +1,7 @@
 local TASK_STATUSES = igi_subtask.TASK_STATUSES
 local trace_assert = igi_helper.trace_assert
 
-function ready_to_finish(obj_data)
+function completed(obj_data)
 	local ids = get_fetched_items(obj_data)
 	local amount = obj_data.amount or 1
 	for id, itm_amount in pairs(ids) do
@@ -91,7 +91,7 @@ function Fetch.on_init(entity)
 end
 
 function Fetch.status(entity)
-	if ready_to_finish(entity) then return TASK_STATUSES.READY_TO_FINISH end
+	if completed(entity) then return TASK_STATUSES.COMPLETED end
 	return TASK_STATUSES.RUNNING
 end
 
@@ -150,7 +150,7 @@ function Fetch.test(entity)
 		end
 
 	elseif entity._test_stage == 3 then
-		assert_test(entity.status == "READY_TO_FINISH", "Quest did not complete")
+		assert_test(entity.status == igi_subtask.TASK_STATUSES.COMPLETED, "Quest did not complete")
 		return true
 	end
 end

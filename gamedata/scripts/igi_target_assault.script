@@ -28,8 +28,6 @@ local function is_squad_at_smart(se_squad, smart_id)
 end
 
 local function is_completed(obj_data)
-	trace_assert(SIMBOARD.smarts[obj_data.id], "assault but not smart")
-
 	local cleared = true
 	for _, sq_id in pairs(obj_data.squads) do
 		local squad = alife_object(sq_id)

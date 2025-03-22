@@ -155,7 +155,7 @@ function continue_test_worker()
     end
     local entity = choose_entity(CACHE)
     if not entity then
-        assert_test(CACHE.status == "COMPLETED" or CACHE.status == "READY_TO_FINISH", "Quest was not completed")
+        assert_test(CACHE.status == igi_subtask.TASK_STATUSES.COMPLETED, "Quest was not completed")
         finish_test()
         return true
     end
