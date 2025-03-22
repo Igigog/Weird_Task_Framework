@@ -1,55 +1,46 @@
 local trace_dbg = igi_helper.trace_dbg
 local Set = igi_utils.Set
 
-local current_tg_faction = nil
-local function get_faction(keyword)
-	if keyword == "actor" then
-		return db.actor:character_community()
-	elseif keyword == 'taskgiver' then
-		return current_tg_faction
-	else
-		return keyword
-	end
-end
-
-local evaluate, tokenize
-function Faction(tg_id, args_str)
-	current_tg_faction = igi_helper.get_community_by_id(tg_id)
-	-- args checker needed
-	local tokens = tokenize(args_str)
-	local factions = evaluate(tokens, 1, #tokens)
-	if type(factions) == 'table' then
-		local faction = igi_utils.random_table_value(factions)
-		return faction or 'stalker'
-	else
-		return get_faction(factions)
-	end
-end
-
-----------------BOOLEAN----------------------------------
-
 local blacklist = {
 	monolith = true,
 	renegade = true,
 	greh = true,
 	isg = true,
 }
+local factions = {}
 local function get_viable_factions()
-	local factions = {}
-	for _, faction in pairs(game_relations.factions_table) do
-		if not blacklist[faction] then
-			factions[faction] = true
+	if not next(factions) then
+		for _, faction in pairs(game_relations.factions_table) do
+			if not blacklist[faction] then
+				factions[faction] = true
+			end
 		end
 	end
 	return factions
 end
 
-local function convert_to_faction_set(faction)
-	trace_dbg("convert to faction", faction)
-	if type(faction) == 'string' then
-		return {[get_faction(faction)] = true}
+local function get_faction(keyword, tg_faction)
+	if keyword == "actor" then
+		return db.actor:character_community()
+	elseif keyword == 'taskgiver' then
+		return tg_faction
+	elseif get_viable_factions()[keyword] then
+		return keyword
 	end
-	return faction
+	return nil
+end
+
+local evaluate, tokenize
+function Faction(tg_id, args_str)
+	local tokens = tokenize(args_str, igi_helper.get_community_by_id(tg_id))
+	return evaluate(tokens, 1, #tokens)
+end
+
+----------------BOOLEAN----------------------------------
+
+local function convert_to_faction_set(faction, tg_faction)
+	local real_faction = get_faction(faction, tg_faction)
+	return real_faction and {[real_faction] = true}
 end
 
 local function get_of_factions(key, faction)
@@ -64,25 +55,18 @@ local function get_of_factions(key, faction)
 end
 
 local function and_func(left, right)
-	right = convert_to_faction_set(right)
-	left = convert_to_faction_set(left)
     return Set.intersection(left, right)
 end
 
 local function or_func(left, right)
-	right = convert_to_faction_set(right)
-	left = convert_to_faction_set(left)
     return Set.union(left, right)
 end
 
 local function not_func(left, right)
-	right = convert_to_faction_set(right)
 	return Set.difference(get_viable_factions(), right)
 end
 
 local function of_func(left, right)
-	right = convert_to_faction_set(right)
-
 	local newset = {}
 	for faction in pairs(right) do
 		for of_faction in pairs(get_of_factions(left, faction)) do
@@ -92,11 +76,11 @@ local function of_func(left, right)
     return newset
 end
 
-function tokenize(str)
+function tokenize(str, tg_faction)
     local tbl = {}
     str = str:gsub("%(", "%( "):gsub('%)', ' %)')
     for substr in str:gmatch("[^%s]+") do
-        tbl[#tbl+1] = substr
+        tbl[#tbl+1] = convert_to_faction_set(substr, tg_faction) or substr
     end
     return tbl
 end
