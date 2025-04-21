@@ -139,20 +139,18 @@ local function resolve_macros(tbl, level, link_context, transient_fields)
     end
 end
 
-local function collect_links(macro, link_context, buf, visited, this_mapping)
-    for dep in macro:link_iterator() do
-        local link = Link:from_str(dep):remap_this(this_mapping)
+local function collect_links(macro, link_context, buf, this_mapping)
+	igi_helper.trace_assert(#buf < 10000, "Overflow while resolving macro (>10000 links). Circular dependency?", macro)
 
-        local repr = link.link_id .. '.' .. link.field
-        igi_helper.trace_assert(not visited[repr], "Circular dependency found! ", dep, macro, visited)
-		visited[repr] = true
+	for dep in macro:link_iterator() do
+        local link = Link:from_str(dep):remap_this(this_mapping)
 
 		buf[#buf + 1] = link
         local val = link_context:get(link)
 
         local macro = Macro:new(val)
         if macro then
-            collect_links(macro, link_context, buf, visited, link.link_id)
+            collect_links(macro, link_context, buf, link.link_id)
         end
     end
     return buf
@@ -181,7 +179,7 @@ local function resolve_all_links(links, level, link_context, transient_fields)
 end
 
 function _resolve_linked_macro(macro, level, link_context, transient_fields)
-    local links = collect_links(macro, link_context, {}, {})
+    local links = collect_links(macro, link_context, {})
     resolve_all_links(links, level, link_context, transient_fields)
     return macro:resolve(link_context)
 end
