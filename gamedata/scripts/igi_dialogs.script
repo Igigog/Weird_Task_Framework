@@ -4,7 +4,7 @@ end
 
 function actor_on_first_update()
     local safe_lookup = igi_helper.safe(lookup_data)
-    for _, func in pairs(modxml_wtf.get_dialogs().funcs) do
+    for _, func in pairs(modxml_wtf.get_dialogs().funcs or {}) do
         local task = func[1]
         local data_key = func[2]
         data[task] = data[task] or {}
