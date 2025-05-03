@@ -11,7 +11,7 @@ end
 
 function on_game_start()
     RegisterScriptCallback("on_specific_character_dialog_list", function(character_id, dialog_list)
-		for dialog in pairs(get_dialogs().dialogs) do
+		for dialog in pairs(get_dialogs().dialogs or {}) do
 			dialog_list:add(dialog)
 		end
     end)
