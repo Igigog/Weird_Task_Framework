@@ -55,6 +55,8 @@ function get_all_quests()
 				end
 			end
 		end
+
+		IGI_QUESTS["hf"] = nil	-- delete outdated HF WTF patch
 	end
 	return IGI_QUESTS
 end
