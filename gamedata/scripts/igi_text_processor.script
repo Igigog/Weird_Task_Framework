@@ -166,7 +166,9 @@ local function resolve_all_links(links, level, link_context, transient_fields)
         local macro = Macro:new(before)
         if macro then
             macro:assert_level(level)
+			local this_before = link_context.this
 			local out = macro:resolve(link_context:set_this(tbl))
+			link_context:set_this(this_before)
 
 			if macro.is_auto then
 				transient_fields[tbl] = transient_fields[tbl] or {}
