@@ -114,12 +114,29 @@ function finalize_task_cache(task_data, task_id, tg_id)
 	return CACHE
 end
 
+local function eval_controller(macro, CACHE, entity)
+	local link_context = igi_text_processor.get_link_context(CACHE, entity)
+	local controller = igi_text_processor.eval_logic_macro(macro, link_context)
+	trace_assert(type(controller) == "table", "Controller is not a table", macro)
+	return controller
+end
+
 local NO_CONTROLLER = {}
 function get_controller(entity, CACHE)
 	if not entity.CONTROLLER then return NO_CONTROLLER end
 	trace_assert(CACHE, "get_controller: no cache")
-	local link_context = igi_text_processor.get_link_context(CACHE, entity)
-	local controller = igi_text_processor.eval_logic_macro(entity.CONTROLLER, link_context)
-	trace_assert(type(controller) == "table", "Controller is not a table", entity.CONTROLLER)
-	return controller
+	return eval_controller(entity.CONTROLLER, CACHE, entity)
+end
+
+function get_helpers(entity, CACHE)
+	if not entity.HELPERS then return {} end
+	trace_assert(CACHE, "get_helpers: no cache")
+	trace_assert(type(entity.HELPERS) == "table", "get_helpers: HELPERS is not a table", entity)
+
+	local out = {}
+	for _, macro in ipairs(entity.HELPERS) do
+		trace_assert(type(macro) == "string", "get_helpers: helper is not a macro", macro)
+		out[#out+1] = eval_controller(macro, CACHE, entity)
+	end
+	return out
 end
