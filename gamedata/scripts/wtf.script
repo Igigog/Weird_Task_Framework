@@ -119,29 +119,34 @@ MapIcon = function (mark)
     return {
         status = function (entity)
             igi_actions.update_mark(entity.id, mark)
+        end,
+
+        on_del = function (entity)
+            level.map_remove_object_spot(entity.id, mark)
         end
     }
 end
 
 ChangeFaction = function (faction)
-    local t = {}
-    t.status = function (entity)
-        if t._done then return end
-        if igi_actions.is_online(entity.id) then
-            igi_actions.change_faction(entity.id, faction)
-            t._done = true
+    return {
+        status = function (entity)
+            if entity._changefaction_done then return end
+            if igi_actions.is_online(entity.id) then
+                igi_actions.change_faction(entity.id, faction)
+                entity._changefaction_done = true
+            end
         end
-    end
-    return t
+    }
 end
 
 Repair = function (new_condition)
-    local t = {}
-    t.status = function (entity)
-        if t._done then return end
-        if igi_actions.is_low_condition(entity.id, new_condition) then
-            get_object_by_id(entity.id):set_condition(new_condition)
-            t._done = true
+    return {
+        status = function (entity)
+            if entity._repair_done then return end
+            if igi_actions.is_low_condition(entity.id, new_condition) then
+                get_object_by_id(entity.id):set_condition(new_condition)
+                entity._repair_done = true
+            end
         end
-    end
+    }
 end
