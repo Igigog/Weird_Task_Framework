@@ -164,3 +164,9 @@ function is_valid_section(section_name)
 	igi_helper.trace_assert(type(section_name) == "string", "Section is not a string", section_name)
 	return ini_sys:section_exist(section_name)
 end
+
+function give_to_actor(section_name)
+	local id = alife_create_item(section_name, alife_object(0)).id
+	news_manager.relocate_item(db.actor, "in", section_name, 1)
+	return id
+end
