@@ -138,7 +138,6 @@ function quest_status(task_id)
 	local CACHE = get_cache(task_id)
 	---------------------------<ACTIONS>---------------------
 	igi_subtask.update_entities(CACHE)
-	igi_actions.update_actions(CACHE)
 	igi_subtask.process_subtasks(CACHE)
 	igi_callbacks.invoke_callbacks("on_task_update", CACHE)
 

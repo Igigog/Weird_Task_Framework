@@ -1,25 +1,5 @@
 local trace_dbg = igi_helper.trace_dbg
 
-function update_actions(CACHE)
-	for _, entity in pairs(CACHE.entities) do
-		process_actions(entity.actions, igi_text_processor.get_link_context(CACHE, entity))
-	end
-
-	process_actions(CACHE.actions, igi_text_processor.get_link_context(CACHE))
-end
-
-function process_actions(actions, link_context)
-	if type(actions) ~= "table" then return end
-	for _, action in pairs(actions) do
-		if (not action._done) then
-			if igi_text_processor.eval_logic_macro(action.when, link_context) then
-				trace_dbg("Run action", action)
-				action._done = not igi_text_processor.eval_logic_macro(action.run, link_context)
-			end
-		end
-	end
-end
-
 function change_faction(id, faction)
 	local se_squad = alife_object(id)
 	if not se_squad or not se_squad.squad_members then return end
