@@ -56,3 +56,97 @@ function shuffle(tbl)
     end
     return t
 end
+
+CreateSquad = {
+    on_init = function (entity)
+        igi_helper.trace_assert(type(entity.section_name) == "string", "section_name is not a string", entity)
+        igi_helper.trace_assert(igi_helper.is_valid_section(entity.section_name), "section does not exist", entity)
+        igi_helper.trace_assert(type(entity.smart_id) == "number", "smart_id is not a number")
+
+        local smart_name = alife_object(entity.smart_id):name()
+        entity.id = utils_obj.create_squad(entity.section_name, smart_name).id
+    end,
+
+    on_del = function (entity)
+        local se_obj = alife_object(entity.id)
+        if se_obj then
+            se_obj.scripted_target = nil
+        end
+    end
+}
+
+ForceOnline = {
+    on_init = function (entity)
+        igi_helper.trace_assert(type(entity.id) == "number", "id is not a number", entity)
+        local se_obj = alife_object(entity.id)
+
+        igi_helper.trace_assert(se_obj ~= nil, "no server object for given id", entity)
+        se_obj.force_online = true
+    end,
+
+    on_del = function (entity)
+        local se_obj = alife_object(entity.id)
+        if se_obj then
+            se_obj.force_online = false
+        end
+    end,
+}
+
+NoOfflineCombat = {
+    on_init = function (entity)
+        igi_helper.trace_assert(type(entity.id) == "number", "id is not a number", entity)
+        local se_obj = alife_object(entity.id)
+
+        igi_helper.trace_assert(se_obj ~= nil, "no server object for given id", entity)
+        sim_offline_combat.task_squads[entity.id] = true
+    end,
+
+    on_del = function (entity)
+        sim_offline_combat.task_squads[entity.id] = nil
+    end
+}
+
+PinToSmart = {
+    status = function (entity)
+        local se_obj = alife_object(entity.id)
+        if se_obj then
+            se_obj.stay_time = game.get_game_time()
+        end
+    end
+}
+
+MapIcon = function (mark)
+    return {
+        status = function (entity)
+            igi_actions.update_mark(entity.id, mark)
+        end,
+
+        on_del = function (entity)
+            level.map_remove_object_spot(entity.id, mark)
+        end
+    }
+end
+
+ChangeFaction = function (faction)
+    return {
+        status = function (entity)
+            if entity._changefaction_done then return end
+            if igi_actions.is_online(entity.id) then
+                igi_actions.change_faction(entity.id, faction)
+                entity._changefaction_done = true
+            end
+        end
+    }
+end
+
+Repair = function (new_condition)
+    return {
+        status = function (entity)
+            if entity._repair_done then return end
+            if igi_actions.is_low_condition(entity.id, new_condition) then
+                get_object_by_id(entity.id):set_condition(new_condition)
+                entity._repair_done = true
+            end
+        end
+    }
+end
