@@ -227,13 +227,22 @@ function resolve_and_link_cache(CACHE, level)
 	reset_transient_fields(transient_fields)
 end
 
-function eval_logic_macro(str, link_context)
+function eval_logic_macro(str, link_context, maybe)
     local macro = Macro:new(str)
-	trace_assert(macro and macro.is_auto and macro.level == '', "Not a @$ macro", str)
+	if not (macro and macro.is_auto and macro.level == '') then
+		trace_assert(maybe, "Not a @$ macro", str)
+		return str
+	end
 	local transient_fields = {}
     local resolved = _resolve_linked_macro(macro, '', link_context, transient_fields)
 	reset_transient_fields(transient_fields)
 	return resolved
+end
+
+function eval_maybe_macro(val, CACHE, this_entity)
+	if type(val) ~= "string" then return val end
+	local link_context = get_link_context(CACHE, this_entity)
+	return eval_logic_macro(val, link_context, true)
 end
 
 --------------- Testing --------------------------

@@ -6,13 +6,8 @@ end
 
 function get_rewards(CACHE)
 	local rewards = {money = 0, goodwill = 0}
-	local link_context = igi_text_processor.get_link_context(CACHE)
 	for k, v in pairs(CACHE.rewards or {}) do
-		if type(v) == "number" then
-			rewards[k] = v
-		else
-			rewards[k] = igi_text_processor.eval_logic_macro(v, link_context)
-		end
+		rewards[k] = igi_text_processor.eval_maybe_macro(v, CACHE)
 	end
 	rewards.money = math.ceil(rewards.money
 			* igi_mcm.get_options_value("money_reward_coeff")
