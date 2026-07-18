@@ -27,22 +27,17 @@ function update_current_map_target(CACHE)
 end
 
 function process_subtasks(CACHE)
-	local updated = false
 	for _, entity in pairs(CACHE.entities) do
 		if entity.status == TASK_STATUSES.RUNNING
 				or entity.status == TASK_STATUSES.READY_TO_FINISH then
 			if update_entity_status(entity, CACHE) then
 				igi_callbacks.invoke_callbacks("on_subtask_status_change", CACHE, entity)
-				updated = true
 			end
 		end
 	end
 
-	if updated then
-		CACHE.status = get_task_status(CACHE.entities, CACHE)
-	end
-
-	return updated
+	CACHE.status = get_task_status(CACHE.entities, CACHE)
+	return CACHE.status
 end
 
 function get_quest_target(entities, CACHE)
@@ -95,96 +90,95 @@ function update_entity_status(entity, CACHE)
 	return true
 end
 
-function update_entities(CACHE)
-	if not CACHE._queue then return end
-	igi_helper.trace_dbg("Update: updating entities", CACHE)
-	for _, v in ipairs(CACHE._queue.add) do
-		enable_entities(v, CACHE)
-		init_entities(v, CACHE)
+local function get_frame_with_entities(frame)
+	if frame.entities then
+		frame.src = "inline"
+		return frame
 	end
 
-	igi_helper.trace_dbg("Update: After adding", CACHE)
-	for _, v in ipairs(CACHE._queue.rem) do
-		disable_entity(v, CACHE)
+	local frame_src = dup_table(igi_taskdata.get_frame(frame.src))
+	if (frame_src.inputs) then
+		for k, typ in pairs(frame_src.inputs) do
+			igi_helper.trace_assert(frame[k] ~= nil and type(frame[k]) == typ, "Bad frame input "..k, frame, frame_src)
+			frame_src.inputs[k] = frame[k]
+		end
+		frame_src.inputs.link_id = "inputs"
+
+		frame_src.entities[#frame_src.entities+1] = frame_src.inputs
 	end
 
-	CACHE._queue = nil
-	igi_helper.trace_dbg("Update: finish", CACHE)
+	frame.inputs = nil
+	frame.entities = frame_src.entities
+	return frame
 end
 
-function enable_entities(key, CACHE)
-    igi_helper.trace_assert(key ~= nil and type(CACHE[key]) == "table", "Can't enable entities: No table for key " .. tostring(key) .. ".")
+function activate_next_frame(CACHE)
+	local new_frame = (CACHE.current_frame or 0) + 1
+	local frame = CACHE.frames[new_frame]
+	if frame == nil then return end
 
-    igi_helper.trace_dbg("Enable: enable entities", key, CACHE[key])
+	disable_entities(CACHE)
 
-    local to_add = CACHE[key]
+    igi_helper.trace_dbg("Enable: enable entities", new_frame, frame)
+	igi_text_processor.resolve_table_macros(frame, "init", igi_text_processor.get_link_context(CACHE, frame))
+    get_frame_with_entities(frame)
 
 	-- Add and generate
-    for k, entity in ipairs(to_add) do
+    for k, entity in ipairs(frame.entities) do
         igi_helper.trace_dbg("Enable: Processing entity", entity)
-        entity._group = key
 
-        local link_context = igi_text_processor.get_link_context(CACHE, entity)
+        local link_context = igi_text_processor.get_link_context(frame, entity)
+		igi_text_processor.resolve_table_macros(entity, "", link_context)
         local new_entities = igi_generate.generate(entity, link_context)
 
         for _, new_entity in ipairs(new_entities) do
             CACHE.entities[#CACHE.entities+1] = new_entity
         end
-        to_add[k] = nil
+        frame.entities[k] = nil
     end
 
-    CACHE[key] = nil
-    igi_helper.trace_dbg("Enable: after run", key, CACHE)
-end
-
-function disable_entity(key, CACHE)
-	-- De-initialize
-	local target
-	for _, v in pairs(CACHE.entities) do
-		if v.link_id == key then
-			target = v
-			break
-		end
-	end
-
-	if not target then return end
-
-	local controller = igi_taskdata.get_controller(target, CACHE)
-	if controller.on_del then
-		controller.on_del(target)
-	end
-
-	run_helpers(target, CACHE, "on_del")
-
-	local link_context = igi_text_processor.get_link_context(CACHE)
-	igi_text_processor.resolve_table_macros(target, "del", link_context)
-
-	target["-CONTROLLER"] = target.CONTROLLER
-	target["-actions"] = target.actions
-
-	target.CONTROLLER = nil
-	target.actions = nil
-
-	igi_callbacks.invoke_callbacks("on_entity_del", CACHE, target)
-end
-
-function init_entities(key, CACHE)
 	-- Initialize
-	for i=1, #CACHE.entities do
-		local entity = CACHE.entities[i]
-		if entity._group == key then
-			local link_context = igi_text_processor.get_link_context(CACHE, entity)
-			igi_text_processor.resolve_table_macros(entity, "init", link_context)
+	for _, entity in ipairs(CACHE.entities) do
+		local link_context = igi_text_processor.get_link_context(CACHE, entity)
+		igi_text_processor.resolve_table_macros(entity, "init", link_context)
 
-			run_helpers(entity, CACHE, "on_init")
+		run_helpers(entity, CACHE, "on_init")
 
-			local controller = igi_taskdata.get_controller(entity, CACHE)
-			if controller.on_init then
-				controller.on_init(entity)
-			end
-
-			igi_callbacks.invoke_callbacks("on_entity_init", CACHE, entity)
+		local controller = igi_taskdata.get_controller(entity, CACHE)
+		if controller.on_init then
+			controller.on_init(entity)
 		end
+
+		igi_callbacks.invoke_callbacks("on_entity_init", CACHE, entity)
+	end
+
+	process_subtasks(CACHE)
+	CACHE.current_frame = new_frame
+    igi_helper.trace_dbg("Enable: after run", CACHE)
+	return frame
+end
+
+function disable_entities(CACHE)
+	-- De-initialize
+	for i=#CACHE.entities, 1, -1 do
+		local entity = CACHE.entities[i]
+		local controller = igi_taskdata.get_controller(entity, CACHE)
+		if controller.on_del then
+			controller.on_del(entity)
+		end
+
+		run_helpers(entity, CACHE, "on_del")
+
+		local link_context = igi_text_processor.get_link_context(CACHE)
+		igi_text_processor.resolve_table_macros(entity, "del", link_context)
+	end
+
+	empty_table(CACHE.entities)
+
+	local frame = CACHE.frames[CACHE.current_frame]
+	if frame then
+		local link_context = igi_text_processor.get_link_context(CACHE, frame)
+		igi_text_processor.resolve_table_macros(frame, "del", link_context)
 	end
 end
 
