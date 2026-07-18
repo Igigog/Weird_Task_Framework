@@ -173,6 +173,7 @@ function activate_next_frame(CACHE)
 			controller.on_init(entity)
 		end
 
+		igi_text_processor.resolve_table_macros(entity, "after_init", link_context)
 		igi_callbacks.invoke_callbacks("on_entity_init", CACHE, entity)
 	end
 
@@ -187,6 +188,9 @@ function disable_entities(CACHE)
 	-- De-initialize
 	for i=#CACHE.entities, 1, -1 do
 		local entity = CACHE.entities[i]
+		local link_context = igi_text_processor.get_link_context(CACHE)
+		igi_text_processor.resolve_table_macros(entity, "before_del", link_context)
+
 		local controller = igi_taskdata.get_controller(entity, CACHE)
 		if controller.on_del then
 			controller.on_del(entity)
@@ -194,7 +198,6 @@ function disable_entities(CACHE)
 
 		run_helpers(entity, CACHE, "on_del")
 
-		local link_context = igi_text_processor.get_link_context(CACHE)
 		igi_text_processor.resolve_table_macros(entity, "del", link_context)
 
 		if entity.link_id == "outputs" then

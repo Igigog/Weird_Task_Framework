@@ -57,6 +57,20 @@ function shuffle(tbl)
     return t
 end
 
+function iter_size(iter)
+    local count = 0
+    for _ in iter do
+        count = count + 1
+    end
+    return count
+end
+
+function extend(tbl, tbl2)
+    for _, v in ipairs(tbl2) do
+        tbl[#tbl+1] = v
+    end
+end
+
 CreateSquad = {
     on_init = function (entity)
         igi_helper.trace_assert(type(entity.section_name) == "string", "section_name is not a string", entity)

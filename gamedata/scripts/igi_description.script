@@ -57,18 +57,16 @@ end
 
 function get_rewards_description(CACHE)
 	if not igi_mcm.get_options_value("show_rewards") then return "" end
-	local low, high = igi_rewards.guess_rewards(CACHE)
-	if (low.money == 0 and high.money == 0 and low.goodwill == 0 and high.goodwill == 0) then
+	local low = igi_rewards.get_rewards(CACHE)
+	if (low.money == 0 and low.goodwill == 0) then
 		return ""
 	end
 
 	return game.translate_string(TEXT_HEADER .. "rewards")
 		.. ' ' ..
 		tostring(low.money) ..
-		(high.money ~= low.money and "-" .. tostring(high.money) or "") ..
 		" " .. game.translate_string(TEXT_HEADER .. "money") .. ", "
 		.. tostring(low.goodwill) ..
-		(high.goodwill ~= low.goodwill and "-" .. tostring(high.goodwill) or "") ..
 		" " .. game.translate_string(TEXT_HEADER .. "goodwill")
 end
 

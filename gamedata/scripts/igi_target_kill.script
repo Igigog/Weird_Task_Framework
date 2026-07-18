@@ -11,8 +11,6 @@ function Kill.on_init(entity)
 	trace_assert(alife_object(entity.id), "Kill: no server object for this id", entity)
 	trace_assert(alife_object(entity.id):commander_id(), "Kill: entity.id is not a squad", entity)
 
-	entity._complexity = calculate_complexity(entity)
-
 	if ara_enabled() then
 		entity.squads = {entity.id}
 		igi_ara.Ara.on_init(entity)
@@ -32,60 +30,6 @@ end
 
 function Kill.quest_target(entity)
 	return entity.id
-end
-
-local function get_monster_value(se_npc)
-	local npc_section = se_npc:section_name()
-	local factor = 1
-	for k, new_factor in pairs(igi_helper.db_ini:collect_section('monster_tier_factor')) do
-		if string.find(npc_section, k) then
-			factor = assert(tonumber(new_factor))
-			break
-		end
-	end
-
-	local value = 100
-	for k, new_value in pairs(igi_helper.db_ini:collect_section('money_reward_mutants')) do
-		if string.find(npc_section, k) then
-			value = assert(tonumber(new_value))
-			break
-		end
-	end
-	return value*factor
-end
-
-local function get_npc_value(se_npc)
-	local value = 1000
-	local tier = string.match(se_npc:section_name(), "%d") or ""
-	igi_helper.trace_dbg(se_npc:section_name(), tier)
-	local factor = igi_helper.db_ini:r_value('npc_tier_factor', tier, 2)
-
-	return value*(factor or 1)
-end
-
-function calculate_complexity(entity)
-	local reward = 0
-	local se_squad = assert(alife_object(entity.id))
-	local faction = se_squad:get_squad_community()
-
-	if string.find(faction, "monster") then
-		for se_npc in se_squad:squad_members() do
-			se_npc = alife_object(se_npc.id)
-			reward = reward + get_monster_value(se_npc)
-		end
-	else
-		for se_npc in se_squad:squad_members() do
-			se_npc = alife_object(se_npc.id)
-			reward = reward + get_npc_value(se_npc)
-		end
-	end
-
-	return reward
-end
-
-function Kill.complexity(entity)
-	if entity._complexity then return entity._complexity end
-	return 1000, 5000
 end
 
 function Kill.test(entity)
