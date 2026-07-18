@@ -1,6 +1,10 @@
 local trace_assert = igi_helper.trace_assert
 local TASK_STATUSES = igi_subtask.TASK_STATUSES
 
+local function ara_enabled()
+	return igi_mcm.get_options_value("realistic_assassinations")
+end
+
 Kill = {}
 function Kill.on_init(entity)
 	trace_assert(type(entity.id) == "number", "Kill: entity.id is not a number", entity)
@@ -8,9 +12,20 @@ function Kill.on_init(entity)
 	trace_assert(alife_object(entity.id):commander_id(), "Kill: entity.id is not a squad", entity)
 
 	entity._complexity = calculate_complexity(entity)
+
+	if ara_enabled() then
+		entity.squads = {entity.id}
+		igi_ara.Ara.on_init(entity)
+	end
 end
 
 function Kill.status(entity)
+	if entity.ara_to_kill and ara_enabled() then
+		local ara_status = igi_ara.Ara.status(entity)
+		if ara_status ~= TASK_STATUSES.COMPLETED then
+			return ara_status
+		end
+	end
 	if not alife_object(entity.id) then return TASK_STATUSES.COMPLETED end
 	return TASK_STATUSES.RUNNING
 end
