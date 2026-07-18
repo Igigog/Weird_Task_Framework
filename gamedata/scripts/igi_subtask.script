@@ -99,11 +99,7 @@ local function get_frame_with_entities(frame, CACHE)
 	local frame_src = dup_table(igi_taskdata.get_frame(frame.src))
 	if (frame_src.inputs) then
 		for k, typ in pairs(frame_src.inputs) do
-			local val = frame[k]
-			if type(frame[k]) == "string" then
-				local link_context = igi_text_processor.get_link_context(CACHE, frame)
-				val = igi_text_processor.eval_logic_macro(frame[k], link_context)
-			end
+			local val = igi_text_processor.eval_maybe_macro(frame[k], CACHE, frame)
 			igi_helper.trace_assert(val ~= nil and type(val) == typ, "Bad frame input "..k, frame, frame_src)
 			frame_src.inputs[k] = val
 		end
@@ -126,12 +122,8 @@ end
 local function get_next_frame(CACHE)
 	if (CACHE.frames and CACHE.frames[CACHE.current_frame]) then
 		local current_frame = CACHE.frames[CACHE.current_frame]
-		if type(current_frame.NEXT_FRAME) == "number" then
-			return current_frame.NEXT_FRAME
-		elseif type(current_frame.NEXT_FRAME) == "string" then
-			local link_context = igi_text_processor.get_link_context(CACHE, current_frame)
-			return igi_text_processor.eval_logic_macro(current_frame.NEXT_FRAME, link_context)
-		end
+		local next_frame = igi_text_processor.eval_maybe_macro(current_frame.NEXT_FRAME, CACHE, current_frame)
+		if next_frame then return next_frame end
 	end
 	return (CACHE.current_frame or 0) + 1
 end
