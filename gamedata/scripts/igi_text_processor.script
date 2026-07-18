@@ -139,7 +139,11 @@ local function resolve_macros(tbl, level, link_context, transient_fields)
             resolve_macros(v, level, link_context, transient_fields)
         elseif type(v) == 'string' then
             local macro = Macro:new(v)
-			if (macro and macro.level == level and (not macro.is_auto)) then
+			if (macro and macro.level == level and (level ~= "" or not macro.is_auto)) then
+				if (macro.is_auto) then
+					transient_fields[tbl] = transient_fields[tbl] or {}
+					transient_fields[tbl][k] = tbl[k]
+				end
 				tbl[k] = _resolve_linked_macro(macro, level, link_context, transient_fields)
 			end
         end
