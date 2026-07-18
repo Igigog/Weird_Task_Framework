@@ -93,8 +93,8 @@ function item_to_string(item, label)
 	if not next(item) then return "" end
 
 	local details = {}
-	for value in pairs(item) do
-		details[#details+1] = game.translate_string(value)
+	for k, v in pairs(item) do
+		details[#details+1] = type(v) == "string" and game.translate_string(v) or game.translate_string(k)
 	end
 	table.sort(details)
 
