@@ -448,6 +448,7 @@
         "igi_dialogs",
         "modxml_wtf",
         "igi_target_kill",
-        "igi_target_assault"
+        "igi_target_assault",
+        "igi_ara"
     ]
 }
