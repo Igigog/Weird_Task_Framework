@@ -27,31 +27,6 @@ function Return.quest_target(obj_data)
 	return se_obj.parent_id == 65535 and obj_data.id or se_obj.parent_id
 end
 
-function get_item_cost(section_name)
-	---@diagnostic disable-next-line: undefined-field
-	config_cost = tonumber(ini_sys:r_string_ex(section_name, "cost"))
-	if config_cost == 0 then
-		return 500
-	end
-	return config_cost
-end
-
-
-function get_item_weight(section_name)
-	---@diagnostic disable-next-line: undefined-field
-	return tonumber(ini_sys:r_string_ex(section_name, "inv_weight"))
-end
-
-function Return.complexity(entity)
-	local section = entity.section_name or (type(entity.id) == "number" and alife_object(entity.id):section_name())
-	if not section then
-		return 1000, 5000
-	end
-
-	local weight = math.max(1, get_item_weight(section))
-	return get_item_cost(section) * weight / 32
-end
-
 function Return.test(entity)
 	local assert_test = igi_tests.assert_test
 	entity._test_stage = (entity._test_stage or 0) + 1

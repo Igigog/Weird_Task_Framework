@@ -11,7 +11,6 @@ function ready_to_finish(obj_data)
 		amount = amount - itm_amount
 	end
 	obj_data._ids = ids
-	obj_data._complexity = calculate_complexity(obj_data) * 1.25
 	return amount <= 0
 end
 
@@ -112,12 +111,12 @@ function Fetch.get_description(entity)
 	}
 end
 
-function calculate_complexity(entity)
-	local base_cost = get_item_base_cost(entity.section_name)
-	local scaled_by_condition = is_scaled_by_condition(entity.section_name)
-	if entity._ids and scaled_by_condition then
+function calculate_cost(section_name, amount, ids)
+	local base_cost = get_item_base_cost(section_name)
+	local scaled_by_condition = is_scaled_by_condition(section_name)
+	if ids and scaled_by_condition then
 		local money = 0
-		for id in pairs(entity._ids) do
+		for id in pairs(ids) do
 			local obj = get_object_by_id(id)
 			if obj then
 				local condition = obj:condition()
@@ -126,12 +125,7 @@ function calculate_complexity(entity)
 		end
 		return money
 	end
-	return get_item_base_cost(entity.section_name) * (entity.amount or 1)
-end
-
-function Fetch.complexity(entity)
-	if entity._complexity then return entity._complexity end
-	return calculate_complexity(entity) * 1.25
+	return get_item_base_cost(section_name) * (amount or 1)
 end
 
 function Fetch.on_complete(entity)

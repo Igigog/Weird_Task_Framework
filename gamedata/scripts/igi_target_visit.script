@@ -35,10 +35,6 @@ function Visit.quest_target(entity)
 	return entity.id
 end
 
-function Visit.complexity(entity)
-	return 500
-end
-
 function Visit.test(entity)
 	local assert_test = igi_tests.assert_test
 	entity._test_stage = (entity._test_stage or 0) + 1

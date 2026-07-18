@@ -23,10 +23,6 @@ function Get.quest_target(obj_data)
 	end
 end
 
-function Get.complexity(entity)
-	return 0
-end
-
 function Get.test(entity)
 	local assert_test = igi_tests.assert_test
 	entity._test_stage = (entity._test_stage or 0) + 1
