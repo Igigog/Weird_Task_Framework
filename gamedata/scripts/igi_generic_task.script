@@ -1,4 +1,4 @@
-TASKS_VERSION = "4.2.2"
+TASKS_VERSION = "4.3"
 TASK_SETUP = {}
 TASKS_CACHE = {}
 
@@ -58,43 +58,12 @@ function process_macros(task_id, macro_level)
 
 	return CACHE
 end
-
-function add_entities(task_id, ...)
-	local CACHE = get_cache(task_id)
-	trace_assert(CACHE ~= nil, "update_entities: CACHE not found for task_id", task_id)
-
-	local args = {...}
-	CACHE._queue = CACHE._queue or {add = {}, rem = {}}
-	for _, v in ipairs(args) do
-		trace_assert(type(CACHE[v]) == "table", "update_entities: entity table not found: ", v)
-		CACHE._queue.add[#CACHE._queue.add+1] = v
-	end
-	return #args
-end
-
-function remove_entities(task_id, ...)
-	local CACHE = get_cache(task_id)
-	trace_assert(CACHE ~= nil, "update_entities: CACHE not found for task_id", task_id)
-
-	local args = {...}
-	CACHE._queue = CACHE._queue or {add = {}, rem = {}}
-	for _, v in ipairs(args) do
-		CACHE._queue.rem[#CACHE._queue.rem+1] = v
-	end
-	return #args
-end
 ---------------------------< Precondition >---------------------------
 function try_prepare_quest(task_id, task_data, tg_id)
 	trace_dbg("validate "..task_id, task_data)
 	trace_assert(task_data, "WTF: validate_task: no task data")
 
 	local CACHE = igi_taskdata.finalize_task_cache(task_data, task_id, tg_id)
-	igi_text_processor.resolve_and_link_cache(CACHE, "")
-
-	CACHE.__entities = CACHE.entities
-	CACHE.entities = {}
-	igi_subtask.enable_entities('__entities', CACHE)
-
 	igi_text_processor.resolve_and_link_cache(CACHE, "")
 
 	if igi_mcm.get_task_value(CACHE.quest_id, "disabled") then return end
@@ -106,6 +75,10 @@ function try_prepare_quest(task_id, task_data, tg_id)
 
 	for _, val in pairs(CACHE.requirements or {}) do
 		if not val then return end
+	end
+
+	for _, frame in pairs(CACHE.frames) do
+		trace_assert(type(frame.entities) == "table" or igi_taskdata.get_frame(frame.src), "Frame not found", frame)
 	end
 
 	trace_dbg("setup "..task_id, task_data)
@@ -126,7 +99,11 @@ function initialise_CACHE(task_id)
 	TASKS_CACHE[task_id] = CACHE
 	TASK_SETUP[task_id] = nil
 
-	igi_subtask.init_entities('__entities', CACHE)
+	if (next(CACHE.entities) and not next(CACHE.frames)) then
+		CACHE.frames = {{entities = CACHE.entities}}
+		CACHE.entities = {}
+	end
+	igi_subtask.activate_next_frame(CACHE)
 
 	process_macros(task_id, "1")
 
@@ -137,16 +114,16 @@ end
 function quest_status(task_id)
 	local CACHE = get_cache(task_id)
 	---------------------------<ACTIONS>---------------------
-	igi_subtask.update_entities(CACHE)
 	igi_subtask.process_subtasks(CACHE)
+	if (CACHE.status == TASK_STATUSES.COMPLETED) then
+		igi_subtask.activate_next_frame(CACHE)
+	end
 	igi_callbacks.invoke_callbacks("on_task_update", CACHE)
 
 	---------------------------<STAGE>----------------------
-	if not CACHE._queue then
-		if CACHE.status == TASK_STATUSES.FAILED then return "fail" end
-		if CACHE.status == TASK_STATUSES.COMPLETED and not igi_rewards.has_material_rewards(CACHE) then
-			return "complete"
-		end
+	if CACHE.status == TASK_STATUSES.FAILED then return "fail" end
+	if CACHE.status == TASK_STATUSES.COMPLETED and not igi_rewards.has_material_rewards(CACHE) then
+		return "complete"
 	end
 
 	igi_subtask.update_current_map_target(CACHE)
@@ -202,6 +179,7 @@ function finish_quest(task_id)
 	igi_callbacks.invoke_callbacks("on_finish", CACHE)
 	process_macros(task_id, "on_finish")
 
+	igi_subtask.disable_entities(CACHE)
 	TASKS_CACHE[task_id] = nil
 end
 

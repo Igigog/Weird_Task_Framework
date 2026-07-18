@@ -21,8 +21,15 @@ LinkContext  = {
 		}
 		for _, entity in pairs(CACHE.entities) do
 			if entity.link_id then
-				trace_assert(link_context[entity.link_id] == nil, "Entity already in context", link_context, entity)
+				trace_assert(link_context[entity.link_id] == nil, "link_id already in context", link_context, entity)
 				link_context[entity.link_id] = entity
+			end
+		end
+
+		for _, frame in pairs(CACHE.frames or {}) do
+			if frame.link_id then
+				trace_assert(link_context[frame.link_id] == nil, "link_id already in context", link_context, frame)
+				link_context[frame.link_id] = frame
 			end
 		end
 		return setmetatable(link_context, { __index = self })
@@ -206,6 +213,10 @@ function resolve_and_link_cache(CACHE, level)
 
     for _, entity in pairs(CACHE.entities) do
         resolve_macros(entity, level, link_context:set_this(entity), transient_fields)
+    end
+
+	for _, frame in pairs(CACHE.frames) do
+        resolve_macros(frame, level, link_context:set_this(frame), transient_fields)
     end
 
 	resolve_macros(CACHE, level, link_context, transient_fields)

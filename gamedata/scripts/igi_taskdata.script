@@ -13,7 +13,9 @@ local function get_game_path()
 	return game_path
 end
 
-local default_tasks_path = get_game_path().."gamedata\\configs\\igi_tasks\\tasks\\"
+local configs_path = get_game_path().."gamedata\\configs\\igi_tasks\\"
+local frames_path = configs_path.."frames\\"
+local default_tasks_path = configs_path.."tasks\\"
 
 local function get_file_content(path)
 	file = io.open(path, "rb")
@@ -33,6 +35,20 @@ function get_task_table(task_name, prefix)
 									or (igi_description.TEXT_HEADER..prefix.."_"..task_name)
 	task_table.quest_id = {prefix, task_name}
 	return task_table
+end
+
+IGI_FRAMES = {}
+function get_frame(key)
+	if IGI_FRAMES[key] then
+		return IGI_FRAMES[key]
+	end
+
+	local task_path = key
+	local content = get_file_content(frames_path .. task_path)
+	igi_helper.trace_assert(content, "Couldn't find frame with key "..tostring(key))
+
+	IGI_FRAMES[key] = json.decode(content)
+	return IGI_FRAMES[key]
 end
 
 local IGI_QUESTS = {}
@@ -66,6 +82,7 @@ function supported_wtf_versions()
 		["4.0"] = true,
 		["4.1"] = true,
 		["4.2"] = true,
+		["4.3"] = true,
 	}
 end
 
@@ -109,6 +126,9 @@ function finalize_task_cache(task_data, task_id, tg_id)
 	CACHE.quest_givers = nil	-- not needed
 	CACHE.task_id = task_id
 	CACHE.task_giver_id = tg_id
+	CACHE.entities = CACHE.entities or {}
+	CACHE.frames = CACHE.frames or {}
+	CACHE.current_frame = 0
 
 	trace_dbg("finalized CACHE", CACHE)
 	return CACHE
