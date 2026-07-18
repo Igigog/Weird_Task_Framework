@@ -1,0 +1,10 @@
+{
+	"WTF_VERSION": "4.3",
+    "inputs": {
+        "count": "number"
+    },
+    "outputs": {
+        "count": "$ |inputs.count| - 1"
+    },
+	"entities": []
+}

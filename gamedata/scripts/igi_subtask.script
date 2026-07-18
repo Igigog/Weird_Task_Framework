@@ -90,8 +90,8 @@ function update_entity_status(entity, CACHE)
 	return true
 end
 
-local function get_frame_with_entities(frame)
-	if frame.entities then
+local function get_frame_with_entities(frame, CACHE)
+	if not frame.src then
 		frame.src = "inline"
 		return frame
 	end
@@ -99,21 +99,45 @@ local function get_frame_with_entities(frame)
 	local frame_src = dup_table(igi_taskdata.get_frame(frame.src))
 	if (frame_src.inputs) then
 		for k, typ in pairs(frame_src.inputs) do
-			igi_helper.trace_assert(frame[k] ~= nil and type(frame[k]) == typ, "Bad frame input "..k, frame, frame_src)
-			frame_src.inputs[k] = frame[k]
+			local val = frame[k]
+			if type(frame[k]) == "string" then
+				local link_context = igi_text_processor.get_link_context(CACHE, frame)
+				val = igi_text_processor.eval_logic_macro(frame[k], link_context)
+			end
+			igi_helper.trace_assert(val ~= nil and type(val) == typ, "Bad frame input "..k, frame, frame_src)
+			frame_src.inputs[k] = val
 		end
 		frame_src.inputs.link_id = "inputs"
 
 		frame_src.entities[#frame_src.entities+1] = frame_src.inputs
 	end
 
-	frame.inputs = nil
+	if (frame_src.outputs) then
+		frame_src.outputs.link_id = "outputs"
+		frame_src.entities[#frame_src.entities+1] = frame_src.outputs
+		frame.outputs = nil
+	end
+
 	frame.entities = frame_src.entities
+	igi_helper.trace_dbg("Fill frame: frame, source", frame, frame_src)
 	return frame
 end
 
+local function get_next_frame(CACHE)
+	if (CACHE.frames and CACHE.frames[CACHE.current_frame]) then
+		local current_frame = CACHE.frames[CACHE.current_frame]
+		if type(current_frame.NEXT_FRAME) == "number" then
+			return current_frame.NEXT_FRAME
+		elseif type(current_frame.NEXT_FRAME) == "string" then
+			local link_context = igi_text_processor.get_link_context(CACHE, current_frame)
+			return igi_text_processor.eval_logic_macro(current_frame.NEXT_FRAME, link_context)
+		end
+	end
+	return (CACHE.current_frame or 0) + 1
+end
+
 function activate_next_frame(CACHE)
-	local new_frame = (CACHE.current_frame or 0) + 1
+	local new_frame = get_next_frame(CACHE)
 	local frame = CACHE.frames[new_frame]
 	if frame == nil then return end
 
@@ -121,10 +145,10 @@ function activate_next_frame(CACHE)
 
     igi_helper.trace_dbg("Enable: enable entities", new_frame, frame)
 	igi_text_processor.resolve_table_macros(frame, "init", igi_text_processor.get_link_context(CACHE, frame))
-    get_frame_with_entities(frame)
+    get_frame_with_entities(frame, CACHE)
 
 	-- Add and generate
-    for k, entity in ipairs(frame.entities) do
+    for _, entity in ipairs(frame.entities) do
         igi_helper.trace_dbg("Enable: Processing entity", entity)
 
         local link_context = igi_text_processor.get_link_context(frame, entity)
@@ -134,8 +158,8 @@ function activate_next_frame(CACHE)
         for _, new_entity in ipairs(new_entities) do
             CACHE.entities[#CACHE.entities+1] = new_entity
         end
-        frame.entities[k] = nil
     end
+	empty_table(frame.entities)
 
 	-- Initialize
 	for _, entity in ipairs(CACHE.entities) do
@@ -159,6 +183,7 @@ function activate_next_frame(CACHE)
 end
 
 function disable_entities(CACHE)
+	local outputs_entity
 	-- De-initialize
 	for i=#CACHE.entities, 1, -1 do
 		local entity = CACHE.entities[i]
@@ -171,6 +196,10 @@ function disable_entities(CACHE)
 
 		local link_context = igi_text_processor.get_link_context(CACHE)
 		igi_text_processor.resolve_table_macros(entity, "del", link_context)
+
+		if entity.link_id == "outputs" then
+			outputs_entity = entity
+		end
 	end
 
 	empty_table(CACHE.entities)
@@ -179,6 +208,13 @@ function disable_entities(CACHE)
 	if frame then
 		local link_context = igi_text_processor.get_link_context(CACHE, frame)
 		igi_text_processor.resolve_table_macros(frame, "del", link_context)
+
+		if outputs_entity ~= nil then
+			outputs_entity.link_id = nil
+			for k, v in pairs(outputs_entity) do
+				frame[k] = v
+			end
+		end
 	end
 end
 
