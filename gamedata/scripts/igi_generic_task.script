@@ -77,8 +77,9 @@ function try_prepare_quest(task_id, task_data, tg_id)
 		if not val then return end
 	end
 
-	for _, frame in pairs(CACHE.frames) do
+	for k, frame in pairs(CACHE.frames) do
 		trace_assert(type(frame.entities) == "table" or igi_taskdata.get_frame(frame.src), "Frame not found", frame)
+		frame.FRAME_ID = k
 	end
 
 	trace_dbg("setup "..task_id, task_data)
@@ -116,7 +117,9 @@ function quest_status(task_id)
 	---------------------------<ACTIONS>---------------------
 	igi_subtask.process_subtasks(CACHE)
 	if (CACHE.status == TASK_STATUSES.COMPLETED) then
-		igi_subtask.activate_next_frame(CACHE)
+		repeat
+			local frame = igi_subtask.activate_next_frame(CACHE)
+		until CACHE.status ~= TASK_STATUSES.COMPLETED or frame == nil
 	end
 	igi_callbacks.invoke_callbacks("on_task_update", CACHE)
 

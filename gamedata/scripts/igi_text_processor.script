@@ -46,7 +46,7 @@ LinkContext  = {
 
 	get_table = function (self, link)
 		local tbl = self[link.link_id]
-        igi_helper.trace_assert(tbl, "Linker can't find tbl for link:", self)
+        igi_helper.trace_assert(tbl, "Linker can't find tbl for link:", self, link)
 		return tbl
 	end,
 }
