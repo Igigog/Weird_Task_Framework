@@ -10,8 +10,6 @@ Description = igi_mcm_builder.Description
 
 function on_game_start()
 	assert(ui_mcm, "Weird Tasks Framework: MCM not installed. Fuck you.")
-	autosave_on_game_start()
-	autocomplete_on_game_start()
 end
 
 function get_options_value(option_id)
