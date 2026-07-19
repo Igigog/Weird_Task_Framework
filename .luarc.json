@@ -448,6 +448,7 @@
         "modxml_wtf",
         "igi_target_kill",
         "igi_target_assault",
-        "igi_ara"
+        "igi_ara",
+        "igi_task_manager"
     ]
 }

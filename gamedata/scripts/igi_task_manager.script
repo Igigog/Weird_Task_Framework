@@ -1,31 +1,23 @@
-local function notnil(v)
-	if (v == nil) then
-		igi_generic_task.NIL_ERROR = true
-	end
-	igi_helper.trace_assert(v ~= nil)
-	return v
-end
-
-local trace_dbg = notnil(igi_helper.trace_dbg)
-local trace_error = notnil(igi_helper.trace_error)
-local pcall = notnil(igi_helper.pcall)
+local trace_dbg = assert(igi_helper.trace_dbg)
+local trace_error = assert(igi_helper.trace_error)
+local pcall = assert(igi_helper.pcall)
 
 local Igi = {
-	is_subset = notnil(igi_utils.Set.is_subset),
-	get_task_text = notnil(igi_description.get_task_text),
-	get_all_quests = notnil(igi_taskdata.get_all_quests),
-	get_cache = notnil(igi_generic_task.get_cache),
-	get_setup = notnil(igi_generic_task.get_setup_cache),
-	get_task_cache = notnil(igi_taskdata.get_task_cache),
-	TASK_STATUSES = notnil(igi_subtask.TASK_STATUSES),
-	setup_quest = notnil(igi_generic_task.setup_quest),
-	initialise_CACHE = notnil(igi_generic_task.initialise_CACHE),
-	try_prepare_quest = notnil(igi_generic_task.try_prepare_quest),
-	quest_status = notnil(igi_generic_task.quest_status),
-	quest_text = notnil(igi_generic_task.quest_text),
-	quest_target = notnil(igi_generic_task.quest_target),
-	finish_quest = notnil(igi_generic_task.finish_quest),
-	first_finished_igi_task = notnil(igi_generic_task.first_finished_igi_task),
+	is_subset = assert(igi_utils.Set.is_subset),
+	get_task_text = assert(igi_description.get_task_text),
+	get_all_quests = assert(igi_taskdata.get_all_quests),
+	get_cache = assert(igi_generic_task.get_cache),
+	get_setup = assert(igi_generic_task.get_setup_cache),
+	get_task_cache = assert(igi_taskdata.get_task_cache),
+	TASK_STATUSES = assert(igi_subtask.TASK_STATUSES),
+	setup_quest = assert(igi_generic_task.setup_quest),
+	initialise_CACHE = assert(igi_generic_task.initialise_CACHE),
+	try_prepare_quest = assert(igi_generic_task.try_prepare_quest),
+	quest_status = assert(igi_generic_task.quest_status),
+	quest_text = assert(igi_generic_task.quest_text),
+	quest_target = assert(igi_generic_task.quest_target),
+	finish_quest = assert(igi_generic_task.finish_quest),
+	first_finished_igi_task = assert(igi_generic_task.first_finished_igi_task),
 }
 
 function on_game_start()

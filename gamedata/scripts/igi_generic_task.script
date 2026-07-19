@@ -6,22 +6,16 @@ local trace_dbg = igi_helper.trace_dbg
 local trace_assert = igi_helper.trace_assert
 local TASK_STATUSES = igi_subtask.TASK_STATUSES
 local last_tasks_version
-NIL_ERROR = false
 
 function on_game_start()
     RegisterScriptCallback("save_state",save_state)
     RegisterScriptCallback("load_state",load_state)
 	RegisterScriptCallback("actor_on_first_update", actor_on_first_update)
 	printf("Weird Tasks Framework "..TASKS_VERSION.." initialised")
+	igi_helper.trace_assert(igi_task_manager.on_game_start, "WTF: Task manager loading failed")
 end
 
 function actor_on_first_update()
-	if NIL_ERROR then
-		news_manager.send_tip(db.actor,
-			"Something is nil! Check nonnil() calls. WTF is not initialised.", nil, nil,
-			30000)
-	end
-
 	if last_tasks_version ~= TASKS_VERSION then
 		printf("Weird Tasks Framework: Updating " .. (TASKS_CACHE.TASKS_VERSION or "nil")
 			.. " -> " .. TASKS_VERSION)
