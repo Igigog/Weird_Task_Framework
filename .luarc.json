@@ -9,7 +9,6 @@
         "igi_activities",
         "character_community",
         "RegisterScriptCallback",
-        "igi_callbacks",
         "printf",
         "igi_mcm",
         "db",
