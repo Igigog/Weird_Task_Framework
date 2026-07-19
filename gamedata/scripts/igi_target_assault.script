@@ -5,9 +5,15 @@ local function ara_enabled()
 	return igi_mcm.get_options_value("realistic_assassinations")
 end
 
-local function is_legit_squad(squad)
-	local section = squad and squad:section_name()
-	return squad and (not section:find("tushkano")) and (not section:find("rat"))
+local function is_legit_squad(se_squad)
+	local section = se_squad:section_name()
+	if section:find("tushkano") or section:find("rat") then return false end
+	for k in se_squad:squad_members() do
+		local se_npc = k.object or k.id and alife_object(k.id)
+		if (IsStalker(se_npc) or IsMonster(se_npc)) and se_npc:alive() then
+			return true
+		end
+	end
 end
 
 local function is_squad_at_smart(se_squad, smart_id)
