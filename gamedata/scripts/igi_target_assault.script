@@ -59,7 +59,7 @@ local function add_target_squads(entity)
 	local smart = SIMBOARD.smarts[entity.id]
 	for sq_id in pairs(smart.squads) do
 		local se_squad = alife_object(sq_id)
-		local actor_faction = character_community(db.actor)
+		local actor_faction = get_actor_true_community()
 		local sq_faction = se_squad:get_squad_community()
 		if is_squad_at_smart(se_squad, entity.id) and
 			game_relations.is_factions_enemies(actor_faction, sq_faction) then
