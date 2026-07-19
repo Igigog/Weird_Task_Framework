@@ -106,15 +106,16 @@ function safe(f)
 	end
 end
 
+local wtf_marker = "WTF ".. igi_generic_task.TASKS_VERSION
 function trace_dbg(title, ...)
 	if igi_mcm.get_options_value("debug") then
-		printf("WTF DBG: "..title .. "\n" .. format_log({...}))
+		printf(wtf_marker .. " DBG: "..title .. "\n" .. format_log({...}))
 		printf("-------------------------")
 	end
 end
 
 function trace_error(title, ...)
-	local val = "WTF ERROR: " .. title .. "\n" .. format_log({...})
+	local val = wtf_marker ..  " ERROR: " .. title .. "\n" .. format_log({...})
 	printf(val)
 	printf("-------------------------")
 	if igi_mcm.get_options_value("debug") then
@@ -137,7 +138,7 @@ end
 function trace_assert(val, err, ...)
 	if not val then
 		trace_dbg("Assertion failed! " .. err, ...)
-		assert(nil, "WTF: "..err .. "\n" .. format_log({...}))
+		assert(nil, wtf_marker .. ": "..err .. "\n" .. format_log({...}))
 	end
 	return val
 end
