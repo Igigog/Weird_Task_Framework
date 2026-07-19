@@ -2,11 +2,6 @@
 local trace_dbg = igi_helper.trace_dbg
 
 TEXT_HEADER = "igi_task_text_"
-function get_location_description(entity)
-	return get_smart_name_by_id(entity.id)
-		or (entity.id and dynamic_news_helper.GetPointDescription(alife_object(entity.id)))
-		or nil
-end
 
 function get_smart_name_by_id(id)
 	if tonumber(id) and SIMBOARD.smarts[id] then
@@ -15,40 +10,27 @@ function get_smart_name_by_id(id)
 	end
 end
 
-function get_entity_description(entity)
-	if type(entity.id) == "number" then
-		local se_obj = alife_object(entity.id)
-		local parent_npc = igi_helper.is_common_npc(se_obj.parent_id) and alife_object(se_obj.parent_id)
+function anomaly_name_by_binder(binder)
+	local field_name = binder.ini:r_string_ex('anomal_zone',"field_name")
+	igi_helper.trace_assert(field_name, "Anomaly doesn't have a field_name")
+	return 'st_' .. field_name .. '_name'
+end
 
-		return {
-			locations = {get_location_description(entity)},
-			factions = {se_obj.player_id or parent_npc and alife_character_community(parent_npc) or nil},
-			targets = {parent_npc and parent_npc:character_name() or nil}
-		}
-	else
-		return {
-			factions = {entity.faction or (entity.section_name and ini_sys:r_string_ex(entity.section_name, "faction"))},
-			targets = {entity.section_name and ini_sys:r_string_ex(entity.section_name, "inv_name_short")}
-		}
-	end
+function item_name_by_section(section_name)
+	igi_helper.trace_assert(type(section_name) == "string", "section is not a string", section_name)
+	return ini_sys:r_string_ex(section_name, "inv_name_short")
+end
+
+function item_name_by_id(id)
+	local se_obj = alife_object(id)
+	igi_helper.trace_assert(se_obj, "No server object for id", id)
+	return item_name_by_section(se_obj:section_name())
 end
 
 
 function get_description(CACHE)
-	if not CACHE.description then
-		CACHE.description = {
-			targets = {},
-			locations = {},
-			factions = {},
-		}
-
-		for _, entity in pairs(CACHE.entities) do
-			add_from_entity(CACHE.description, entity, CACHE)
-		end
-	end
-
 	local content = {}
-	for label, v in pairs(CACHE.description) do
+	for label, v in pairs(CACHE.description or {}) do
 		content[#content+1] = item_to_string(v, label)
 	end
 
@@ -70,23 +52,6 @@ function get_rewards_description(CACHE)
 		" " .. game.translate_string(TEXT_HEADER .. "goodwill")
 end
 
-function add_from_entity(description, entity, CACHE)
-	if not entity.to_description then return end
-
-	local controller = igi_taskdata.get_controller(entity, CACHE)
-	local description_f = controller.get_description or get_entity_description
-	local desc = description_f(entity)
-	for k, tbl in pairs(desc) do
-		add_all_values(description[k], tbl)
-	end
-end
-
-function add_all_values(dest, src)
-	for _, v in pairs(src) do
-		dest[v] = true
-	end
-end
-
 function item_to_string(item, label)
 	if not next(item) then return "" end
 
@@ -94,7 +59,6 @@ function item_to_string(item, label)
 	for k, v in pairs(item) do
 		details[#details+1] = type(v) == "string" and game.translate_string(v) or game.translate_string(k)
 	end
-	table.sort(details)
 
 	label = game.translate_string(TEXT_HEADER..label)
 	return label..": "..table.concat(details, ', ')

@@ -110,6 +110,7 @@ Macro       = {
 		trace_assert(out ~= nil, "Macro returned nil", self.orig)
 		trace_assert(self.is_auto or type(out) ~= "userdata", "Macro returned userdata", self.orig)
 
+		igi_helper.trace_dbg("Resolved macro to", self.orig, type(out) == "userdata" and "userdata" or out)
 		return out
     end,
 
