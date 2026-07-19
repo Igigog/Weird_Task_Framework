@@ -132,7 +132,15 @@ PinToSmart = {
 MapIcon = function (mark)
     return {
         status = function (entity)
-            igi_actions.update_mark(entity.id, mark)
+            local has_spot = level.map_has_object_spot(entity.id, mark) == 1
+            local se_obj = alife_object(entity.id)
+            local object_in_world = se_obj and se_obj.parent_id == 65535
+
+            if object_in_world and not has_spot then
+                level.map_add_object_spot(entity.id, mark, game.translate_string(mark))
+            elseif (not object_in_world) and has_spot then
+                level.map_remove_object_spot(entity.id, mark)
+            end
         end,
 
         on_del = function (entity)
@@ -141,12 +149,37 @@ MapIcon = function (mark)
     }
 end
 
+
+local function is_online(id)
+	local se_obj = alife_object(id)
+	if not se_obj then return end
+
+	if se_obj.squad_members then
+		se_obj = se_obj:squad_members()()	-- stateful iterator, returns function
+		for _,v in ipairs(db.OnlineStalkers) do
+			if (v == se_obj.id) then
+				return true
+			end
+		end
+		return false
+	end
+	return se_obj.online
+end
+
 ChangeFaction = function (faction)
     return {
         status = function (entity)
             if entity._changefaction_done then return end
-            if igi_actions.is_online(entity.id) then
-                igi_actions.change_faction(entity.id, faction)
+            if is_online(entity.id) then
+                local se_squad = alife_object(entity.id)
+                if not se_squad or not se_squad.squad_members then return end
+                for npc in se_squad:squad_members() do
+                    local member = get_object_by_id(npc.id)
+                    if member then
+                        member:set_character_community(faction, 0, 0)
+                    end
+                end
+
                 entity._changefaction_done = true
             end
         end
@@ -157,7 +190,9 @@ Repair = function (new_condition)
     return {
         status = function (entity)
             if entity._repair_done then return end
-            if igi_actions.is_low_condition(entity.id, new_condition) then
+            local item = get_object_by_id(entity.id)
+            if not item then return false end
+            if item:condition() < (new_condition / 100) then
                 get_object_by_id(entity.id):set_condition(new_condition)
                 entity._repair_done = true
             end

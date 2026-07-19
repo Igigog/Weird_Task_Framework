@@ -424,7 +424,6 @@
         "mob_remark",
         "mob_sound",
         "se_load_var",
-        "igi_actions",
         "save_ctime",
         "starts_with",
         "parse_list",
