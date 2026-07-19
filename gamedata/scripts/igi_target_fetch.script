@@ -2,7 +2,7 @@ local TASK_STATUSES = igi_subtask.TASK_STATUSES
 local trace_assert = igi_helper.trace_assert
 
 function ready_to_finish(obj_data)
-	local ids = get_fetched_items(obj_data)
+	local ids = get_fetched_items(obj_data.section_name)
 	local amount = obj_data.amount or 1
 	for id, itm_amount in pairs(ids) do
 		if amount <= 0 then
@@ -14,8 +14,7 @@ function ready_to_finish(obj_data)
 	return amount <= 0
 end
 
-function get_fetched_items(obj_data)
-	local section = obj_data.section_name
+function get_fetched_items(section)
 	local total = 0
 	local ids = {}
 	local is_multi = IsItem("multiuse",section)
@@ -98,17 +97,9 @@ function Fetch.quest_target(entity)
 	return -1
 end
 
-function Fetch.get_description(entity)
-	---@diagnostic disable-next-line: undefined-field
-	local item_name = ini_sys:r_string_ex(entity.section_name, "inv_name")
-	local str = game.translate_string(item_name)..", "..tostring(entity.amount or 1)
-	if igi_mcm.get_options_value("utjan_fetch_thing") then
-		local _, amount = get_fetched_items(entity)
-		str = str .. " " .. string.format(game.translate_string("igi_tasks_utjan_fetch_need"), amount)
-	end
-	return {
-		targets = {str}
-	}
+function fetch_amount_description(section_name, amount)
+	local _, in_inventory = get_fetched_items(section_name)
+	return tostring(amount or 1) .. " " .. string.format(game.translate_string("igi_tasks_utjan_fetch_need"), in_inventory)
 end
 
 function calculate_cost(section_name, amount, ids)
