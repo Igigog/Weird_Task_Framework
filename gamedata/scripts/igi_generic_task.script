@@ -58,7 +58,11 @@ function try_prepare_quest(task_id, task_data, tg_id)
 	trace_assert(task_data, "WTF: validate_task: no task data")
 
 	local CACHE = igi_taskdata.finalize_task_cache(task_data, task_id, tg_id)
-	igi_text_processor.resolve_and_link_cache(CACHE, "")
+	local failed = igi_text_processor.resolve_and_link_cache(CACHE, "")
+	if failed then
+		trace_dbg("Can't prepare task because macro resolution failed: "..task_id, CACHE)
+		return
+	end
 
 	if igi_mcm.get_task_value(CACHE.quest_id, "disabled") then return end
 	if not igi_mcm.get_options_value("disable_preconditions") then

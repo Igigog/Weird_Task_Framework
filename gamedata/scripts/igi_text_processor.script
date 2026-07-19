@@ -84,8 +84,9 @@ Macro       = {
         if not macro then return end
 
         local t = {
-            level = level,
+            level = level ~= '?' and level or '',
             is_auto = is_auto ~= '',
+			is_nullable = level == '?',
             macro = macro,
 			orig = str
         }
@@ -107,7 +108,11 @@ Macro       = {
 		Macro.link_context = link_context
 		local out = eval(self:_without_links())
 
-		trace_assert(out ~= nil, "Macro returned nil", self.orig)
+		if out == nil then
+			trace_assert(self.is_nullable, "Macro returned nil", self.orig)
+			igi_helper.trace_dbg("Failed macro resolution: macro returned nil", self.orig)
+			return nil, true
+		end
 		trace_assert(self.is_auto or type(out) ~= "userdata", "Macro returned userdata", self.orig)
 
 		igi_helper.trace_dbg("Resolved macro to", self.orig, type(out) == "userdata" and "userdata" or out)
@@ -145,7 +150,9 @@ local function resolve_macros(tbl, level, link_context, transient_fields)
 					transient_fields[tbl] = transient_fields[tbl] or {}
 					transient_fields[tbl][k] = tbl[k]
 				end
-				tbl[k] = _resolve_linked_macro(macro, level, link_context, transient_fields)
+				local out, failed = _resolve_linked_macro(macro, level, link_context, transient_fields)
+				if failed then return true end
+				tbl[k] = out
 			end
         end
     end
@@ -179,7 +186,10 @@ local function resolve_all_links(links, level, link_context, transient_fields)
         if macro then
             macro:assert_level(level)
 			local this_before = link_context.this
-			local out = macro:resolve(link_context:set_this(tbl))
+			local out, failed = macro:resolve(link_context:set_this(tbl))
+			if failed then
+				return true
+			end
 			link_context:set_this(this_before)
 
 			if macro.is_auto then
@@ -194,7 +204,10 @@ end
 
 function _resolve_linked_macro(macro, level, link_context, transient_fields)
     local links = collect_links(macro, link_context, {})
-    resolve_all_links(links, level, link_context, transient_fields)
+    local failed = resolve_all_links(links, level, link_context, transient_fields)
+	if failed then
+		return nil, true
+	end
     return macro:resolve(link_context)
 end
 
@@ -208,8 +221,9 @@ end
 
 function resolve_table_macros(tbl, level, link_context)
 	local transient_fields = {}
-	resolve_macros(tbl, level, link_context, transient_fields)
+	local failed = resolve_macros(tbl, level, link_context, transient_fields)
 	reset_transient_fields(transient_fields)
+	return failed
 end
 
 function resolve_and_link_cache(CACHE, level)
@@ -217,15 +231,24 @@ function resolve_and_link_cache(CACHE, level)
 	local transient_fields = {}
 
     for _, entity in pairs(CACHE.entities) do
-        resolve_macros(entity, level, link_context:set_this(entity), transient_fields)
+        local failed = resolve_macros(entity, level, link_context:set_this(entity), transient_fields)
+		if failed then
+			reset_transient_fields(transient_fields)
+			return true
+		end
     end
 
 	for _, frame in pairs(CACHE.frames) do
-        resolve_macros(frame, level, link_context:set_this(frame), transient_fields)
+        local failed = resolve_macros(frame, level, link_context:set_this(frame), transient_fields)
+		if failed then
+			reset_transient_fields(transient_fields)
+			return true
+		end
     end
 
-	resolve_macros(CACHE, level, link_context, transient_fields)
+	local failed = resolve_macros(CACHE, level, link_context, transient_fields)
 	reset_transient_fields(transient_fields)
+	return failed
 end
 
 function eval_logic_macro(str, link_context, maybe)
@@ -235,9 +258,9 @@ function eval_logic_macro(str, link_context, maybe)
 		return str
 	end
 	local transient_fields = {}
-    local resolved = _resolve_linked_macro(macro, '', link_context, transient_fields)
+    local resolved, failed = _resolve_linked_macro(macro, '', link_context, transient_fields)
 	reset_transient_fields(transient_fields)
-	return resolved
+	return resolved, failed
 end
 
 function eval_maybe_macro(val, CACHE, this_entity)
