@@ -31,7 +31,7 @@ function process_subtasks(CACHE)
 		if entity.status == TASK_STATUSES.RUNNING
 				or entity.status == TASK_STATUSES.READY_TO_FINISH then
 			if update_entity_status(entity, CACHE) then
-				igi_callbacks.invoke_callbacks("on_subtask_status_change", CACHE, entity)
+				igi_helper.trace_dbg("on_subtask_status_change", CACHE, entity)
 			end
 		end
 	end
@@ -166,7 +166,7 @@ function activate_next_frame(CACHE)
 		end
 
 		igi_text_processor.resolve_table_macros(entity, "after_init", link_context)
-		igi_callbacks.invoke_callbacks("on_entity_init", CACHE, entity)
+		igi_helper.trace_dbg("on_entity_init", CACHE, entity)
 	end
 
 	process_subtasks(CACHE)

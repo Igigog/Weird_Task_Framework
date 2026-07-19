@@ -110,7 +110,7 @@ local function get_task_data(quest_id)
 		assert(nil)
 	end
 
-	igi_callbacks.invoke_callbacks("on_get_taskdata", task_tbl, quest_id)
+	igi_helper.trace_dbg("on_get_taskdata", task_tbl, quest_id)
 	return task_tbl
 end
 

@@ -108,7 +108,14 @@ function initialise_CACHE(task_id)
 
 	process_macros(task_id, "1")
 
-	igi_callbacks.invoke_callbacks("on_first_run", CACHE)
+	if igi_mcm.get_options_value("autosave_before") then
+		local title = igi_description.get_task_text(CACHE.description_key, "name", CACHE.task_giver_id)
+		CreateTimeEvent("igi_mcm_features", "autosave_before", 0, function()
+			exec_console_cmd("save " .. "task " .. title .. " started")
+			return true
+		end)
+	end
+	igi_helper.trace_dbg("on_first_run", CACHE)
 end
 
 --< Status >--------------------------------------------------
@@ -121,11 +128,12 @@ function quest_status(task_id)
 			local frame = igi_subtask.activate_next_frame(CACHE)
 		until CACHE.status ~= TASK_STATUSES.COMPLETED or frame == nil
 	end
-	igi_callbacks.invoke_callbacks("on_task_update", CACHE)
+	igi_helper.trace_dbg("on_task_update", CACHE)
 
 	---------------------------<STAGE>----------------------
 	if CACHE.status == TASK_STATUSES.FAILED then return "fail" end
-	if CACHE.status == TASK_STATUSES.COMPLETED and not igi_rewards.has_material_rewards(CACHE) then
+	if CACHE.status == TASK_STATUSES.COMPLETED and
+			(igi_mcm.get_options_value("autocomplete") or not igi_rewards.has_material_rewards(CACHE)) then
 		return "complete"
 	end
 
@@ -170,16 +178,23 @@ function finish_quest(task_id)
 	igi_rewards.collect_and_give_rewards(CACHE)
 
 	if (CACHE.status ~= igi_subtask.TASK_STATUSES.FAILED) then
-		igi_callbacks.invoke_callbacks("on_complete", CACHE)
+		igi_helper.trace_dbg("on_complete", CACHE)
 		igi_subtask.invoke_controller("on_complete", CACHE)
 		process_macros(task_id, "on_complete")
 	else
-		igi_callbacks.invoke_callbacks("on_fail", CACHE)
+		igi_helper.trace_dbg("on_fail", CACHE)
 		igi_subtask.invoke_controller("on_fail", CACHE)
 		process_macros(task_id, "on_fail")
 	end
 
-	igi_callbacks.invoke_callbacks("on_finish", CACHE)
+	if igi_mcm.get_options_value("autosave_after") then
+		local title = igi_description.get_task_text(CACHE.description_key, "name", CACHE.task_giver_id)
+		CreateTimeEvent("igi_mcm_features", "autosave_after", 0, function()
+			exec_console_cmd("save " .. "task " .. title .. " finished")
+			return true
+		end)
+	end
+	igi_helper.trace_dbg("on_finish", CACHE)
 	process_macros(task_id, "on_finish")
 
 	igi_subtask.disable_entities(CACHE)
