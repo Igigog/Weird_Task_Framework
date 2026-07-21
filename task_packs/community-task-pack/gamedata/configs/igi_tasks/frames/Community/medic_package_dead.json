@@ -1,0 +1,42 @@
+{
+    "WTF_VERSION": "4.3",
+    "inputs": {
+        "squad_id": "number",
+        "smart_id": "number",
+        "package_section": "string"
+    },
+	"entities": [
+    {
+        "id": "$ |inputs.squad_id|",
+        "HELPERS": ["@$ wtf.ForceOnline", "@$ wtf.NoOfflineCombat", "@$ wtf.PinToSmart"],
+        "link_id": "friend_squad"
+    },
+
+    {
+        "section_name":"contact_lost_pda",
+        "id": "init$ alife_create_item(|this.section_name|, alife_object(|this.parent_id|)).id",
+        "parent_id": "$ alife_object(|friend_squad.id|):commander_id()",
+
+        "CONTROLLER": "@$ igi_target_return.Return"
+    },
+
+    {
+        "section_name": "army_sim_squad_alpha",
+        "smart_id":"$ |inputs.smart_id|",
+        "HELPERS": [
+            "@$ wtf.CreateSquad",
+            "@$ wtf.PinToSmart"
+        ],
+        "link_id": "enemy_squad"
+    },
+
+    {
+        "section_name":"$ |inputs.package_section|",
+        "id": "init$ alife_create_item(|this.section_name|, alife_object(|this.parent_id|)).id",
+        "parent_id": "init$ alife_object(|enemy_squad.id|):commander_id()",
+
+        "CONTROLLER": "@$ igi_target_return.Return",
+        "link_id": "package"
+    }
+	]
+}

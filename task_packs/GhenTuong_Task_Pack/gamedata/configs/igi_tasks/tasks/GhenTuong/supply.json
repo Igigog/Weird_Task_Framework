@@ -1,0 +1,31 @@
+{
+	"WTF_VERSION": "4.2",
+	"CREDITS": "GhenTuong - idea and initial implementation\\nIgigog - support",
+	"preconditions": [
+		"$ db.actor:character_rank() >= 2500"
+	],
+	"description": {
+		"locations": ["$ igi_description.get_smart_name_by_id(|frame.smart_id|)"],
+		"factions": ["$ |frame.enemy_faction|"]
+	},
+	"frames": [
+	{
+		"src": "GhenTuong/transaction.json",
+		"_smart_ids": "$ igi_finder.get_smarts(1,1)",
+		"smart_id": "?$ wtf.shuffle(|this._smart_ids|)[1]",
+		"treasure_section": "$ igi_utils.choose('gt_package_medicine','gt_package_ammunition')",
+		"enemy_faction": "$ igi_macros.Faction(|CACHE.task_giver_id|, 'enemy of taskgiver and enemy of actor')",
+		"friend_faction":"$ |this.enemy_faction|",
+		"enemies_count": 6,
+		"link_id": "frame"
+	}
+	],
+	"rewards": {
+		"money": "@$ 6000 + 400 * |frame.enemies_count|",
+		"goodwill": "@$ 60 + 4 * |frame.enemies_count|"
+	},
+	"icon": "ui_inGame2_Osobiy_zakaz",
+	"quest_givers": [
+		{"Mechanic": true}
+	]
+}

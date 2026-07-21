@@ -1,0 +1,38 @@
+{
+	"WTF_VERSION": "4.2",
+	"CREDITS": "\\nNerkokant - idea\\nIgigog - scripting\\nMich - KS23 Blowgun\\nBilly, Medic - descriptions",
+	"description": {
+		"targets": ["monster_vegetarian"],
+		"locations": ["$ igi_description.get_smart_name_by_id(|smart.id|)"]
+	},
+	"entities": [
+		{
+			"ids": "$ igi_finder.get_smarts(0,0)",
+			"id": "?$ wtf.shuffle(|this.ids|)[1]",
+			"name": "$ alife_object(|this.id|):name()",
+			"link_id": "smart"
+		},
+
+		{
+			"section_name":"simulation_flesh",
+			"smart_id": "init$ |smart.id|",
+			"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline"],
+			"CONTROLLER":"@$ igi_target_shoot.Shoot",
+        	"weapon": "wpn_igi_ks23_ecolog"
+		},
+
+		{
+			"section_name":"wpn_igi_ks23_ecolog",
+			"id": "init$ igi_helper.give_to_actor(|this.section_name|)",
+			"bullet": "init$ igi_helper.give_to_actor('ammo_23_igi_eco')",
+			"CONTROLLER":"@$ igi_target_return.Return"
+		}
+	],
+	"rewards": {
+		"money": 8000,
+		"goodwill": 50
+	},
+	"quest_givers": [
+		{"Ecolog": true, "Leader": true}
+	]
+}

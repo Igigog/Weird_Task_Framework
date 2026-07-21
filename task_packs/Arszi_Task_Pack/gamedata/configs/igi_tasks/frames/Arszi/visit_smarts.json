@@ -1,0 +1,19 @@
+{
+    "WTF_VERSION": "4.3",
+    "inputs": {
+        "ids": "table",
+        "visited": "table"
+    },
+    "outputs": {
+        "visited": "$ wtf.extend(|inputs.visited|, |input.ids|)"
+    },
+    "entities": [
+    {
+		"CONTROLLER":"@$ igi_target_visit.Visit",
+		"GEN": "@$ igi_generate.Split('ids', 'id')",
+		"ids": "$ |inputs.ids|",
+
+		"subtask": true
+	}
+    ]
+}

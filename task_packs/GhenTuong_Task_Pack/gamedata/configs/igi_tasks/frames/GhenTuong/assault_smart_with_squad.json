@@ -1,0 +1,24 @@
+{
+	"WTF_VERSION": "4.3",
+    "inputs": {
+        "smart_id": "number",
+        "section_name": "string"
+    },
+	"outputs": {
+		"squad_size": "after_init$ wtf.iter_size(alife_object(|squad.id|):squad_members())"
+	},
+	"entities": [
+    {
+		"mutants_section": "$ 'gt_mutant_'..wtf_gt_tasks.scale_to_player()",
+		"section_name":"$ igi_utils.random_table_value(igi_helper.db_ini:collect_section(|this.mutants_section|))",
+		"smart_id": "$ |inputs.smart_id|",
+		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline"],
+		"link_id": "squad"
+	},
+
+	{
+		"id": "$ |inputs.smart_id|",
+		"CONTROLLER":"@$ igi_target_assault.Assault"
+	}
+    ]
+}

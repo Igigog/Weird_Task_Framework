@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<!-- fetch_meat -->
+	<string id="igi_task_text_arszi_fetch_meat_name">
+		<text>Еда для новичков</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_meat_text">
+		<text>Фанат попросил меня добыть припасы</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_meat_about">
+		<text>С каждым днем прибывает все больше и больше новичков, и из-за этого в Деревне Новичков не хватает припасов. Я хотел бы попросить тебя пойти и принести немного мяса, чтобы мы могли помочь нуждающимся новичкам с горячей едой.</text>
+	</string>
+	<string id="igi_task_text_arszi_fetch_meat_finish">
+		<text>Спасибо, друг, вот твоя плата за помошь!</text>
+	</string>
+
+	<!-- fetch_ecolog -->
+	<string id="igi_task_text_arszi_fetch_ecolog_name">
+		<text>Сбор образцов</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_ecolog_text">
+		<text>Сахаров просил меня принести ему образцы для исследований</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_ecolog_about">
+		<text>Молодой человек! Похоже, вы не так простодушны, как остальные. Может быть, вы видите ценность в нашей работе, да?! Наука требует многого. Пожалуйста, будьте так добры, обеспечьте наши исследования. Мы не можем рисковать, что у нас закончатся образцы для каталогизации. Пожалуйста, дайте мне все, что можете! Научное сообщество будет вам благодарно, а я щедро заплачу вам за поддержку.</text>
+	</string>
+	<string id="igi_task_text_arszi_fetch_ecolog_finish">
+		<text>Спасибо, молодой человек! Вот ваша награда.</text>
+	</string>
+
+	<!-- fetch_butcher -->
+	<string id="igi_task_text_arszi_fetch_butcher_name">
+		<text>Найти части мутантов</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_butcher_text">
+		<text>Мясник попросил меня принести части мутантов</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_butcher_about">
+		<text>Мясо - не единственная часть мутантов, которая может быть ценной. Некоторые сталкеры ценят определенные части мутантов как трофеи или талисманы удачи. Ну, например, красивое ожерелье из клыков псевдодога или пушистый кошачий хвост, свисающий с пояса. Любой может выследить мутанта и носить его части как символ достижения, но для создания исключительно эффектных предметов требуется настоящее мастерство! - Принеси мне несколько трофеев, и я сделаю из них несколько стильных аксессуаров. Ты в деле?</text>
+	</string>
+	<string id="igi_task_text_arszi_fetch_butcher_finish">
+		<text>Ты принес отличные материалы. Молодец, охотник.</text>
+	</string>
+</string_table>

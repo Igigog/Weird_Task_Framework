@@ -1,0 +1,36 @@
+{
+	"WTF_VERSION": "4.2",
+	"CREDITS": "\\nBilly - idea and descriptions\\nIgigog - scripting",
+	"icon": "ui_iconsTotal_found_thing",
+	"entities": [
+	{
+		"section_name":"drx_sl_quest_item_2",
+		"id": "init$ igi_helper.give_to_actor(|this.section_name|)",
+		"release": "on_finish$ alife_release_id(|this.id|) or 1",
+		"link_id": "package"
+	},
+
+	{
+		"id": "init$ alife_create('script_zone', |this.pos|, |this.lvid|, |this.gvid|).id",
+		"release": "del$ alife_release_id(|this.id|) or 1",
+		
+		"pos": "@$ vector():set(-100, -30, -397)",
+		"gvid": 449,
+		"lvid": 162028,
+		"link_id": "zone"
+	},
+
+	{
+		"CONTROLLER":"@$ wtf_target_deliver.Deliver",
+		"id": "init$ |package.id|",
+		"where": "init$ |zone.id|"
+	}
+	],
+	"rewards": {
+		"money": 2000,
+		"goodwill": 40
+	},
+	"quest_givers": [
+		{"Sidorovich": true}
+	]
+}

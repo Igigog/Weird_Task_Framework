@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<!-- MCM option text -->
+	<string id="igi_task_text_community_hf_workshop_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Peregrine, Yantar) -->
+	<string id="igi_task_text_community_hf_workshop_mechanic_army_yan_mlr_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mechanic_army_yan_mlr_text">
+		<text>Перегрин попросил меня починить его сломанное оружие в качестве своего рода испытания. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mechanic_army_yan_mlr_about">
+		<text>Я подумал, не хотите ли вы доказать свою состоятельность как техника. У меня тут сломалось оружие - обычно его выбрасывают на запчасти. Вместо этого, как насчет того, чтобы ты починил его для меня, а я могу поискать инструменты для мастерской для себя?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mechanic_army_yan_mlr_finish">
+		<text>Поздравляю - я не ожидал, что вы действительно отремонтируете эту вещь, но вот она! Как я уже сказал, вы, безусловно, достойны этих инструментов.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Kirilov, Agroprom) -->
+	<string id="igi_task_text_community_hf_workshop_agr_smart_terrain_1_6_army_mechanic_stalker_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_agr_smart_terrain_1_6_army_mechanic_stalker_text">
+		<text>Лейтенант Кирилов попросил меня отремонтировать сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. На оружии, похоже, выгравировано клеймо производителя, что затрудняет выдачу за идентичный пистолет той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_agr_smart_terrain_1_6_army_mechanic_stalker_about">
+		<text>У меня есть оружие в ужасном состоянии, которое нуждается в полной переделке. Как насчет портативной мастерской? Обычно таким оборудованием могут пользоваться только квалифицированные специалисты, но полковник разрешил мне получить эту награду, учитывая принесенные вами инструменты. Это пригодится, если вы планируете длительные экскурсии по Зоне.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_agr_smart_terrain_1_6_army_mechanic_stalker_finish">
+		<text>Поздравляю - я не ожидал, что вы действительно отремонтируете эту вещь, но вот она! Как я уже сказал, вы, безусловно, достойны этих инструментов.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Mangun, Bar) -->
+	<string id="igi_task_text_community_hf_workshop_bar_visitors_stalker_mechanic_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_bar_visitors_stalker_mechanic_text">
+		<text>Мангун попросил меня починить сломанное оружие одного из его клиентов. Я должен вернуть его, как только оно будет в отличном состоянии. Похоже, на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_bar_visitors_stalker_mechanic_about">
+		<text>Благодаря тем инструментам, которые вы мне принесли, теперь все приходят ко мне за модернизацией! Кстати говоря, еще один сталкер пришел с просьбой починить эту рухлядь - просто чудо, что они так долго продержались с этой штукой. Если ты мне его починишь, я могу подарить тебе собственную мастерскую: это мой способ отплатить за услугу.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_bar_visitors_stalker_mechanic_finish">
+		<text>Поздравляю - я не ожидал, что вы действительно отремонтируете эту вещь, но вот она! Как я уже сказал, вы, безусловно, достойны этих инструментов.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Loner, Darkscape) -->
+	<string id="igi_task_text_community_hf_workshop_dasc_tech_mlr_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_dasc_tech_mlr_text">
+		<text>Техник на лесопилке попросил меня починить сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, на оружии выгравировано клеймо изготовителя, что затрудняет выдачу идентичного оружия той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_dasc_tech_mlr_about">
+		<text>У меня есть оружие, которое нуждается в ремонте, но здесь почти нет материалов, чтобы сделать эту работу. Мне удалось раздобыть инструменты, которые могут послужить портативной мастерской, если вы заинтересованы в ремонте вместо меня?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_dasc_tech_mlr_finish">
+		<text>Спасибо за ремонт. Как мы и договаривались, вот инструменты.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Limpid, Dark Valley) -->
+	<string id="igi_task_text_community_hf_workshop_val_smart_terrain_7_3_bandit_mechanic_stalker_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_val_smart_terrain_7_3_bandit_mechanic_stalker_text">
+		<text>Лимпид попросил меня починить сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, на оружии выгравировано клеймо изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_val_smart_terrain_7_3_bandit_mechanic_stalker_about">
+		<text>Эй, Султан поручил мне починить эту пушку, но она проржавела до чертиков. Отремонтируй его для меня, а я соберу здесь инструменты для твоей собственной мастерской?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_val_smart_terrain_7_3_bandit_mechanic_stalker_finish">
+		<text>Ты снова все выполнил! Хорошая сделка, мужик, вот инструменты.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Hog, Dead City) -->
+	<string id="igi_task_text_community_hf_workshop_cit_killers_merc_mechanic_stalker_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_cit_killers_merc_mechanic_stalker_text">
+		<text>Хог попросил меня починить его сломанное оружие в качестве своего рода испытания. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_cit_killers_merc_mechanic_stalker_about">
+		<text>Я подумал, не хотите ли вы доказать свою состоятельность как техника. У меня тут сломалось оружие - обычно его выбрасывают на запчасти. Вместо этого, как насчет того, чтобы ты починил его для меня, а я могу поискать инструменты для мастерской для себя?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_cit_killers_merc_mechanic_stalker_finish">
+		<text>Congratulations - I didn't expect you to actually repair this thing, but there it is! As I said, you are certainly worthy of these tools.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Xenotech, Cordon) -->
+	<string id="igi_task_text_community_hf_workshop_esc_smart_terrain_5_7_loner_mechanic_stalker_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_esc_smart_terrain_5_7_loner_mechanic_stalker_text">
+		<text>Ксенотех попросил меня починить его сломанное оружие в качестве своего рода теста. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_esc_smart_terrain_5_7_loner_mechanic_stalker_about">
+		<text>Я подумал, не хотите ли вы доказать свою состоятельность как техника. У меня тут сломалось оружие - обычно его выбрасывают на запчасти. Вместо этого, как насчет того, чтобы ты починил его для меня, а я могу поискать инструменты для мастерской для себя?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_esc_smart_terrain_5_7_loner_mechanic_stalker_finish">
+		<text>Поздравляю - я не ожидал, что вы действительно отремонтируете эту вещь, но вот она! Как я уже сказал, вы, безусловно, достойны этих инструментов.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Seryoga, Cordon) -->
+	<string id="igi_task_text_community_hf_workshop_army_south_mechan_mlr_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_army_south_mechan_mlr_text">
+		<text>Серега попросил меня починить его сломанное оружие в качестве своеобразного теста. Я должен вернуть его, когда оно будет в отличном состоянии. На оружии, похоже, вытравлено клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_army_south_mechan_mlr_about">
+		<text>Вы ведь направляетесь вглубь Зоны? Я могу достать вам инструменты для портативной мастерской, но мне нужно убедиться, что вы умеете ими правильно пользоваться. Этого пистолета должно хватить.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_army_south_mechan_mlr_finish">
+		<text>Поздравляю - я не ожидал, что вы действительно отремонтируете эту вещь, но вот она! Как я уже сказал, вы, безусловно, достойны этих инструментов.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Nitro, Jupiter) -->
+	<string id="igi_task_text_community_hf_workshop_jup_b217_stalker_tech_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_jup_b217_stalker_tech_text">
+		<text>Нитро попросил меня починить его сломанное оружие в качестве своеобразного теста. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичный пистолет той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_jup_b217_stalker_tech_about">
+		<text>Я подумал, не хотите ли вы доказать свою состоятельность как техника. У меня тут сломалось оружие - обычно его выбрасывают на запчасти. Вместо этого, как насчет того, чтобы ты починил его для меня, а я могу поискать инструменты для мастерской для себя?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_jup_b217_stalker_tech_finish">
+		<text>Поздравляю - я не ожидал, что вы действительно отремонтируете эту вещь, но вот она! Как я уже сказал, вы, безусловно, достойны этих инструментов.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Bandit, Jupiter) -->
+	<string id="igi_task_text_community_hf_workshop_jup_cont_mech_bandit_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_jup_cont_mech_bandit_text">
+		<text>Техник-бандит попросил меня починить сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо производителя, что затрудняет выдачу идентичного оружия той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_jup_cont_mech_bandit_about">
+		<text>Ммм... Эту хреновину надо починить, а запчастей в моем районе ни хрена нет. Эй, возьми эту штуку из моих рук, и я дам тебе инструменты для мастерской - что скажешь?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_jup_cont_mech_bandit_finish">
+		<text>Хах! Ты снова пришел на помощь! Спасибо, брат. Вот инструменты из мастерской - не обращайте внимания на кровь...</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Monolith, Jupiter) -->
+	<string id="igi_task_text_community_hf_workshop_mechanic_monolith_jup_depo_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mechanic_monolith_jup_depo_text">
+		<text>Техник в депо попросил меня починить его сломанное оружие в качестве своего рода теста. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии вытравлено клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mechanic_monolith_jup_depo_about">
+		<text>Нашим братьям нужна ваша помощь. Для этого я могу дать вам инструменты для обслуживания вашего собственного снаряжения. Но сначала я должен увидеть, как ты продемонстрируешь свое мастерство в ремонте этого оружия. Оно видело много битв и должно быть восстановлено до прежней славы.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mechanic_monolith_jup_depo_finish">
+		<text>Спасибо, что восстановил это оружие, брат. Вот твоя награда.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Novikov, Great Swamp) -->
+	<string id="igi_task_text_community_hf_workshop_mar_base_stalker_tech_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mar_base_stalker_tech_text">
+		<text>Новиков попросил меня отремонтировать сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. На оружии, по-видимому, выгравировано клеймо производителя, что затрудняет выдачу за идентичный пистолет той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mar_base_stalker_tech_about">
+		<text>Эй, какой-то идиот пришел и бросил это ружье. Говорят, он оставил его на ночь в воде, но, по-моему, оно полностью испорчено. Думаешь, ты сможешь его починить? Если что, у меня есть инструменты для мастерской с твоим именем.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mar_base_stalker_tech_finish">
+		<text>Потрясающе, чувак! Ты снова выручил меня! Дай-ка я тебе денег подкину.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (UNISG, LOSTZONE) -->
+	<string id="igi_task_text_community_hf_workshop_jup_depo_isg_tech_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_jup_depo_isg_tech_text">
+		<text>Маус попросил меня починить сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичный пистолет той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_jup_depo_isg_tech_about">
+		<text>Агенту нужно именно это оружие для операции. Проблема только в том, что оно испорчено, а времени на замену нет. Почините его для меня, и я замолвлю словечко о том, чтобы вы получили мастерскую для себя.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_jup_depo_isg_tech_finish">
+		<text>Ваша работа хорошо выполнена. Спасибо. Вот мастер-класс, как я и обещал.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Screw, Army Warehouses) -->
+	<string id="igi_task_text_community_hf_workshop_mil_smart_terrain_7_7_freedom_mechanic_stalker_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mil_smart_terrain_7_7_freedom_mechanic_stalker_text">
+		<text>Винт попросил меня починить его сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. На оружии, похоже, выгравировано клеймо изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mil_smart_terrain_7_7_freedom_mechanic_stalker_about">
+		<text>Йо! Вы видели мой последний прототип? Это довольно... ну, это работа в процессе. Возможно, я потратил слишком много времени на работу над ним, а один из моих заказов должен быть выполнен в ближайшее время. Не могли бы вы позаботиться об этом для меня? В обмен я могу собрать для вас портативную мастерскую.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mil_smart_terrain_7_7_freedom_mechanic_stalker_finish">
+		<text>Ты сумасшедший! Ты - спаситель. Как и было обещано, один из лучших, первоклассных семинаров Freedom - можно использовать в любое время и в любом месте!</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Cleric, Pripyat) -->
+	<string id="igi_task_text_community_hf_workshop_pri_monolith_monolith_mechanic_stalker_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_pri_monolith_monolith_mechanic_stalker_text">
+		<text>Клерик попросил меня починить его сломанное оружие в качестве своего рода испытания. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, на оружии выгравировано клеймо изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_pri_monolith_monolith_mechanic_stalker_about">
+		<text>Похоже, вы искусны в оружейном деле. Восстановите это оружие.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_pri_monolith_monolith_mechanic_stalker_finish">
+		<text>Хорошо. Ты доказал свою ценность.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (MERCENARY, Pripyat) -->
+	<string id="igi_task_text_community_hf_workshop_merc_pri_a18_mech_mlr_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_merc_pri_a18_mech_mlr_text">
+		<text>Наемник-техник на Окраине попросил меня починить его сломанное оружие в качестве своего рода теста. Я должен вернуть его, как только оно будет в отличном состоянии. На оружии, похоже, выгравировано клеймо изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_merc_pri_a18_mech_mlr_about">
+		<text>Я подумал, не хотите ли вы доказать свою состоятельность как техника. У меня тут сломалось оружие - обычно его выбрасывают на запчасти. Вместо этого, как насчет того, чтобы ты починил его для меня, а я могу поискать инструменты для мастерской для себя?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_merc_pri_a18_mech_mlr_finish">
+		<text>Поздравляю - я не ожидал, что вы действительно отремонтируете эту вещь, но вот она! Как я уже сказал, вы, безусловно, достойны этих инструментов.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Monolith2, Pripyat) -->
+	<string id="igi_task_text_community_hf_workshop_mechanic_monolith_kbo_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mechanic_monolith_kbo_text">
+		<text>Техник в сервисном центре в Юбилейном попросил меня починить его сломанное оружие в качестве своего рода теста. Я должен вернуть его, когда оно будет в отличном состоянии. На оружии, похоже, вытравлено клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mechanic_monolith_kbo_about">
+		<text>Вам нужна мастерская, которую вы могли бы назвать своей? Вы можете доказать мне свою ценность, отремонтировав этот инструмент Монолита.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_mechanic_monolith_kbo_finish">
+		<text>Выдающаяся работа, брат. Вот мастерская, которую ты желаешь...</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Dazhbog, Red Forest) -->
+	<string id="igi_task_text_community_hf_workshop_red_greh_tech_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_red_greh_tech_text">
+		<text>Дажьбог попросил меня починить его сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. На оружии, похоже, выгравировано клеймо изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_red_greh_tech_about">
+		<text>Мне нужно починить это оружие. Тебе нужны инструменты для мастерской. Заинтересован?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_red_greh_tech_finish">
+		<text>Хорошо. Ты исправил это для меня.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (BANDIT, Truck Cemetary) -->
+	<string id="igi_task_text_community_hf_workshop_trucks_cemetery_bandit_mechanic_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_trucks_cemetery_bandit_mechanic_text">
+		<text>Техник на Кладбище грузовиков попросил меня починить его сломанное оружие. Я должен вернуть его, как только оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо изготовителя, что затрудняет выдачу идентичного оружия той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_trucks_cemetery_bandit_mechanic_about">
+		<text>Ай, какой-то паршивец повредился рассудком от слишком большого количества глотков водки, а затем был уничтожен химерой физически, когда подошел к тем машинам. Короче говоря, я забрал его пистолет, но он разбит от ада и обратно. Думаешь, ты сможешь его починить? У меня есть ребята, которые устроили засаду на конвой "Долга" и должны принести кое-что вкусненькое, если ты согласен.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_trucks_cemetery_bandit_mechanic_finish">
+		<text>Ты действительно сделал это, мой друг! Спасибо, брат, ты лучший. Наслаждайтесь нашими последними трофеями.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Cardan, Zaton) -->
+	<string id="igi_task_text_community_hf_workshop_zat_a2_stalker_mechanic_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_zat_a2_stalker_mechanic_text">
+		<text>Кардан попросил меня починить его сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_zat_a2_stalker_mechanic_about">
+		<text>Я здесь, чтобы чинить оружие и пить водку, а водка кончилась. Пока я обеспечу следующую партию хорошего товара, не могли бы вы починить для меня эту? Я могу принести тебе инструменты для мастерской, если хочешь.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_zat_a2_stalker_mechanic_finish">
+		<text>Потрясающе! Вот ваши инструменты, как и было обещано, и не стесняйтесь заходить в любое время.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (MERC, Zaton) -->
+	<string id="igi_task_text_community_hf_workshop_zat_stancia_mech_merc_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_zat_stancia_mech_merc_text">
+		<text>Техник-наемник попросил меня починить его сломанное оружие в качестве своеобразного теста. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_zat_stancia_mech_merc_about">
+		<text>Один из наших парней отправляется на секретное задание, и ему нужно починить это оружие, чтобы скрыться. Проблема в том, что я внезапно завален заказами на модернизацию. Если вы поможете, я смогу достать для вас инструменты для мастерской.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_zat_stancia_mech_merc_finish">
+		<text>Черт возьми, вещь девственно чиста! Хорошая работа, вот инструменты для мастерской, как мы и договаривались.</text>
+	</string>
+</string_table>

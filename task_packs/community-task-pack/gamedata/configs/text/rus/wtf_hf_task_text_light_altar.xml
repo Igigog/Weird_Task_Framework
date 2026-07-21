@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<!-- MCM option text -->
+	<string id="igi_task_text_community_hf_light_altar_name">
+		<text>Охота за артефактом для странного устройства</text>
+	</string>
+	
+	<!-- Get Moonlight for Light Altar -->
+	<string id="igi_task_text_community_hf_light_altar_yan_stalker_sakharov_name">
+		<text>Охота за артефактом для странного устройства</text>
+	</string>
+	<string id="igi_task_text_community_hf_light_altar_yan_stalker_sakharov_text">
+		<text>Профессор Сахаров попросил меня найти Лунный свет для исследования и разработки нового устройства.</text>
+	</string>
+	<string id="igi_task_text_community_hf_light_altar_yan_stalker_sakharov_about">
+		<text>В наше распоряжение попало странное устройство, излучающее пси-волны. К счастью, в настоящее время оно деактивировано, и наши текущие исследования с ним позволяют найти способ использовать это свойство с пользой. Если вы получите Лунный свет, чтобы противостоять этому, мы можем завершить наши исследования и дать вам плоды нашего труда в обмен. Плата не предусмотрена, но передового устройства должно быть более чем достаточно, не так ли?</text>
+	</string>
+	<string id="igi_task_text_community_hf_light_altar_yan_stalker_sakharov_finish">
+		<text>Пока вас не было, мы смогли продолжить наши исследования с помощью симуляций. С лунным светом, который вы принесли, мы сможем завершить его. Вот ваша награда, как и было обещано.</text>
+	</string>
+</string_table>

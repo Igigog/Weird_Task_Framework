@@ -1,0 +1,41 @@
+<dialog id="wtf_community_medic_package_ask">
+    <precondition>igi_dialogs.data.community_medic_package.package_in_npc</precondition>
+    <phrase_list>
+        <phrase id="0">
+            <text>wtf_community_medic_package_ask_for_package</text>
+            <next>ask_password</next>
+        </phrase>
+        <phrase id="ask_password">
+            <text>wtf_community_medic_package_ask_password</text>
+            <next>password_wrong1</next>
+            <next>password_wrong2</next>
+            <next>password_correct</next>
+        </phrase>
+        <phrase id="password_wrong1">
+            <text>wtf_community_medic_package_password_wrong1</text>
+            <next>false_password_given</next>
+        </phrase>
+        <phrase id="password_wrong2">
+            <text>wtf_community_medic_package_password_wrong2</text>
+            <next>false_password_given</next>
+        </phrase>
+        <phrase id="password_correct">
+            <text>wtf_community_medic_package_password_correct</text>
+            <next>give_package</next>
+        </phrase>
+        <phrase id="false_password_given">
+            <text>wtf_community_medic_package_false_password_given</text>
+            <next>huh</next>
+        </phrase>
+        <phrase id="huh">
+            <action>igi_dialogs.data.community_medic_package.make_squad_enemy</action>
+            <action>dialogs.break_dialogue</action>
+            <text>wtf_community_medic_package_huh</text>
+        </phrase>
+        <phrase id="give_package">
+            <action>igi_dialogs.data.community_medic_package.give_package</action>
+            <action>igi_dialogs.data.community_medic_package.notify_give_package</action>
+            <text>wtf_community_medic_package_give_package</text>
+        </phrase>
+    </phrase_list>
+</dialog>

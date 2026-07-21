@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<!-- Package -->
+	<string id="igi_task_text_pda_package">
+		<text>Кажется, именно эту посылку нужно доставить.</text>
+	</string>
+	<string id="gt_package_artifact_name">
+		<text>Ящик с артефактом</text>
+	</string>
+	<string id="gt_package_weapon_name">
+		<text>Ящик с оружием</text>
+	</string>
+	<string id="gt_package_medicine_name">
+		<text>Ящик с медикаментами</text>
+	</string>
+	<string id="gt_package_ammunition_name">
+		<text>Ящик с патронами</text>
+	</string>
+</string_table>
