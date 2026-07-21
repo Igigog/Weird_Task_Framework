@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<!-- Get Portable Workshop for Repaired Weapon (Stalker, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_stalker_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_stalker_mechanic_task_text">
+		<text>A Loner mechanic wants me to repair a broken weapon, as a certification of skill for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_stalker_mechanic_task_about">
+		<text>I've scrounged some tools for a portable workshop if you're interested. The catch is that I need this particular weapon repaired.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_stalker_mechanic_task_finish">
+		<text>Perfect! This is some really nice work - oh, here's the workshop as promised.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Bandit, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_bandit_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_bandit_mechanic_task_text">
+		<text>A Bandit mechanic wants me to repair a broken weapon, in exchange for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_bandit_mechanic_task_about">
+		<text>Yo, I've got this gun off some sucker last week but I haven't been able to work on it at all. If you work on it for me, I can get you some workshop tools.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_bandit_mechanic_task_finish">
+		<text>Hey, hey, this looks good! Pristine, even. Ah, here's your workshop tools, man, as promised.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Military, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_army_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_army_mechanic_task_text">
+		<text>A Military mechanic wants me to repair a broken weapon, as a certification of skill for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_army_mechanic_task_about">
+		<text>HQ has cleared me for providing you with some workshop tools. I just need you to repair this weapon as proof of your skill, to make sure it will be used effectively.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_army_mechanic_task_finish">
+		<text>I'm impressed, good work. Here's the portable workshop as discussed.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Duty, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_duty_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_duty_mechanic_task_text">
+		<text>A Duty mechanic wants me to repair a broken weapon, as a certification of skill for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_duty_mechanic_task_about">
+		<text>Hey, a recruit got his rifle chewed up during a mutant attack. It's in terrible shape. If you take care of it for me, I can put in a word about getting you some workshop tools.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_duty_mechanic_task_finish">
+		<text>Excellent! The rookie will be glad to not rely on their pistol from now on. Enjoy the tools.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Mercenary, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_killer_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_killer_mechanic_task_text">
+		<text>A Mercenary mechanic wants me to repair a broken weapon for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_killer_mechanic_task_about">
+		<text>I have another proposition. There's a weapon here that needs repair. Supposed to be spick and span for transport. In exchange, I have some surplus tools I can fashion into a portable workshop.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_killer_mechanic_task_finish">
+		<text>Looks like everything's in order. Thank you</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Clear Sky, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_csky_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_csky_mechanic_task_text">
+		<text>A Clear Sky mechanic wants me to repair a broken weapon for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_csky_mechanic_task_about">
+		<text>We've recovered some weapons from our recent expedition, but they're in pretty bad shape. You fix up one of them, and I can get you some workshop tools.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_csky_mechanic_task_finish">
+		<text>Awesome, man! We're slowly recovering our fighting strength. Here, the tools as promised.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Freedom, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_freedom_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_freedom_mechanic_task_text">
+		<text>A Freedom mechanic wants me to repair a broken weapon, as a certification of skill for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_freedom_mechanic_task_about">
+		<text>Alright man, I've had enough of these gun. Here, see if you can take a crack at it. If you can, I'll get you some of my tools, whaddaya say?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_freedom_mechanic_task_finish">
+		<text>Goddamn, looks as good as new. Well, here's the tools then.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Monolith, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_monolith_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_monolith_mechanic_task_text">
+		<text>A Monolith mechanic wants me to repair a broken weapon. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_monolith_mechanic_task_about">
+		<text>Our brothers require weapons faster than I can work. Restore this one to relieve my burden.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_monolith_mechanic_task_finish">
+		<text>This is satisfactory. The Monolith bestows upon you these workshop tools as a reward.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Ecologist, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_ecolog_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_ecolog_mechanic_task_text">
+		<text>An Ecologist mechanic wants me to repair a broken weapon for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_ecolog_mechanic_task_about">
+		<text>We need this gun repaired soon. It looks like it may be involved in the death of one of our scientists, but my work is piling up. There's hardly any money around at the moment, but I can spare some workshop tools instead.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_ecolog_mechanic_task_finish">
+		<text>Superb, looks like we can use this. Hopefully this can be used to track down the killer. Thank you.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Renegade, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_renegade_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_renegade_mechanic_task_text">
+		<text>A Renegade mechanic wants me to repair a broken weapon, as a certification of skill for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_renegade_mechanic_task_about">
+		<text>Oi, we've took some surplus supplies from a convoy passing through here. Looks like tools for other mechanics around. I can pass them along to you, but I'll need to see if you can handle the work. Repair this junk for me.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_renegade_mechanic_task_finish">
+		<text>Huh, I'll be damned, you followed through. Well, here's the tools as promised.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Sin, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_greh_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_greh_mechanic_task_text">
+		<text>A Sin mechanic wants me to repair a broken weapon, as a certification of skill for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_greh_mechanic_task_about">
+		<text>We ambushed people attempting to transport workshop tools through this place. They look like they'll be useful in your hands, but I must make sure. Here, take this broken weapon and restore it.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_greh_mechanic_task_finish">
+		<text>I knew I had a good eye. Here's the tools as promised.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (UNISG, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_isg_mechanic_task_name">
+		<text>Weapon Repair for Portable Workshop</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_isg_mechanic_task_text">
+		<text>A UNISG mechanic wants me to repair a broken weapon, as a certification of skill for a portable workshop. I should bring it back once it's in excellent condition. There appears to be some maker's mark etched onto the weapon, which makes it difficult to pass off an identical gun of the same make.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_isg_mechanic_task_about">
+		<text>I have another proposition. The covert nature of our operations makes self-sufficiency a necessity in this place. If you're planning on deeper excursions, you'll need a portable workshop to mend your gear. I'll need to know you're up to the task first - clean up this gun for me.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_isg_mechanic_task_finish">
+		<text>This is in pristine condition, good work. Here's the portable workshop.</text>
+	</string>
+</string_table>

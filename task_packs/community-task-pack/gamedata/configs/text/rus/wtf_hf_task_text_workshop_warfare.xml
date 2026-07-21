@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<!-- Get Portable Workshop for Repaired Weapon (Stalker, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_stalker_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_stalker_mechanic_task_text">
+		<text>Механик Одиночка хочет, чтобы я починил сломанное оружие, в качестве сертификации навыка для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравирован какой-то знак изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_stalker_mechanic_task_about">
+		<text>Я раздобыл несколько инструментов для портативной мастерской, если вы заинтересованы. Загвоздка в том, что мне нужно отремонтировать именно это оружие.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_stalker_mechanic_task_finish">
+		<text>Отлично! Это действительно хорошая работа - о, а вот и мастерская, как и было обещано.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Bandit, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_bandit_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_bandit_mechanic_task_text">
+		<text>Механик-разбойник хочет, чтобы я починил сломанное оружие в обмен на портативную мастерскую. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_bandit_mechanic_task_about">
+		<text>Йоу, я снял этот пистолет с какого-то лоха на прошлой неделе, но у меня не было возможности поработать над ним. Если ты поработаешь над ним для меня, я могу дать тебе некоторые инструменты для мастерской.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_bandit_mechanic_task_finish">
+		<text>Эй, эй, это выглядит хорошо! Даже нетронутым. А вот и инструменты для мастерской, как и обещал.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Military, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_army_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_army_mechanic_task_text">
+		<text>Военный механик хочет, чтобы я отремонтировал сломанное оружие, в качестве сертификации навыков для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_army_mechanic_task_about">
+		<text>Штаб разрешил мне предоставить вам некоторые инструменты для мастерской. Мне просто нужно, чтобы вы отремонтировали это оружие в качестве доказательства вашего мастерства, чтобы убедиться, что оно будет использоваться эффективно.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_army_mechanic_task_finish">
+		<text>Я впечатлен, хорошая работа. Вот переносная мастерская, о которой шла речь.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Duty, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_duty_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_duty_mechanic_task_text">
+		<text>Механик Долга хочет, чтобы я починил сломанное оружие, в качестве сертификации навыка для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_duty_mechanic_task_about">
+		<text>Эй, новобранцу разгрызли винтовку во время нападения мутантов. Она в ужасном состоянии. Если ты позаботишься о ней, я могу замолвить словечко о том, чтобы достать тебе инструменты для мастерской.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_duty_mechanic_task_finish">
+		<text>Отлично! Новичок будет рад не полагаться на свой пистолет с этого момента. Наслаждайтесь инструментами.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Mercenary, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_killer_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_killer_mechanic_task_text">
+		<text>Механик-наемник хочет, чтобы я починил сломанное оружие для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии вытравлено клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_killer_mechanic_task_about">
+		<text>У меня есть другое предложение. Здесь есть оружие, которое нуждается в ремонте. Оно должно быть в порядке и пригодно для транспортировки. В обмен у меня есть кое-какие лишние инструменты, которые я могу превратить в портативную мастерскую.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_killer_mechanic_task_finish">
+		<text>Похоже, все в порядке. Спасибо.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Clear Sky, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_csky_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_csky_mechanic_task_text">
+		<text>Механик из Clear Sky хочет, чтобы я починил сломанное оружие для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии вытравлено клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_csky_mechanic_task_about">
+		<text>Мы нашли несколько единиц оружия из нашей недавней экспедиции, но они в довольно плохом состоянии. Почините одно из них, а я принесу вам инструменты для мастерской.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_csky_mechanic_task_finish">
+		<text>Круто, чувак! Мы постепенно восстанавливаем наши боевые силы. Вот, инструменты, как и обещал.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Freedom, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_freedom_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_freedom_mechanic_task_text">
+		<text>Механик Свободы хочет, чтобы я починил сломанное оружие, в качестве сертификации навыка для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравирован какой-то знак изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_freedom_mechanic_task_about">
+		<text>Ладно, мужик, с меня хватит этого пистолета. Вот, посмотри, сможешь ли ты выстрелить. Если сможешь, я дам тебе несколько своих инструментов, что скажешь?</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_freedom_mechanic_task_finish">
+		<text>Черт возьми, выглядит как новенький. Ну, тогда вот инструменты.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Monolith, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_monolith_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_monolith_mechanic_task_text">
+		<text>Механик из Монолита просит меня починить сломанное оружие. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо производителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_monolith_mechanic_task_about">
+		<text>Нашим братьям требуется оружие быстрее, чем я могу работать. Восстанови это, чтобы облегчить мое бремя.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_monolith_mechanic_task_finish">
+		<text>Это удовлетворительно. Монолит дарует вам в награду эти инструменты для мастерской.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Ecologist, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_ecolog_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_ecolog_mechanic_task_text">
+		<text>Механик-эколог просит меня починить сломанное оружие для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравирован какой-то знак изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_ecolog_mechanic_task_about">
+		<text>Нам нужно поскорее отремонтировать это оружие. Похоже, оно может быть причастно к смерти одного из наших ученых, но у меня накопилось много работы. Денег сейчас почти нет, но я могу выделить несколько инструментов для мастерской.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_ecolog_mechanic_task_finish">
+		<text>Превосходно, похоже, мы сможем это использовать. Надеюсь, это можно будет использовать для поиска убийцы. Спасибо.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Renegade, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_renegade_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_renegade_mechanic_task_text">
+		<text>Механик-ренегат хочет, чтобы я починил сломанное оружие, в качестве сертификации навыка для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_renegade_mechanic_task_about">
+		<text>Эй, мы взяли некоторые излишки припасов из проходящего здесь конвоя. Похоже на инструменты для других механиков. Я могу передать их вам, но мне нужно посмотреть, справитесь ли вы с работой. Почините для меня этот хлам.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_renegade_mechanic_task_finish">
+		<text>Хах, будь я проклят, ты все выполнил. Ну, вот инструменты, как и обещал.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (Sin, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_greh_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_greh_mechanic_task_text">
+		<text>Механик Сина хочет, чтобы я починил сломанное оружие, в качестве сертификации навыка для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравирован какой-то знак изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_greh_mechanic_task_about">
+		<text>Мы устроили засаду на людей, пытавшихся провезти через это место инструменты для мастерских. Похоже, они будут полезны в твоих руках, но я должен убедиться. Вот, возьми это сломанное оружие и восстанови его.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_greh_mechanic_task_finish">
+		<text>Я знал, что у меня хороший глаз. Вот инструменты, как и было обещано.</text>
+	</string>
+
+	<!-- Get Portable Workshop for Repaired Weapon (UNISG, Warfare) -->
+	<string id="igi_task_text_community_hf_workshop_sim_default_isg_mechanic_task_name">
+		<text>Ремонт оружия для портативной мастерской</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_isg_mechanic_task_text">
+		<text>Механик UNISG хочет, чтобы я отремонтировал сломанное оружие, в качестве сертификации навыков для портативной мастерской. Я должен вернуть его, когда оно будет в отличном состоянии. Похоже, что на оружии выгравировано клеймо изготовителя, что затрудняет выдачу за идентичное оружие той же марки.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_isg_mechanic_task_about">
+		<text>У меня есть другое предложение. Тайный характер наших операций делает самообеспечение необходимым в этом месте. Если вы планируете более глубокие вылазки, вам понадобится портативная мастерская для починки снаряжения. Сначала мне нужно убедиться, что вы справитесь с задачей - почистите для меня это оружие.</text>
+	</string>
+	<string id="igi_task_text_community_hf_workshop_sim_default_isg_mechanic_task_finish">
+		<text>Это в первозданном состоянии, хорошая работа. Вот переносная мастерская.</text>
+	</string>
+</string_table>

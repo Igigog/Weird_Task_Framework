@@ -1,0 +1,30 @@
+local function parent_section(sec)
+	return SYS_GetParam(0, sec,"parent_section") or sec
+end
+
+ function set_item_condition(id, min_condition, max_condition)
+	local item = get_object_by_id(id)
+    igi_helper.trace_assert(item and IsWeapon(item) and not IsMelee(item))
+	
+	-- Set overall item condition to low
+	item:set_condition(igi_random.rand(min_condition, max_condition)/100)
+	
+	-- Set condition of individual weapon parts to low
+	local sec = parent_section(item:section())
+	local parts = itms_manager.ini_parts:r_string_ex("con_parts_list", sec)
+	local parts_data = {}
+	for _,part in pairs(str_explode(parts, ",")) do
+		parts_data[part] = igi_random.rand(min_condition, max_condition)
+	end
+	se_save_var( item:id(), item:name(), "parts", parts_data )
+end
+
+Break = {
+    status = function (entity)
+        if entity._break_done then return end
+        if get_object_by_id(entity.id) ~= nil then
+           entity._break_done = true
+           set_item_condition(entity.id, 10, 40)
+        end
+    end
+}

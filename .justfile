@@ -1,13 +1,11 @@
-set shell := ["powershell.exe", "-c"]
-
-run:
-    ..\..\ModOrganizer.exe "moshortcut://:Anomaly (DX11-AVX)"
-
-mo2:
-    ..\..\ModOrganizer.exe
-
 pack:
     #!/usr/bin/sh
     VERSION=$(grep '^TASKS_VERSION =' gamedata/scripts/igi_generic_task.script | sed 's/TASKS_VERSION = "\(.*\)".*/\1/')
-    cd ..
-    7z a -tzip "WTF_$VERSION.zip" Weird_Tasks_Framework/gamedata GhenTuong_Task_Pack/gamedata Arszi_Task_Pack/gamedata community-task-pack/gamedata
+    FILENAME="WTF_$VERSION.zip"
+
+    (cd .. && zip -r "Weird_Tasks_Framework/$FILENAME" Weird_Tasks_Framework/gamedata)
+    (cd task_packs && for gamedata in */gamedata; do zip -r "../$FILENAME" "$gamedata"; done)
+
+linkup:
+    -for pack in task_packs/*; do [[ -L "../$(basename $pack)" ]] && rm -f "../$(basename $pack)"; done
+    for pack in task_packs/*; do ln -s $(realpath "$pack") "../$(basename $pack)"; done

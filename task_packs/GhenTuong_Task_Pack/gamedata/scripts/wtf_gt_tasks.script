@@ -1,0 +1,26 @@
+
+itms_manager.gt_use_package = function (obj)
+	local sec = obj:section()
+	local content_key = ini_sys:r_string_ex(sec,"possible_content")
+	local finalized_key = content_key.."_"..tostring(scale_to_player())
+
+	local possible_content = igi_helper.db_ini:collect_section(content_key)
+								or igi_helper.db_ini:collect_section(finalized_key)
+	local content = {}
+	for i=1, ini_sys:r_float_ex(sec, "amount_content") do
+		content[i] = random_key_table(possible_content)
+	end
+	utils_item.delay_event(content, {obj:id()}, "container_tool_af_iam_dummy", true, 5)
+end
+
+function scale_to_player()
+	local rank = db.actor:character_rank()
+
+	if rank >= 8000 then
+		return 3
+	elseif rank > 3000 then
+		return 2
+	else
+		return 1
+	end
+end

@@ -1,0 +1,109 @@
+function on_game_start()
+    RegisterScriptCallback("actor_on_interaction", actor_on_interaction)
+    RegisterScriptCallback("on_before_level_changing", function () level_change = true end)
+    RegisterScriptCallback("actor_on_first_update", actor_on_first_update)
+    RegisterScriptCallback("save_state", save_state)
+    RegisterScriptCallback("load_state", load_state)
+end
+
+level_change = false
+function save_state(m_data)
+    m_data.wtf_community_level_change = level_change
+end
+
+function load_state(m_data)
+    level_change = m_data.wtf_community_level_change
+end
+
+function actor_on_first_update()
+    if level_change then
+        CreateTimeEvent('wtf_community', 'update_level_orders', 15, function ()
+            on_level_changing_army()
+            on_level_changing_duty()
+            return true
+        end)
+    end
+    level_change = false
+end
+
+function on_level_changing_army()
+    local tg = get_story_se_object("agr_smart_terrain_1_6_near_2_military_colonel_kovalski")
+    local task_id = tg and igi_task_manager.validate_task({"community", "orders_army"}, tg.id)
+    if task_id then
+        task_manager.get_task_manager():give_task(task_id)
+        news_manager.send_tip(db.actor, "igi_task_text_community_orders_army_about", nil, tg, 10000)
+    end
+end
+
+function on_level_changing_duty()
+    local tg = get_story_se_object("bar_dolg_general_petrenko_stalker")
+    local task_id = tg and igi_task_manager.validate_task({"community", "orders_duty"}, tg.id)
+    if task_id then
+        task_manager.get_task_manager():give_task(task_id)
+        news_manager.send_tip(db.actor, "igi_task_text_community_orders_duty_about", nil, tg, 10000)
+    end
+end
+
+function actor_on_interaction(key, _, key2)
+    if key ~= "anomalies" or (key2 ~= "emission_end" and key2 ~= "psi_storm_end") then
+        return
+    end
+    local tasks = task_manager.get_task_manager().task_info
+    if (not tasks['hide_from_surge']) and (not tasks['hide_from_psi_storm']) then
+        return
+    end
+
+    CreateTimeEvent('wtf_community', 'emission_quest', 5, function ()
+        local tg = get_story_se_object("yan_stalker_sakharov")
+        local task_id = tg and igi_task_manager.validate_task({"community", "orders_ecolog"}, tg.id)
+        if task_id then
+            task_manager.get_task_manager():give_task(task_id)
+            news_manager.send_tip(db.actor, "igi_task_text_community_orders_ecolog_about", nil, tg, 10000)
+        end
+        return true
+    end)
+end
+
+function kill_squad(id)
+    local members = {}
+    local se_squad = alife_object(id)
+    for se_member in se_squad:squad_members() do
+        members[#members+1] = se_member
+    end
+
+    local out = {}
+    for _, se_member in pairs(members) do
+        out[#out+1] = se_member.id
+
+        local npc = get_object_by_id(se_member.id)
+        npc:kill(npc)
+        se_save_var(se_member.id, npc:name(), "dont_release", true)
+    end
+
+    return out
+end
+
+function let_release(id)
+    se_save_var(id, "", "dont_release", nil)
+    return true
+end
+
+function filter_on_player_level(zones)
+    local actor_level_id = igi_helper.get_object_level_id(alife():object(0))
+    local out = {}
+    for _, zone_id in ipairs(zones) do
+        local se_obj = alife_object(zone_id)
+        if se_obj and igi_helper.get_object_level_id(se_obj) == actor_level_id then
+            out[#out+1] = zone_id
+        end
+    end 
+    return out
+end
+
+function keys(tbl)
+    local out = {}
+    for k in pairs(tbl) do
+        out[#out+1] = k
+    end
+    return out    
+end

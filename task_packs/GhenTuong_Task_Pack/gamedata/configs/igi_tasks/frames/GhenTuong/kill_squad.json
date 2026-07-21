@@ -1,0 +1,19 @@
+{
+	"WTF_VERSION": "4.3",
+    "inputs": {
+        "smart_id": "number",
+        "section_name": "string"
+    },
+	"outputs": {
+		"squad_size": "after_init$ wtf.iter_size(alife_object(|squad.id|):squad_members())"
+	},
+	"entities": [
+	{
+		"section_name":"$ |inputs.section_name|",
+		"smart_id": "$ |inputs.smart_id|",
+		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline"],
+		"CONTROLLER":"@$ igi_target_kill.Kill",
+		"link_id": "squad"
+	}
+    ]
+}

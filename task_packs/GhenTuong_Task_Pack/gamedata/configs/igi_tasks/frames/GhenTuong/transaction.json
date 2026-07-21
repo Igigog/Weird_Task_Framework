@@ -1,0 +1,40 @@
+{
+    "WTF_VERSION": "4.3",
+    "inputs": {
+        "smart_id": "number",
+        "treasure_section": "string",
+        "enemy_faction": "string",
+        "friend_faction": "string"
+    },
+	"outputs": {
+		"traitor_count": "after_init$ wtf.iter_size(alife_object(|traitor.id|):squad_members())",
+		"enemy_count": "after_init$ wtf.iter_size(alife_object(|enemy.id|):squad_members())",
+		"enemies_count": "after_init$ |this.traitor_count| + |this.enemy_count|"
+	},
+    "entities": [
+    {
+		"GEN": "@$ igi_generate.Amount(2)",
+		"CONTROLLER":"@$ igi_target_return.Return",
+		"id": "init$ igi_helper.create_on_smart(|inputs.treasure_section|, |inputs.smart_id|)",
+		"HELPERS": ["@$ wtf.MapIcon('treasure_unique')"]
+	},
+    {
+		"id": "$ |inputs.smart_id|",
+		"CONTROLLER":"@$ igi_target_assault.Assault"
+	},
+
+	{
+		"section_name":"$ igi_helper.db_ini:r_value('gt_guard', |inputs.enemy_faction|)",
+		"smart_id": "$ |inputs.smart_id|",
+		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline"],
+		"link_id": "enemy"
+	},
+
+	{
+		"section_name":"$ igi_helper.db_ini:r_value('gt_guard', |inputs.friend_faction|)",
+		"smart_id": "$ |inputs.smart_id|",
+		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline", "@$ wtf.ChangeFaction(|inputs.enemy_faction|)"],
+		"link_id": "traitor"
+	}
+    ]
+}

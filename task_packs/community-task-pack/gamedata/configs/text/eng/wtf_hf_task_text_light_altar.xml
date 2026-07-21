@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<!-- MCM option text -->
+	<string id="igi_task_text_community_hf_light_altar_name">
+		<text>Artefact Hunt for Strange Device</text>
+	</string>
+	
+	<!-- Get Moonlight for Light Altar -->
+	<string id="igi_task_text_community_hf_light_altar_yan_stalker_sakharov_name">
+		<text>Artefact Hunt for Strange Device</text>
+	</string>
+	<string id="igi_task_text_community_hf_light_altar_yan_stalker_sakharov_text">
+		<text>Professor Sakharov has asked me to find a Moonlight for research and development of a new device.</text>
+	</string>
+	<string id="igi_task_text_community_hf_light_altar_yan_stalker_sakharov_about">
+		<text>We have come into possession of a strange device that emits psi-waves. Fortunately, it is currently deactivated and our current research with it suggests a way to use this property for the better. If you obtain a Moonlight to counteract this, we can complete our research and give you the fruits of our labour in exchange. There is no pay, but a cutting-edge device should be more than enough, yes?</text>
+	</string>
+	<string id="igi_task_text_community_hf_light_altar_yan_stalker_sakharov_finish">
+		<text>While you were gone, we were able to continue our research through simulations. With the Moonlight you have brought, we will be able to complete it. Here is your reward, as promised.</text>
+	</string>
+</string_table>

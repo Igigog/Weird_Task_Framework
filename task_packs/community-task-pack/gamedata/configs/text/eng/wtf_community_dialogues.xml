@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+
+	<!-- medic_package -->
+	<string id="wtf_community_medic_package_ask_for_package">
+		<text>I'm here to get the package.</text>
+	</string>
+
+    <string id="wtf_community_medic_package_ask_password">
+		<text>I don't know what you're talking about. What's the password?</text>
+	</string>
+
+	<string id="wtf_community_medic_package_password_wrong1">
+		<text>Tetridanoch.</text>
+	</string>
+
+	<string id="wtf_community_medic_package_password_wrong2">
+		<text>Teriantroch.</text>
+	</string>
+
+	<string id="wtf_community_medic_package_password_correct">
+		<text>Tetriandoch.</text>
+	</string>
+
+	<string id="wtf_community_medic_package_false_password_given">
+		<text>That's not the password! Who are you?!</text>
+	</string>
+
+	<string id="wtf_community_medic_package_huh">
+		<text>Huh?</text>
+	</string>
+
+	<string id="wtf_community_medic_package_give_package">
+		<text>Here's the package. Be quick - we don't want these army dogs to see you lurking around. Tell Medic he owes us one.</text>
+	</string>
+
+</string_table>

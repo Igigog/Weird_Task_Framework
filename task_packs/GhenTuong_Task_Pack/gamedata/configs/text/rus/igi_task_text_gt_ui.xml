@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<!-- Mutant -->
+	<string id="igi_task_text_gt_zombie">
+		<text>Зомби</text>
+	</string>
+	<string id="igi_task_text_gt_flesh">
+		<text>Плоть</text>
+	</string>
+	<string id="igi_task_text_gt_boar">
+		<text>Кабан</text>
+	</string>
+	<string id="igi_task_text_gt_snork">
+		<text>Снорк</text>
+	</string>
+	<string id="igi_task_text_gt_psy_dog">
+		<text>Пси-собака</text>
+	</string>
+	<string id="igi_task_text_gt_lurker">
+		<text>Луркер</text>
+	</string>
+	<string id="igi_task_text_gt_chimera">
+		<text>Химера</text>
+	</string>
+	<string id="igi_task_text_gt_bloodsucker">
+		<text>Кровосос</text>
+	</string>
+	<string id="igi_task_text_gt_burer">
+		<text>Бюрер</text>
+	</string>
+	<string id="igi_task_text_gt_controller">
+		<text>Контроллёр</text>
+	</string>
+	<string id="igi_task_text_gt_poltergeist">
+		<text>Полтергейст</text>
+	</string>
+	<string id="igi_task_text_gt_gigant">
+		<text>Псевдогигант</text>
+	</string>
+	
+	<!-- Heavy -->
+	<string id="igi_task_text_gt_heavy">
+		<text>Опытный сталкер</text>
+	</string>
+</string_table>

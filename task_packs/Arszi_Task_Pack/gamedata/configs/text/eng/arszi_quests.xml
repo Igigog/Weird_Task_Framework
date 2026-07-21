@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<!-- fetch_meat -->
+	<string id="igi_task_text_arszi_fetch_meat_name">
+		<text>Food for the rookies</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_meat_text">
+		<text>Fanatic has asked me to bring him some supplies</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_meat_about">
+		<text>More and more rookies arrive each day, and because of this Rookie village is a bit low on supplies. I would like to ask you to go and fetch some meat, so we can aid the rookies in need with a warm meal.</text>
+	</string>
+	<string id="igi_task_text_arszi_fetch_meat_finish">
+		<text>Thank you my friend, here is your reward for helping us out!</text>
+	</string>
+
+	<!-- fetch_ecolog -->
+	<string id="igi_task_text_arszi_fetch_ecolog_name">
+		<text>Sample collection</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_ecolog_text">
+		<text>Sakharov has asked me to bring him samples for his studies</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_ecolog_about">
+		<text>You, young man, Stalker or whatever you call yourself! You seem not as simple minded as the others. Maybe you see the value in our work, yes?! Science demands much, when not all. Please would you be so kind to provide for our studies? We cannot risk to run out of samples to catalogue. Please get me what you can! The scientific community will thank you and I will handsomely pay you for your support. Yes?</text>
+	</string>
+	<string id="igi_task_text_arszi_fetch_ecolog_finish">
+		<text>Thank you, young man! Here is your reward.</text>
+	</string>
+
+	<!-- fetch_butcher -->
+	<string id="igi_task_text_arszi_fetch_butcher_name">
+		<text>Find mutant trophies</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_butcher_text">
+		<text>Butcher has asked me to bring him some common trophies</text>
+	</string>
+    <string id="igi_task_text_arszi_fetch_butcher_about">
+		<text>Meat is not the only part of mutants, which might be valuable. Some stalkers prize specific parts of mutants as trophies or lucky charms. You know, like a nice pseudodog fang necklace or a fluffy cat tail hanging from the belt. Anyone can hunt down a mutant and wear its parts as a symbol of achivement, but to create exceptionally spectacular items, it requires real skill! - Bring me some trophies, and I'll craft some stylish accessories out of them. Are you in?</text>
+	</string>
+	<string id="igi_task_text_arszi_fetch_butcher_finish">
+		<text>Some fine materials you've gathered. Well done, hunter.</text>
+	</string>
+</string_table>

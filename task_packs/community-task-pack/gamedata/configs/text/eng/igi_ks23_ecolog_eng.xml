@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+
+	<string id="st_wpn_igi_ks23_ecolog">
+		<text>KS-23 "Blowgun"</text>
+	</string>
+
+	<string id="st_wpn_igi_ks23_ecolog_descr">
+		<text>Modified smoothbore carbine, multifunctional police weapon designed for crowd control, selective force, mental and chemical influence on offenders. The rifle is operated using sliding forend, which is rigidly connected to the improved bolt. Unlike the basic design the barrel is locked when fired by rotating the bolt. Trigger mechanism is of trigger-type. Ammunition is fed from three-round magazine, located below the barrel.
+
+			%c[d_purple] • %c[ui_gray_2] Mass: %c[ui_gray_1]3,85 kg\n
+			%c[d_purple] • %c[ui_gray_2] Length: %c[ui_gray_1]1040 mm\n
+			%c[d_purple] • %c[ui_gray_2] Barrel length: %c[ui_gray_1]510 mm\n
+			%c[d_purple] • %c[ui_gray_2] Cartridge: %c[ui_gray_1]Dart\n
+			%c[d_purple] • %c[ui_gray_2] Caliber: %c[ui_gray_1]23 mm\n
+			%c[d_purple] • %c[ui_gray_2] Action: %c[ui_gray_1]Pump action\n
+			%c[d_purple] • %c[ui_gray_2] Effective range: %c[ui_gray_1]up to 100 m\n
+			%c[d_purple] • %c[ui_gray_2] Max. range: %c[ui_gray_1]150 m\n
+			%c[d_purple] • %c[ui_gray_2] Feed system: %c[ui_gray_1]Underbarrel tube which holds 3 cartridges, plus one cartridge in the chamber .\n
+			%c[d_purple] • %c[ui_gray_2] Sight: %c[ui_gray_1]Integrated 3.4x scope\n</text>
+	</string>
+
+	<string id="ammo_23_igi_eco">
+		<text>23 mm Dart</text>
+	</string>
+
+	<string id="ammo_23_igi_eco_s">
+		<text>23 mm Dart</text>
+	</string>
+
+	<string id="ammo_23_eco_descr">
+		<text>This ammunition was developed by ChAZ Research Institute according to the special order from Professors Herman and Ozersky, after a successful series of studies in the center of the zone in 2012.  It is a 23mm caliber dart with an ampoule filled with organic liquid crystals synthesized under a strong vacuum.  Because of extreme complexity and high cost of manufacturing, these darts are highly valued by research groups deployed on the territory of ChAZ. Their only disadvantage is the extremely fragile construction, requiring careful handling.</text>
+	</string>
+
+	<string id="igi_task_text_community_tracking_shot_name">
+		<text>Beacon of Science</text>
+	</string>
+	<string id="igi_task_text_community_tracking_shot_about">
+		<text>Young man, would you like to contribute to science? We are on the verge of a terrific discovery in the field of genetic research! We have the basic data to create the CHAZ Mutant Behaviorism Theory. In a nutshell: our research is based on the genetic information of the behavior of every living organism on the planet. That being said, yes, we have a job for you. You will have to travel out to a certain location and locate the mutant species we want. In addition, you will be issued registered equipment in the form of a special rifle with a telescopic sight and a few syringe darts to mark the target. Again, to mark, but not to kill. Upon completion of the assignment, you will be required to return the rifle and shells.  Please note that this ammunition is not live ammunition. This is a valuable one-of-a-kind piece made to order at the ChAZ Research Institute and the distance of the shot is very important. So I have a convincing request to mark the targets at the longest possible distance, otherwise the capsule containing the substance may break and fail to mark the mutant organism.</text>
+	</string>
+	<string id="igi_task_text_community_tracking_shot_text">
+		<text>The chief of scientists gave me the job of shooting a special ammunition, 
+			giving me a rifle and special liquid darts.
+			I am contractually obliged to move out according to the coordinates given to me. 
+			I need to mark a mutant species and try not to kill it.
+			The chief added: The longer the distance of the shot, the more likely it is that the capsule inside the dart will remain intact.</text>
+	</string>
+	<string id="igi_task_text_community_tracking_shot_finish">
+		<text>Good job, stalker.</text>
+	</string>
+
+</string_table>

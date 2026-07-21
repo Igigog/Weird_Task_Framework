@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+
+	<!-- Sid bribery -->
+	<string id="igi_task_text_community_sid_bribery_name">
+		<text>The More You Know</text>
+	</string>
+	<string id="igi_task_text_community_sid_bribery_text">
+		<text>My job is to leave the package at the spot near the checkpoint.</text>
+	</string>
+	<string id="igi_task_text_community_sid_bribery_about">
+		<text>So, here's the deal... I need you to deliver a package to the military, the contents of which should not concern you. You'll take it to the checkpoint down in the south. The soldiers are a bit twitchy, so they'll shoot you on sight. You'll have to drop off the package to the southeast of the checkpoint, behind the fence. I'll mark the spot on your map. Don't talk to anyone and try not to attract any attention. Once you drop off the package, get back to me.</text>
+	</string>
+	<string id="igi_task_text_community_sid_bribery_finish">
+		<text>Let me call the commander... Yes... He got the package. Well done. Here's your reward. And don't talk to anyone about this, understood?</text>
+	</string>
+
+		<!-- Orders! Ecolog -->
+	<string id="igi_task_text_community_orders_ecolog_name">
+		<text>Order! Daily Research</text>
+	</string>
+	<string id="igi_task_text_community_orders_ecolog_text">
+		<text>I should research the anomaly and bring any anomalous substances to Sakharov.</text>
+	</string>
+	<string id="igi_task_text_community_orders_ecolog_about">
+		<text>Attention, all researchers! The emission has finally subsided, and our instruments indicate an immense surge in psionic energy. Immediate action is required - proceed at once to survey the anomalous zones and conduct rigorous measurements. Any artefacts recovered must be brought to my bunker without delay. We cannot afford to squander this unique opportunity for scientific advancement!</text>
+	</string>
+	<string id="igi_task_text_community_orders_ecolog_finish">
+		<text>Ah, this is what you've found? Yes... splendid - excellent work! I'll analyze the attributes of this new artefact; hopefully, it will provide us with fresh insights into the emissions and their effects on anomalies. Take your payment as a token of appreciation for your efforts, dear colleague.</text>
+	</string>
+
+		<!-- Orders! Duty -->
+	<string id="igi_task_text_community_orders_duty_name">
+		<text>Order! Reporting for Duty</text>
+	</string>
+	<string id="igi_task_text_community_orders_duty_text">
+		<text>I need to clear the territory of Duty from any mutants.</text>
+	</string>
+	<string id="igi_task_text_community_orders_duty_about">
+		<text>Colonel Petrenko here, addressing all soldiers in the bar. Report for duty and get organized - break time is over. A new pack of blind dogs has been spotted near the Bar. Eliminating them is an order to ensure the safety of incoming stalkers. The first soldier to complete the task will receive proper payment.</text>
+	</string>
+	<string id="igi_task_text_community_orders_duty_finish">
+		<text>Good work. Take your pay and fall back in. I have other matters to handle - dismissed.</text>
+	</string>
+
+		<!-- Orders! Army -->
+	<string id="igi_task_text_community_orders_army_name">
+		<text>Order! Keeping Watch</text>
+	</string>
+	<string id="igi_task_text_community_orders_army_text">
+		<text>I should scout the locations around Agroprom.</text>
+	</string>
+	<string id="igi_task_text_community_orders_army_about">
+		<text>All personnel entering Agroprom are required to scout the designated areas. Conduct reconnaissance with discretion and eliminate any threats on sight. Report back to me upon completion of your orders.</text>
+	</string>
+	<string id="igi_task_text_community_orders_army_finish">
+		<text>Is that everything you have to report? Good. I'll relay this to the next patrols before moving out. Good work, soldier. You are dismissed.</text>
+	</string>
+
+		<!--  -->
+	<string id="igi_task_text_community_medic_package_name">
+		<text>Between Law And Profit</text>
+	</string>
+	<string id="igi_task_text_community_medic_package_text">
+		<text>My job is to contact a squad of mercenaries and receive a package.</text>
+	</string>
+	<string id="igi_task_text_community_medic_package_about">
+		<text>My boys are in quite a pinch: they were... Uhh... Delivering a special package my way. The origin of the package might or might not have involved military research, and the army might be tailing them. I need you to contact my boys, receive the package, and return it here safely. Remember the password: Tetriandoch.</text>
+	</string>
+	<string id="igi_task_text_community_medic_package_finish">
+		<text>Exactly what your mission required. Nice work. Here's your pay, and a little bit extra from me.</text>
+	</string>
+
+</string_table>

@@ -1,0 +1,78 @@
+local TASK_STATUSES = igi_subtask.TASK_STATUSES
+
+function ready_to_finish(se_obj)
+    local item = get_object_by_id(se_obj.id)
+	if not item then return false end
+
+    local threshold = 90
+
+    -- Reject if overall weapon condition is less than threshold
+    if item.condition and item:condition() < (threshold/100) then
+        return false
+    end
+
+    -- Reject if one or more parts have a condition less than threshold
+    local parts = se_load_var(item:id(), item:name(), "parts")
+    for k,v in pairs(parts or {}) do
+        if string.find(k, "prt_w_") and v < threshold then
+            return false
+        end
+    end
+
+    return true
+end
+
+Repair = {}
+function Repair.status(entity)
+    local se_obj = alife_object(entity.id)
+	if not se_obj then return TASK_STATUSES.FAILED end
+	if ready_to_finish(se_obj) then return TASK_STATUSES.READY_TO_FINISH end
+    return TASK_STATUSES.RUNNING
+end
+
+function Repair.quest_target(entity)
+    return entity.id
+end
+
+function Repair.test(entity)
+	local assert_test = igi_tests.assert_test
+	entity._test_stage = (entity._test_stage or 0) + 1
+
+	local function repair_item(item)
+		if not item then return end
+		
+		-- Set overall item condition to low
+		item:set_condition(100)
+	
+		-- Set condition of individual weapon parts to low
+		local sec = SYS_GetParam(0, item:section(),"parent_section") or item:section()
+		local parts = itms_manager.ini_parts:r_string_ex("con_parts_list", sec)
+		local parts_data = {}
+		for i,part in pairs(str_explode(parts, ",")) do
+			parts_data[part] = 100
+		end
+		se_save_var( item:id(), item:name(), "parts", parts_data )
+	end
+
+	-- Go to Item
+	if entity._test_stage == 1 then
+		local se_obj = alife_object(entity.id)
+		assert_test(se_obj, "Entity does not exist")
+		igi_tests.travel_to_se_obj(se_obj)
+	-- Break Item
+	elseif entity._test_stage == 2 then
+		local obj = get_object_by_id(entity.id)
+		assert_test(obj, "Entity is not online when player travels to it")
+
+		wtf_hf_tasks.set_item_condition(entity.id, 10, 40)
+	elseif entity._test_stage == 4 then
+		local se_obj = alife_object(entity.id)
+		local obj = get_object_by_id(se_obj.id)
+		repair_item(obj)
+
+	elseif entity._test_stage == 5 then
+		assert_test(entity.status == "READY_TO_FINISH", "Quest did not complete")
+		
+		return true
+	end
+end
