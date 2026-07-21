@@ -9,3 +9,9 @@ pack:
 linkup:
     -for pack in task_packs/*; do [[ -L "../$(basename $pack)" ]] && rm -f "../$(basename $pack)"; done
     for pack in task_packs/*; do ln -s $(realpath "$pack") "../$(basename $pack)"; done
+
+docs:
+    cd docs && npm start
+
+deploy-docs:
+    cd docs && npm run deploy
