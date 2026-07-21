@@ -1,3 +1,0 @@
-# Override language detection
-*.script linguist-language=Lua
-*.ltx linguist-language=INI

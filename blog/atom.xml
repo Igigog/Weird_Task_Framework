@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://igigog.github.io/Weird_Task_Framework/blog</id>
+    <title>Weird Task Framework Blog</title>
+    <updated>2026-06-21T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://igigog.github.io/Weird_Task_Framework/blog"/>
+    <subtitle>Weird Task Framework Blog</subtitle>
+    <entry>
+        <title type="html"><![CDATA[New documentation!]]></title>
+        <id>https://igigog.github.io/Weird_Task_Framework/blog/new-site</id>
+        <link href="https://igigog.github.io/Weird_Task_Framework/blog/new-site"/>
+        <updated>2026-06-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[arstarst]]></summary>
+        <content type="html"><![CDATA[<p>arstarst</p>
+<!-- -->
+<p>asatrastars</p>]]></content>
+        <author>
+            <name>Igigog</name>
+            <uri>https://github.com/igigog</uri>
+        </author>
+    </entry>
+</feed>

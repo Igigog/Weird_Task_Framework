@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="rss.xsl"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Weird Task Framework Blog</title>
+        <link>https://igigog.github.io/Weird_Task_Framework/blog</link>
+        <description>Weird Task Framework Blog</description>
+        <lastBuildDate>Sun, 21 Jun 2026 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[New documentation!]]></title>
+            <link>https://igigog.github.io/Weird_Task_Framework/blog/new-site</link>
+            <guid>https://igigog.github.io/Weird_Task_Framework/blog/new-site</guid>
+            <pubDate>Sun, 21 Jun 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[arstarst]]></description>
+            <content:encoded><![CDATA[<p>arstarst</p>
+<!-- -->
+<p>asatrastars</p>]]></content:encoded>
+        </item>
+    </channel>
+</rss>
