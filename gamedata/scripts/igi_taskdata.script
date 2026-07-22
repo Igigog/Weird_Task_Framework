@@ -129,6 +129,7 @@ function finalize_task_cache(task_data, task_id, tg_id)
 	CACHE.entities = CACHE.entities or {}
 	CACHE.frames = CACHE.frames or {}
 	CACHE.current_frame = 0
+	CACHE.quest_targets = {}
 
 	trace_dbg("finalized CACHE", CACHE)
 	return CACHE
