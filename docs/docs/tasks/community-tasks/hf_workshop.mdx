@@ -1,0 +1,8 @@
+import {TaskView} from "@site/src/components/Tasks";
+
+# Weapon Repair for Portable Workshop
+
+<TaskView taskPack="community-task-pack" task="Community/hf_workshop.json" substitutions={{
+          "has_alife_info(|CACHE.tg_name| .. '_upgrade_tier_3')": "Mechanic has all instruments",
+            "not has_alife_info('wtf_hf_workshop_done')": "Quest was never done before"
+}}/>
