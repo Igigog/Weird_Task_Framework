@@ -1,0 +1,145 @@
+---
+sidebar_position: 2
+---
+
+# Creating your first quest
+
+In this tutorial, we'll go through creation of a simple quest using Weird Task Framework. I will not touch advanced topics; for that, head to [Documentation](/documentation/intro). Let's get started.
+
+What we want to do is a simple fetch-style quest. We'll be fetching exactly 6 Monolith patches, and we'll be giving them to any Freedom or Mercenary medic. It is not much, but it is honest work.
+
+## Folder structure
+
+Quests in WTF are structured into task packs. Here's the structure of the smallest task pack possible:
+
+```
+example_task_pack/
+└── gamedata
+    └── configs
+        └── igi_tasks
+            └── tasks
+                └── example
+                    └── example_task.json
+```
+
+Of note here is the folder `example`: you can choose the name freely, and it will be used for MCM to indicate your task pack. The file `example_task.json` is your first quest; here it is:
+
+```json title="example_task.json"
+{
+    "WTF_VERSION": "4.3",
+    "entities": [],
+    "quest_givers": []
+}
+```
+
+... Not very exciting. It doesn't do anything, and you can't even get it from any task giver. Let's add rewards, task givers and an icon, while we're at it.
+
+## Task givers and rewards
+
+```json title="example_task.json"
+{
+    "WTF_VERSION": "4.3",
+    "entities": [],
+    "quest_givers": [
+        {"Medic": true, "Freedom": true},
+        {"Medic": true, "Mercenary": true}
+    ],
+    "rewards": {
+        "money": 2000,
+        "goodwill": 20
+    },
+    "icon": "ui_inGame2_PD_master_boevih_sistem"
+}
+```
+
+With this, WTF will add your quest to all Freedom and Mercenary medics in the game. Go ahead, check it out!
+
+There is quite a bit of flexibility WTF gives you for defining both quest givers and rewards. The rewards we have now are static; there is a way to make them dynamic and change them depending on the quest.
+
+## Entity
+
+```json title="example_task.json"
+{
+    "WTF_VERSION": "4.3",
+    "entities": [
+    {
+        "CONTROLLER":"@$ igi_target_fetch.Fetch",
+        "section_name":"monolith_patch",
+        "amount": 6
+    }
+    ],
+    "quest_givers": [
+        {"Medic": true, "Freedom": true},
+        {"Medic": true, "Mercenary": true}
+    ],
+    "rewards": {
+        "money": 2000,
+        "goodwill": 20
+    },
+    "icon": "ui_inGame2_PD_master_boevih_sistem"
+}
+```
+
+I have added the entity for you. Don't thank me. The fields of it should be self-explanatory: `amount: 6` means we need to collect 6 of `section_name: monolith_patch`, which is the monolith patch. Of note is the field `CONTROLLER`: that's the part that defines the logic of your quest. `igi_target_fetch.Fetch` is built with fetch-type quests in mind: it ensures the player collected `amount` of `section_name` items, then marks the quest as ready to finish.
+
+## Description
+
+To add description, add text files for every translation you're targeting. Feel free to name the files whatever you want:
+
+```
+example_task_pack/
+└── gamedata
+    └── configs
+        ├── igi_tasks
+        │   └── tasks
+        │       └── example
+        │           └── example_task.json
+        └── text
+            ├── eng
+            │   └── wtf_example_tasks.xml
+            └── rus
+                └── wtf_example_tasks.xml
+```
+
+Here's what's inside:
+
+```xml title="text/eng/wtf_example_tasks.xml"
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+    <string id="igi_task_text_example_example_task_name">
+        <text>Monolith hunt</text>
+    </string>
+    <string id="igi_task_text_example_example_task_text">
+        <text>You were asked to hunt monolith for the good of all stalkers</text>
+    </string>
+    <string id="igi_task_text_example_example_task_about">
+        <text>These monolith fanatics are on the killing spree again. Our guys can't sleep at night with all the shooting. Can't you help us out?</text>
+    </string>
+    <string id="igi_task_text_example_example_task_finish">
+        <text>Thank you my friend, here is your reward for helping us out!</text>
+    </string>
+</string_table>
+```
+
+WTF expects you to format your text id's like this:
+
+```ini
+title               = igi_task_text_$FOLDER_$FILENAME_name
+descr               = igi_task_text_$FOLDER_$FILENAME_text
+job_descr           = igi_task_text_$FOLDER_$FILENAME_about
+task_complete_descr = igi_task_text_$FOLDER_$FILENAME_finish
+```
+
+Which, in case of `igi_tasks/tasks/example/example_task.json`, corresponds to:
+```
+igi_task_text_example_example_task_name
+igi_task_text_example_example_task_text
+igi_task_text_example_example_task_about
+igi_task_text_example_example_task_finish
+```
+
+----
+
+With this, the quest is created. Three files, two of them translations, and a total of about 20 lines of quest configuration, where only 3 lines actually describe the logic. Is it the most fancy quest you've ever seen? Probably not. It is the simplest quest I could manage.
+
+It is still a fully implemented quest though. You should be proud of yourself.
