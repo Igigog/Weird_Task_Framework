@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([["220"],{1912(s){s.exports=JSON.parse('{"blogBasePath":"/Weird_Task_Framework/blog","blogTitle":"Blog","authorsListPath":"/Weird_Task_Framework/blog/authors"}')}}]);

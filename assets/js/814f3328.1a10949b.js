@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([["833"],{5513(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"New documentation!","permalink":"/Weird_Task_Framework/blog/new-site","unlisted":false,"date":"2026-06-21T00:00:00.000Z"}]}')}}]);
