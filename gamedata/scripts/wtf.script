@@ -67,8 +67,9 @@ end
 
 function extend(tbl, tbl2)
     for _, v in ipairs(tbl2) do
-        tbl[#tbl+1] = v
+        tbl[#tbl + 1] = v
     end
+    return tbl
 end
 
 CreateSquad = {
