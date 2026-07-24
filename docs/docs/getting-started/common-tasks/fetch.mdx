@@ -2,3 +2,85 @@
 ---
 
 # Fetch quest
+
+```json
+{
+    "WTF_VERSION": "4.3",
+    "description": {
+        "targets": [
+            "$ igi_description.item_name_by_section(|item.section_name|)",
+            "$ igi_target_fetch.fetch_amount_description(|item.section_name|, |item.amount|)"
+        ]
+    },
+    "entities": [
+    {
+        "link_id": "item",
+        "CONTROLLER":"@$ igi_target_fetch.Fetch",
+        "section_name": "$ wtf.shuffle(|CACHE.sections|)[1]",
+        "amount":"$ igi_random.rand(1,4)"
+    }
+    ],
+    "rewards": {
+        "money": "$ igi_target_fetch.calculate_cost(|item.section_name|, |item.amount|)",
+        "goodwill": 30
+    },
+    "quest_givers": [
+        {"Sakharov": true}
+    ],
+    "icon": "ui_inGame2_Specimen_Controller",
+    "sections": [
+        "patch_monolith",
+        "patch_duty",
+        "patch_freedom"
+    ]
+}
+```
+
+Ah yes, the fetch quest. The one where it all started. I don't like 'em, but you might, so here's a config for you. It is more complicated than what you've seen in [Creating your first quest](/getting-started/first-task), so let me explain.
+
+### Randomizing
+
+`amount` and `section_name` are randomized now - that'd make it a bit less boring. `igi_random.rand(a, b)` gives you a number between a and b, inclusive. `wtf.shuffle(|CACHE.sections|)[1]` basically says "take whatever is in `sections` part of the config, randomize the order and give me the first thing".
+
+### Description
+
+Fetch task from [Creating your first quest](/getting-started/first-task) had static description. Since we're randomizing things, we actually need to show what's expected from the player. `description.target` is the dynamic part of the description, and it will show whatever is in the array comma-separated. `item_name_by_section` should be self-explanatory, `igi_target_fetch.fetch_amount_description` shows amount and how much you have in inventory.
+
+### Reward
+
+Calculating the cost of the items you've collected is surprisingly complicated - you have normal items like patches, but then you have multiuse items, items with conditions, items with batteries... `igi_target_fetch.calculate_cost` abstracts it all out, and you get a nice number.
+
+## Fetch Weapon
+
+```json
+{
+    "WTF_VERSION": "4.3",
+    "description": {
+        "targets": [
+            "$ igi_description.item_name_by_section(|frame.section_name|)",
+            "$ igi_target_fetch.fetch_amount_description(|frame.section_name|, |frame.amount|)"
+        ]
+    },
+    "entities": [
+    {
+        "src": "core/fetch_item_condition.json",
+        "section_name": "wpn_aps",
+        "amount": 1,
+        "min_condition": 0.8,
+        "CONTROLLER":"@$ igi_target_fetch.Fetch",
+        "_ids": {},
+        "link_id": "frame"
+    }
+    ],
+    "rewards": {
+        "money": "@$ igi_target_fetch.calculate_cost(|frame.section_name|, |frame.amount|, |frame._ids|)",
+        "goodwill": 30
+    },
+    "quest_givers": [
+        {"Sakharov": true}
+    ],
+    "icon": "ui_inGame2_Specimen_Controller"
+}
+```
+
+Fetching guns is a bit of a pain - to calculate the reward, you need to know exactly which gun will be taken from inventory by `Fetch` controller. `Fetch` saves that data in field `_ids` - we can make it empty for initial reward calculation and it will be re-calculated on quest finish.
