@@ -2,7 +2,11 @@ local TASK_STATUSES = igi_subtask.TASK_STATUSES
 local trace_assert = igi_helper.trace_assert
 
 function ready_to_finish(obj_data)
-	local ids = get_fetched_items(obj_data.section_name)
+	local ids = get_fetched_items(
+		obj_data.section_name,
+		obj_data.min_condition,
+		obj_data.max_condition
+	)
 	local amount = obj_data.amount or 1
 	for id, itm_amount in pairs(ids) do
 		if amount <= 0 then
@@ -14,11 +18,20 @@ function ready_to_finish(obj_data)
 	return amount <= 0
 end
 
-function get_fetched_items(section)
+local function is_scaled_by_condition(sec)
+	if IsItem("multiuse", sec) then return false end
+	if IsItem("device", sec) then return false end
+	if IsItem("battery", sec) then return false end
+	return true
+end
+
+function get_fetched_items(section, min_condition, max_condition)
 	local total = 0
 	local ids = {}
 	local is_multi = IsItem("multiuse",section)
 	local is_ammo = IsItem("ammo",section)
+	local min_condition = min_condition or 0
+	local max_condition = max_condition or 1
 
 	local function itr(temp, obj)
 		if not string.find(obj:section(), section) then return end
@@ -29,8 +42,12 @@ function get_fetched_items(section)
 			ids[obj:id()] = obj:ammo_get_count()
 			total = total + obj:ammo_get_count()
 		else
-			ids[obj:id()] = 1
-			total = total + 1
+			local condition = obj:condition()
+			local condition_good = condition >= min_condition and condition <= max_condition
+			if (not is_scaled_by_condition(section)) or condition_good then
+				ids[obj:id()] = 1
+				total = total + 1
+			end
 		end
 	end
 	db.actor:iterate_inventory(itr, nil)
@@ -42,13 +59,6 @@ function get_item_base_cost(section)
 	---@diagnostic disable-next-line: undefined-field
 	local cost = ini_sys:r_float_ex(section,"cost") * (1 / max_uses)
 	return cost
-end
-
-local function is_scaled_by_condition(sec)
-	if IsItem("multiuse",sec) then return false end
-	if IsItem("device",sec) then return false end
-	if IsItem("battery", sec) then return false end
-	return true
 end
 
 function give_arti_container(obj)
@@ -105,7 +115,7 @@ end
 function calculate_cost(section_name, amount, ids)
 	local base_cost = get_item_base_cost(section_name)
 	local scaled_by_condition = is_scaled_by_condition(section_name)
-	if ids and scaled_by_condition then
+	if ids and next(ids) and scaled_by_condition then
 		local money = 0
 		for id in pairs(ids) do
 			local obj = get_object_by_id(id)
