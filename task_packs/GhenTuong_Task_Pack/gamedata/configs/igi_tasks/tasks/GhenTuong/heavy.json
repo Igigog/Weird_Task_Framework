@@ -8,7 +8,7 @@
 	"frames": [
 	{
 		"src": "GhenTuong/kill_squad.json",
-		"smart_id": "$ wtf.shuffle(igi_finder.get_smarts(1,1))[1]",
+		"smart_id": "?$ wtf.shuffle(igi_finder.get_smarts(1,1))[1]",
 		"section_name":"$ 'gt_stalker_heavy_' .. wtf_gt_tasks.scale_to_player() .. '_' .. |this.faction|",
 		"squad_size": 4,
 		"link_id": "frame",
