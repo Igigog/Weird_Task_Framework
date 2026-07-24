@@ -2,3 +2,41 @@
 ---
 
 # Visit quest
+
+```json
+{
+    "WTF_VERSION": "4.3",
+    "description": {
+        "locations": "$ wtf.map(|smarts.ids|, igi_description.get_smart_name_by_id)"
+    },
+    "entities": [
+    {
+        "CONTROLLER":"@$ igi_target_visit.Visit",
+        "GEN": "@$ igi_generate.Split('ids', 'id')",
+        "_ids": "$ wtf.shuffle(igi_finder.get_smarts(0,0))",
+        "ids": [
+            "?$ |this._ids|[1]",
+            "?$ |this._ids|[2]",
+            "?$ |this._ids|[3]"
+        ],
+        "link_id": "smarts",
+
+        "subtask": true
+    }
+    ],
+    "rewards": {
+        "money": "$ 200 + 100 * #|smarts.ids|",
+        "goodwill": "$ 10 + 5 * #|smarts.ids|"
+    },
+    "quest_givers": [
+        {"Sakharov": true}
+    ],
+    "icon": "ui_inGame2_Put_v_pripyat"
+}
+```
+
+Visit-type task was a contribution from Arszi's task pack. The core idea is simple: there is a list of objects, and you need to get close to them. In this case we take 3 random smarts from current level - `?$` macros ensure all three exist.
+
+`GEN` field is a special thing called generator. Its purpose is to take one entity and create more of it. I use `igi_generate.Split` to *split* a list of ids into single entities, each of them having only one id.
+
+`"subtask": true` is an experimental WTF feature which allows for a single task to have multiple task markers on a map. I want to keep it one way or another, but I'm not sure if I'll keep the current implementation/API.
