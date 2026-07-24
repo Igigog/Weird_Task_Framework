@@ -30,7 +30,10 @@ end
 
 function get_description(CACHE)
 	local content = {}
-	for label, v in pairs(CACHE.description or {}) do
+	local sorted_keys = wtf.keys(CACHE.description or {})
+	table.sort(sorted_keys)
+	for _, label in pairs(sorted_keys) do
+		local v = CACHE.description[label]
 		content[#content+1] = item_to_string(v, label)
 	end
 
