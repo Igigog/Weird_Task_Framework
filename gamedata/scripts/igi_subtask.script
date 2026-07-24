@@ -91,8 +91,7 @@ function update_entity_status(entity, CACHE)
 end
 
 local function get_frame_with_entities(frame, CACHE)
-	if not frame.src then
-		frame.src = "inline"
+	if frame.entities then
 		return frame
 	end
 
