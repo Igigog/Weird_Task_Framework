@@ -5,3 +5,5 @@ taskmaker/__pycache__
 .vscode
 out.txt
 run.lua
+
+task_packs/example_task_pack
