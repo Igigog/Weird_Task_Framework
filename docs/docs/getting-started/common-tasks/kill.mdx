@@ -5,28 +5,28 @@
 
 ```json
 {
-	"WTF_VERSION": "4.3",
-	"description": {
-		"locations": ["$ igi_description.get_smart_name_by_id(|squad.smart_id|)"]
-	},
-	"entities": [
+    "WTF_VERSION": "4.3",
+    "description": {
+        "locations": ["$ igi_description.get_smart_name_by_id(|squad.smart_id|)"]
+    },
+    "entities": [
     {
-		"section_name":"bandit_sim_squad_alpha",
-		"smart_id": "?$ wtf.shuffle(igi_finder.get_smarts(1,1))[1]",
-		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline"],
-		"CONTROLLER":"@$ igi_target_kill.Kill",
-		"squad_size": 3,
-		"link_id": "squad"
-	}
+        "section_name":"bandit_sim_squad_alpha",
+        "smart_id": "?$ wtf.shuffle(igi_finder.get_smarts(1,1))[1]",
+        "HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline"],
+        "CONTROLLER":"@$ igi_target_kill.Kill",
+        "squad_size": 3,
+        "link_id": "squad"
+    }
     ],
-	"icon": "ui_inGame2_PD_master_boevih_sistem",
-	"rewards": {
-		"money": "@$ 2000 + 400 * |squad.squad_size|",
-		"goodwill": "@$ 20 + 4 * |squad.squad_size|"
-	},
-	"quest_givers": [
-		{"Mechanic": true}
-	]
+    "icon": "ui_inGame2_PD_master_boevih_sistem",
+    "rewards": {
+        "money": "@$ 2000 + 400 * |squad.squad_size|",
+        "goodwill": "@$ 20 + 4 * |squad.squad_size|"
+    },
+    "quest_givers": [
+        {"Mechanic": true}
+    ]
 }
 ```
 
