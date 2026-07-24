@@ -79,7 +79,9 @@ CreateSquad = {
         igi_helper.trace_assert(type(entity.smart_id) == "number", "smart_id is not a number")
 
         local smart_name = alife_object(entity.smart_id):name()
-        entity.id = utils_obj.create_squad(entity.section_name, smart_name).id
+        local se_obj = utils_obj.create_squad(entity.section_name, smart_name)
+        entity.id = se_obj.id
+        entity.squad_size = iter_size(se_obj:squad_members())
     end,
 
     on_del = function (entity)
