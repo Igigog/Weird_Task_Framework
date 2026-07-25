@@ -1,0 +1,7 @@
+import {TaskView} from "@site/src/components/Tasks";
+
+# Equip
+
+<TaskView taskPack="GhenTuong_Task_Pack" task="GhenTuong/weapon.json" substitutions={{
+	"db.actor:community_goodwill(igi_helper.get_community_by_id(|CACHE.task_giver_id|))": "Goodwill"
+}}/>

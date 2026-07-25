@@ -1,0 +1,8 @@
+import {TaskView} from "@site/src/components/Tasks";
+
+# Supply chain
+
+<TaskView taskPack="GhenTuong_Task_Pack" task="GhenTuong/supply.json" substitutions={{
+		  "db.actor:character_rank()": "Player rank",
+	"|frame.enemies_count|": "Amount of enemies"
+}}/>
