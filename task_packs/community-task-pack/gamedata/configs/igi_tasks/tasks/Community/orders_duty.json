@@ -4,9 +4,12 @@
 	"quest_givers": [],
 	"icon": "ui_inGame2_Put_v_pripyat",
 	"requirements": [
-		"$ db.actor:character_community() == 'actor_dolg'",
+		"$ not game_relations.is_factions_enemies('dolg', get_actor_true_community())",
 		"$ level.name() == 'l05_bar'",
 		"$ |lair1.has_dogs| or |lair2.has_dogs|"
+	],
+	"preconditions": [
+		"$ get_actor_true_community() == 'dolg'"
 	],
 	"entities": [
 		{
