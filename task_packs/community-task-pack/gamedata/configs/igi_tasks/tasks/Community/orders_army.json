@@ -4,8 +4,11 @@
 	"quest_givers": [],
 	"icon": "ui_inGame2_Put_v_pripyat",
 	"requirements": [
-		"$ db.actor:character_community() == 'actor_army'",
+		"$ not game_relations.is_factions_enemies('army', get_actor_true_community())",
 		"$ level.name() == 'l03_agroprom'"
+	],
+	"preconditions": [
+		"$ get_actor_true_community() == 'army'"
 	],
 	"description": {
         "locations": "$ wtf.map(|smart.smarts|, igi_description.get_smart_name_by_id)"

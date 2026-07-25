@@ -4,7 +4,10 @@
 	"quest_givers": [],
 	"icon": "ui_inGame2_Put_v_pripyat",
 	"requirements": [
-		"$ db.actor:character_community() == 'actor_ecolog'"
+		"$ not game_relations.is_factions_enemies('ecolog', get_actor_true_community())"
+	],
+	"preconditions": [
+		"$ get_actor_true_community() == 'ecolog'"
 	],
 	"description": {
 		"locations": ["$ igi_description.anomaly_name_by_binder(|anomaly.binder|)"],
