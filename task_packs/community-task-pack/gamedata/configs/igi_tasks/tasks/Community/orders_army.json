@@ -11,14 +11,20 @@
 		"$ get_actor_true_community() == 'army'"
 	],
 	"description": {
-        "locations": "$ wtf.map(|smart.smarts|, igi_description.get_smart_name_by_id)"
+		"locations": "$ wtf.map(|smart.smart_ids|, igi_description.get_smart_name_by_id)"
 	},
 	"entities": [
 		{
-			"smarts": "$ igi_finder.get_smarts(0,0)",
-            "GEN": "@$ igi_generate.Split('smarts', 'id', 3)",
+			"smarts": "$ wtf.shuffle(igi_finder.get_smarts(0,0))",
+			"smart_ids": [
+				"?$ |this.smarts|[1]",
+				"?$ |this.smarts|[2]",
+				"?$ |this.smarts|[3]"
+			],
+			"GEN": "@$ igi_generate.Split('smart_ids', 'id')",
             "CONTROLLER": "@$ igi_target_visit.Visit",
-			"link_id": "smart"
+			"link_id": "smart",
+			"subtask": true
 		}
 	],
 	"rewards": {
