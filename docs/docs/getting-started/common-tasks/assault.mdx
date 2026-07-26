@@ -2,3 +2,37 @@
 ---
 
 # Assault quest
+
+```json
+{
+    "WTF_VERSION": "4.3",
+    "description": {
+        "locations": ["$ igi_description.get_smart_name_by_id(|smart.id|)"]
+    },
+    "entities": [
+    {
+        "section_name":"simulation_mix_dogs",
+        "smart_id": "$ |smart.id|",
+        "HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline"],
+        "squad_size": 4,
+        "link_id": "squad"
+    },
+
+    {
+        "id": "?$ wtf.shuffle(igi_finder.get_smarts(1,1))[1]",
+        "CONTROLLER":"@$ igi_target_assault.Assault",
+        "link_id": "smart"
+    }
+    ],
+    "rewards": {
+        "money": "@$ 3000 + 200 * |squad.squad_size|",
+        "goodwill": "@$ 30 + 2 * |squad.squad_size|"
+    },
+    "icon": "ui_iconsTotal_mutant",
+    "quest_givers": [
+        {"Mechanic": true}
+    ]
+}
+```
+
+Assault-type quests are pretty much [Kill](/getting-started/common-tasks/kill)-type quests, but instead of killing a specific squad, you need to clear a location of all enemies. As such, we'll need two entities - `smart` is the location to be cleared, and `squad` is some enemy we spawn there. Notice that `squad` entity has no controller - we don't need to do anything with this _concrete_ squad, it's just spawned on a smart we need to clear.
