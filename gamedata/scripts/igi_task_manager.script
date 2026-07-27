@@ -382,13 +382,11 @@ IgiTask = {
 			tmrs_tasks.active_tasks[self.id] = nil
 		end
 
-		if self.last_check_task == "fail" then
-			local ok, err = pcall(Igi.finish_quest, self.id)
-			if not ok then
-				on_task_crashed(err)
-			end
-			news_manager.send_task(db.actor, "fail", tsk)
+		local ok, err = pcall(Igi.finish_quest, self.id)
+		if not ok then
+			on_task_crashed(err)
 		end
+		news_manager.send_task(db.actor, "fail", tsk)
 	end,
 
 	save_state = function (self)
