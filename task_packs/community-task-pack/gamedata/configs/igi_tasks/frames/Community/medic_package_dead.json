@@ -3,7 +3,8 @@
     "inputs": {
         "squad_id": "number",
         "smart_id": "number",
-        "package_section": "string"
+        "package_section": "string",
+        "commander_id": "number"
     },
 	"entities": [
     {
@@ -20,7 +21,7 @@
     {
         "section_name":"contact_lost_pda",
         "id": "init$ alife_create_item(|this.section_name|, alife_object(|this.parent_id|)).id",
-        "parent_id": "$ alife_object(|friend_squad.id|):commander_id()",
+        "parent_id": "$ (|inputs.commander_id|)",
 
         "CONTROLLER": "@$ igi_target_return.Return"
     },

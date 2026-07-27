@@ -43,7 +43,9 @@
         "smart_id":"?$ |frame.smarts|[2]",
         "squad_id": "init$ |frame.squad_id|",
         "package_section": "$ |frame_alive.package_section|",
+        "commander_id": "init$ |frame.commander_id|",
 
+        "pda_msg": "init$ igi_helper.pda_message('igi_task_text_community_medic_package_dead_msg', |CACHE.task_giver_id|, 'beep_1') or 1",
         "link_id": "frame_dead"
     }
     ],

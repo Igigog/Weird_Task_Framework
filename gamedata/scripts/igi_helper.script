@@ -172,3 +172,15 @@ function give_to_actor(section_name)
 	news_manager.relocate_item(db.actor, "in", section_name, 1)
 	return id
 end
+
+function pda_message(msg, sender_id, sound)
+	local se_obj = alife_object(sender_id)
+	if not se_obj then
+		dynamic_news_helper.send_tip(msg, nil, nil, 30)
+		return
+	end
+
+	local name = game.translate_string(se_obj:character_name())
+	local icon = se_obj:character_icon()
+	dynamic_news_helper.send_tip(msg, name, nil, 30, icon, sound, 'npc')
+end
