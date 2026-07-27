@@ -135,7 +135,10 @@ function activate_next_frame(CACHE)
 	disable_entities(CACHE)
 
     igi_helper.trace_dbg("Enable: enable entities", new_frame, frame)
+	local entities_before = frame.entities
+	frame.entities = nil
 	igi_text_processor.resolve_table_macros(frame, "init", igi_text_processor.get_link_context(CACHE, frame))
+	frame.entities = entities_before
     get_frame_with_entities(frame, CACHE)
 
 	-- Add and generate
@@ -179,7 +182,7 @@ function disable_entities(CACHE)
 	-- De-initialize
 	for i=#CACHE.entities, 1, -1 do
 		local entity = CACHE.entities[i]
-		local link_context = igi_text_processor.get_link_context(CACHE)
+		local link_context = igi_text_processor.get_link_context(CACHE, entity)
 		igi_text_processor.resolve_table_macros(entity, "before_del", link_context)
 
 		local controller = igi_taskdata.get_controller(entity, CACHE)
