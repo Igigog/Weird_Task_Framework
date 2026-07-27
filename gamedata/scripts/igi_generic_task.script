@@ -107,7 +107,7 @@ function initialise_CACHE(task_id)
 	process_macros(task_id, "1")
 
 	if igi_mcm.get_options_value("autosave_before") then
-		local title = igi_description.get_task_text(CACHE.description_key, "name", CACHE.task_giver_id)
+		local title = igi_description.get_task_text(CACHE, "name", CACHE.task_giver_id)
 		CreateTimeEvent("igi_mcm_features", "autosave_before", 0, function()
 			exec_console_cmd("save " .. "task " .. title .. " started")
 			return true
@@ -163,7 +163,7 @@ function quest_text(task_id,field)
 		field = "done"
 	end
 
-	local text = igi_description.get_task_text(CACHE.description_key, field, CACHE.task_giver_id)
+	local text = igi_description.get_task_text(CACHE, field, CACHE.task_giver_id)
 	local desc = field ~= "name" and ("\\n "..igi_description.get_description(CACHE)) or ""
 	local mark = igi_mcm.get_options_value("wtf_task_mark") and "[WTF] " or ""
 	return mark..text..desc
@@ -195,7 +195,7 @@ function finish_quest(task_id)
 		igi_rewards.give_fail_penalty(CACHE)
 	end
 	if igi_mcm.get_options_value("autosave_after") then
-		local title = igi_description.get_task_text(CACHE.description_key, "name", CACHE.task_giver_id)
+		local title = igi_description.get_task_text(CACHE, "name", CACHE.task_giver_id)
 		CreateTimeEvent("igi_mcm_features", "autosave_after", 0, function()
 			exec_console_cmd("save " .. "task " .. title .. " finished")
 			return true
