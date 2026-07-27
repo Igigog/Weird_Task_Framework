@@ -7,9 +7,9 @@
         "friend_faction": "string"
     },
 	"outputs": {
-		"traitor_count": "after_init$ wtf.iter_size(alife_object(|traitor.id|):squad_members())",
-		"enemy_count": "after_init$ wtf.iter_size(alife_object(|enemy.id|):squad_members())",
-		"enemies_count": "after_init$ |this.traitor_count| + |this.enemy_count|"
+		"traitor_count": "init$ wtf.iter_size(alife_object(|traitor.id|):squad_members())",
+		"enemy_count": "init$ wtf.iter_size(alife_object(|enemy.id|):squad_members())",
+		"enemies_count": "init$ |this.traitor_count| + |this.enemy_count|"
 	},
     "entities": [
     {
