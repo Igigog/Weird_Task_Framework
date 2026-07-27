@@ -5,7 +5,7 @@
         "section_name": "string"
     },
 	"outputs": {
-		"squad_size": "after_init$ wtf.iter_size(alife_object(|squad.id|):squad_members())"
+		"squad_size": "init$ wtf.iter_size(alife_object(|squad.id|):squad_members())"
 	},
 	"entities": [
     {
