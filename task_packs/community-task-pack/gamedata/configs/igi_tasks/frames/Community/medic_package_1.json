@@ -4,7 +4,8 @@
         "smart": "number"
     },
     "outputs": {
-        "squad_id": "del$ |friend_squad.id|",
+        "squad_id": "init$ |friend_squad.id|",
+        "commander_id": "init$ alife_object(|friend_squad.id|):commander_id()",
         "finished_in_time": "del$ |timer.finished_in_time|"
     },
 	"entities": [

@@ -68,6 +68,9 @@
 	<string id="igi_task_text_community_medic_package_about">
 		<text>My boys are in quite a pinch: they were... Uhh... Delivering a special package my way. The origin of the package might or might not have involved military research, and the army might be tailing them. I need you to contact my boys, receive the package, and return it here safely. Remember the password: Tetriandoch.</text>
 	</string>
+	<string id="igi_task_text_community_medic_package_dead_msg">
+		<text>It seems like you're too late. Army bastards might've got a hold on my package... This will affect your pay. Check the squad leader, maybe we'll get a clue.</text>
+	</string>
 	<string id="igi_task_text_community_medic_package_finish">
 		<text>Exactly what your mission required. Nice work. Here's your pay, and a little bit extra from me.</text>
 	</string>
