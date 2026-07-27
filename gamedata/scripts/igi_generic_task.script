@@ -189,7 +189,11 @@ function finish_quest(task_id)
 		-- normal case: sourced entities can't be referred to in rewards
 		igi_subtask.disable_entities(CACHE)
 	end
-	igi_rewards.collect_and_give_rewards(CACHE)
+	if (CACHE.status ~= igi_subtask.TASK_STATUSES.FAILED) then
+		igi_rewards.collect_and_give_rewards(CACHE)
+	else
+		igi_rewards.give_fail_penalty(CACHE)
+	end
 	if igi_mcm.get_options_value("autosave_after") then
 		local title = igi_description.get_task_text(CACHE.description_key, "name", CACHE.task_giver_id)
 		CreateTimeEvent("igi_mcm_features", "autosave_after", 0, function()
