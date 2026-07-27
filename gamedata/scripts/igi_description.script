@@ -46,7 +46,7 @@ end
 
 function get_rewards_description(CACHE)
 	if not igi_mcm.get_options_value("show_rewards") then return "" end
-	local low = igi_rewards.get_rewards(CACHE)
+	local low = igi_rewards.get_rewards(CACHE.rewards, CACHE)
 	if (low.money == 0 and low.goodwill == 0) then
 		return ""
 	end
