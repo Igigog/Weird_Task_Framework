@@ -77,6 +77,7 @@ Link = {
 
 Macro       = {
 	link_context = {},
+	link_pattern = "%b||",
 
     new = function(self, str)
 		if type(str) ~= "string" then return end
@@ -126,7 +127,7 @@ Macro       = {
 	end,
 
 	link_iterator = function (self)
-        return string.gmatch(self.macro, "%b||")
+		return string.gmatch(self.macro, Macro.link_pattern)
 	end
 }
 
@@ -269,6 +270,30 @@ function eval_maybe_macro(val, CACHE, this_entity)
 	return eval_logic_macro(val, link_context, true)
 end
 
+function linkup_string(str, link_context)
+	links = {}
+	for dep in string.gmatch(str, Macro.link_pattern) do
+		local link = Link:from_str(dep)
+
+		links[#links + 1] = link
+		local val = link_context:get(link)
+
+		local macro = Macro:new(val)
+		if macro then
+			collect_links(macro, link_context, links, link.link_id)
+		end
+	end
+
+	local transient_fields = {}
+	resolve_all_links(links, "", link_context, transient_fields)
+	local out = string.gsub(str, Macro.link_pattern, function(dep)
+		local link = Link:from_str(dep)
+		igi_helper.trace_dbg("linkup_string", link, link_context)
+		return tostring(link_context[link.link_id][link.field])
+	end)
+	reset_transient_fields(transient_fields)
+	return out
+end
 --------------- Testing --------------------------
 --[[
 igi_helper = {

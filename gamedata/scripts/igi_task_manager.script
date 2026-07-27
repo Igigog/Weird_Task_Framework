@@ -162,7 +162,7 @@ function dialogs.drx_sl_text_mechanic_has_ordered_task_to_give( a, b )
 		dialogs.last_task_id = task_id
 		local ok = pcall(Igi.setup_quest, task_id)
 		if ok then
-			local ok, text = pcall(Igi.get_task_text, CACHE.description_key, "about", CACHE.task_giver_id)
+			local ok, text = pcall(Igi.get_task_text, CACHE, "about", CACHE.task_giver_id)
 			if ok then
 				return text
 			else
@@ -571,7 +571,7 @@ old_get_task_complete_text = axr_task_manager.get_task_complete_text
 function axr_task_manager.get_task_complete_text(task_id)
 	local CACHE = Igi.get_cache(task_id)
 	if CACHE then
-		local ok, text = pcall(Igi.get_task_text, CACHE.description_key, "finish", CACHE.task_giver_id)
+		local ok, text = pcall(Igi.get_task_text, CACHE, "finish", CACHE.task_giver_id)
 		return ok and text or ""
 	end
 
@@ -582,7 +582,7 @@ old_get_task_job_description = axr_task_manager.get_task_job_description
 function axr_task_manager.get_task_job_description( task_id )
 	local CACHE = Igi.get_cache(task_id) or Igi.get_setup(task_id)
 	if CACHE then
-		local ok, text = pcall(Igi.get_task_text, CACHE.description_key, "about", CACHE.task_giver_id)
+		local ok, text = pcall(Igi.get_task_text, CACHE, "about", CACHE.task_giver_id)
 		return ok and text or ""
 	end
 
@@ -598,7 +598,7 @@ function dialogs.text_npc_has_task(a,b)
 	if CACHE then
 		local ok, text = pcall(function()
 			Igi.setup_quest(task_id)
-			return Igi.get_task_text(CACHE.description_key, "about", CACHE.task_giver_id)
+			return Igi.get_task_text(CACHE, "about", CACHE.task_giver_id)
 		end)
 		if not ok then
 			on_task_crashed(text)

@@ -95,13 +95,13 @@ end
 
 function get_task_text_values(CACHE)
 	local mark = igi_mcm.get_options_value("wtf_task_mark") and "[WTF] " or ""
-	local title = mark .. get_task_text(CACHE.description_key, "name", CACHE.task_giver_id)
+	local title = mark .. get_task_text(CACHE, "name", CACHE.task_giver_id)
 	local text = get_description(CACHE) .. "\\n" .. get_rewards_description(CACHE)
 	local icon = CACHE.icon or "ui_iconsTotal_mutant"
 	return title, text, icon
 end
 
-function get_task_text(desc_key, field, tg_id)
+function get_raw_task_text(desc_key, field, tg_id)
 	desc_key = desc_key or ""
 	local se_tg = alife_object(tg_id)
 	local tg_name = se_tg:section_name() ~= "m_trader" and se_tg:section_name() or se_tg:name()
@@ -122,4 +122,12 @@ function get_task_text(desc_key, field, tg_id)
 	
 	-- fallback to basic field
 	return game.translate_string(TEXT_HEADER..field)
+end
+
+function get_task_text(CACHE, field, tg_id)
+	local raw = get_raw_task_text(CACHE.description_key or "", field, tg_id)
+	return igi_text_processor.linkup_string(
+		raw,
+		igi_text_processor.get_link_context(CACHE)
+	)
 end
