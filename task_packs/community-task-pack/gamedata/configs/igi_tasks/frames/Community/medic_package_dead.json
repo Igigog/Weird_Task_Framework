@@ -8,7 +8,12 @@
 	"entities": [
     {
         "id": "$ |inputs.squad_id|",
-        "HELPERS": ["@$ wtf.ForceOnline", "@$ wtf.NoOfflineCombat", "@$ wtf.PinToSmart"],
+        "HELPERS": [
+            "@$ wtf.ForceOnline",
+            "@$ wtf.NoOfflineCombat",
+            "@$ wtf.PinToSmart",
+            "@$ wtf.Dead"
+        ],
         "link_id": "friend_squad"
     },
 
