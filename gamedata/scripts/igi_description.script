@@ -47,12 +47,12 @@ function get_rewards_description(CACHE)
 		return ""
 	end
 
-	local money = math.floor((low.money or 0) * 2 / 1000 + 0.5) * 1000 / 2
-	local goodwill = math.floor((low.goodwill or 0) * 2 / 100 + 0.5) * 100 / 2
+	local money = math.floor((low.money or 0) * 2 / 1000) * 1000 / 2
+	local goodwill = math.floor((low.goodwill or 0) * 2 / 100) * 100 / 2
 	return game.translate_string(TEXT_HEADER .. "rewards")
-		.. ' ~' ..
+		.. ' ' ..
 		tostring(money) ..
-		" " .. game.translate_string(TEXT_HEADER .. "money") .. ", ~"
+		" " .. game.translate_string(TEXT_HEADER .. "money") .. ", "
 		.. tostring(goodwill) ..
 		" " .. game.translate_string(TEXT_HEADER .. "goodwill")
 end
