@@ -246,7 +246,10 @@ IgiTask = {
 		db.actor:give_task(t, 0, false, 0)
 	end,
 
-	check_task = function (self)
+	check_task            = function(self)
+		if (self.task_crashed) then
+			return
+		end
 		-- Timer for less pressure
 		local tg = time_global()
 		if (tg < self.last_update_time) then
@@ -263,7 +266,7 @@ IgiTask = {
 
 		local ok, t_title = pcall(Igi.quest_text, self.id, "name")
 		if not ok then
-			on_task_crashed(t_title, self.id)
+			on_task_crashed(t_title, self.id, self)
 			return
 		end
 		if self.current_title ~= t_title then
@@ -275,7 +278,7 @@ IgiTask = {
 
 		local ok, t_descr = pcall(Igi.quest_text, self.id, "text")
 		if not ok then
-			on_task_crashed(t_descr, self.id)
+			on_task_crashed(t_descr, self.id, self)
 			return
 		end
 		if self.current_descr ~= t_descr then
@@ -287,7 +290,7 @@ IgiTask = {
 
 		local ok, t_targets = pcall(Igi.quest_target, self.id)
 		if not ok then
-			on_task_crashed(t_targets, self.id)
+			on_task_crashed(t_targets, self.id, self)
 			return
 		end
 		if (self.current_target ~= t_targets[1]) then
@@ -317,7 +320,7 @@ IgiTask = {
 		-- status functor
 		local ok, t = pcall(Igi.quest_status, self.id)
 		if not ok then
-			on_task_crashed(t, self.id)
+			on_task_crashed(t, self.id, self)
 			return
 		end
 		if t == "complete" or t == "fail" or t == "reversed" then
@@ -619,9 +622,12 @@ function load_state(m_data)
 end
 
 crash_count = 0
-function on_task_crashed(err, task_id)
+function on_task_crashed(err, task_id, igi_task)
 	if task_id then
 		task_manager.get_task_manager():set_task_failed(task_id)
+	end
+	if igi_task then
+		igi_task.task_crashed = true
 	end
 	trace_error("Task crashed: ", err, callstack(false, true))
 	trace_error("Task " .. (task_id and task_id .. " " or "") 

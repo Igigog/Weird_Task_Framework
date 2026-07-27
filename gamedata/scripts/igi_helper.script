@@ -118,6 +118,7 @@ function trace_error(title, ...)
 	local val = wtf_marker ..  " ERROR: " .. title .. "\n" .. format_log({...})
 	printf(val)
 	printf("-------------------------")
+	flush()
 	if igi_mcm.get_options_value("debug") then
 		news_manager.send_tip(db.actor, val:gsub("\n", "\\n"), nil, nil, 30000)
 	end
