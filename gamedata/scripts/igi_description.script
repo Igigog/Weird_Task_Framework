@@ -5,7 +5,11 @@ TEXT_HEADER = "igi_task_text_"
 
 function get_smart_name_by_id(id)
 	if tonumber(id) and SIMBOARD.smarts[id] then
-		local smart = alife_object(id)
+		local smart = SIMBOARD.smarts[id].smrt
+		if ui_options.curr_localization() == "rus" then -- russian translation has no levels
+			local lvl_name = alife():level_name(game_graph():vertex(smart.m_game_vertex_id):level_id())
+			return game.translate_string(lvl_name) .. ". " .. game.translate_string("st_" .. smart:name() .. "_name")
+		end
 		return "st_" .. smart:name() .. "_name"
 	end
 end
