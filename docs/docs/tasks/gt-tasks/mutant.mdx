@@ -5,3 +5,27 @@ import {TaskView} from "@site/src/components/Tasks";
 <TaskView taskPack="GhenTuong_Task_Pack" task="GhenTuong/mutant.json" substitutions={{
 	"|frame.squad_size|": "Amount of enemies"
 }}/>
+
+<br/>
+
+Just like [Neutralization](/tasks/gt-tasks/heavy), Mutants is a classic Kill-type quest, and it uses the same scaling: level 1 with 0 rank, level 2 with 3000 rank, and level 3 with 8000 rank. The levels differ in mutants they spawn: at level 1 you'll be fighting boars, at level 3 - chimeras and controllers.
+
+```ini
+[gt_mutant_1] 
+gt_zombie
+gt_flesh
+gt_boar
+
+[gt_mutant_2] 
+gt_snork
+gt_psy_dog
+gt_lurker
+gt_poltergeist
+gt_bloodsucker
+
+[gt_mutant_3]
+gt_chimera
+gt_burer
+gt_controller
+gt_gigant
+```
