@@ -49,5 +49,8 @@
 	<string id="igi_task_text_community_tracking_shot_finish">
 		<text>Good job, stalker.</text>
 	</string>
+	<string id="igi_task_text_community_tracking_shot_pda_msg">
+		<text>Calibrating... We are getting the data! Thank you very much, stalker, come back to get your reward.</text>
+	</string>
 
 </string_table>

@@ -49,5 +49,8 @@
 	<string id="igi_task_text_community_tracking_shot_finish">
 		<text>Хорошая работа, сталкер</text>
 	</string>
+	<string id="igi_task_text_community_tracking_shot_pda_msg">
+		<text>Калибрую... Мы начали получать данные! Наука благодарит вас, сталкер, можете возвращаться за вашим вознаграждением.</text>
+	</string>
 
 </string_table>

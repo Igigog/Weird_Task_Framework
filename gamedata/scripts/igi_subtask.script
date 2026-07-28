@@ -28,11 +28,8 @@ end
 
 function process_subtasks(CACHE)
 	for _, entity in pairs(CACHE.entities) do
-		if entity.status == TASK_STATUSES.RUNNING
-				or entity.status == TASK_STATUSES.READY_TO_FINISH then
-			if update_entity_status(entity, CACHE) then
-				igi_helper.trace_dbg("on_subtask_status_change", CACHE, entity)
-			end
+		if update_entity_status(entity, CACHE) then
+			igi_helper.trace_dbg("on_subtask_status_change", CACHE, entity)
 		end
 	end
 
