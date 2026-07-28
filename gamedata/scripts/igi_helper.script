@@ -182,5 +182,5 @@ function pda_message(msg, sender_id, sound)
 
 	local name = game.translate_string(se_obj:character_name())
 	local icon = se_obj:character_icon()
-	dynamic_news_helper.send_tip(msg, name, nil, 30, icon, sound, 'npc')
+	dynamic_news_helper.send_tip(msg, name, nil, 7, icon, sound, 'npc')
 end

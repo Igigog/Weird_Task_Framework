@@ -3,30 +3,20 @@
 	"CREDITS": "\\nNerkokant - idea\\nIgigog - scripting\\nMich - KS23 Blowgun\\nBilly, Medic - descriptions",
 	"description": {
 		"targets": ["monster_vegetarian"],
-		"locations": ["$ igi_description.get_smart_name_by_id(|smart.id|)"]
+		"locations": ["$ igi_description.get_smart_name_by_id(|start.smart_id|)"]
 	},
-	"entities": [
-		{
-			"ids": "$ igi_finder.get_smarts(0,0)",
-			"id": "?$ wtf.shuffle(|this.ids|)[1]",
-			"name": "$ alife_object(|this.id|):name()",
-			"link_id": "smart"
-		},
+	"frames": [
+	{
+		"src": "Community/tracking_shot/start.json",
+		"smart_id": "?$ wtf.shuffle(igi_finder.get_smarts(0,0))[1]",
+		"link_id": "start"
+	},
+	{
+		"src": "Community/tracking_shot/end.json",
+		"gun_id": "init$ |start.gun_id|",
 
-		{
-			"section_name":"simulation_flesh",
-			"smart_id": "init$ |smart.id|",
-			"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline"],
-			"CONTROLLER":"@$ igi_target_shoot.Shoot",
-        	"weapon": "wpn_igi_ks23_ecolog"
-		},
-
-		{
-			"section_name":"wpn_igi_ks23_ecolog",
-			"id": "init$ igi_helper.give_to_actor(|this.section_name|)",
-			"bullet": "init$ igi_helper.give_to_actor('ammo_23_igi_eco')",
-			"CONTROLLER":"@$ igi_target_return.Return"
-		}
+		"pda_msg": "init$ igi_helper.pda_message('igi_task_text_community_tracking_shot_pda_msg', |CACHE.task_giver_id|) or 1"
+	}
 	],
 	"rewards": {
 		"money": 8000,
