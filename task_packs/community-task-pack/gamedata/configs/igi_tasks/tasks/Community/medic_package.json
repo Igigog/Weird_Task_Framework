@@ -16,7 +16,7 @@
 
     "frames": [
     {
-        "src": "Community/medic_package_1.json",
+        "src": "Community/medic_package/start.json",
         "smart": "?$ |this.smarts|[1]",
 
         "level": "$ wtf.shuffle(igi_finder.get_levels(1,1))[1]",
@@ -31,7 +31,7 @@
         "NEXT_FRAME": "@$ |frame.finished_in_time| and |frame_alive.FRAME_ID| or |frame_dead.FRAME_ID|"
     },
     {
-        "src": "Community/medic_package_alive.json",
+        "src": "Community/medic_package/alive.json",
         "squad_id": "init$ |frame.squad_id|",
         "package_section": "special_delivery_case",
 
@@ -39,7 +39,7 @@
         "NEXT_FRAME": -1
     },
     {
-        "src": "Community/medic_package_dead.json",
+        "src": "Community/medic_package/dead.json",
         "smart_id":"?$ |frame.smarts|[2]",
         "squad_id": "init$ |frame.squad_id|",
         "package_section": "$ |frame_alive.package_section|",
