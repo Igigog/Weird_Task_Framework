@@ -15,8 +15,8 @@
     },
     {
         "section_name":"simulation_flesh",
-        "smart_id": "init$ |inputs.smart_id|",
-        "HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ScriptedSquad"],
+        "id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
+        "HELPERS": ["@$ wtf.ScriptedSquad"],
         "CONTROLLER":"@$ igi_target_shoot.Shoot",
         "weapon": "wpn_igi_ks23_ecolog"
     }
