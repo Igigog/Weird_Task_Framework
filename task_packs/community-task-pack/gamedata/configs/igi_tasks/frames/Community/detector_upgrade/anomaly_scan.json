@@ -1,0 +1,30 @@
+{
+    "inputs": {
+        "zone_ids": "table",
+        "pda_messages": "table"
+    },
+
+    "outputs": {
+        "detector_id": "init$ |detector.id|"
+    },
+    
+    "entities": [
+    {
+        "section_name":"detector_anomaly",
+        "id": "init$ igi_helper.give_to_actor(|this.section_name|)",
+        "CONTROLLER":"@$ igi_target_return.Return",
+        "link_id": "detector"
+    },
+
+    {
+        "ids": "$ |inputs.zone_ids|",
+        "GEN": "@$ igi_generate.Split('ids', 'id')",
+        "range": 20,
+        "CONTROLLER": "@$ wtf_target_anomaly_scan.AnomalyScan",
+        "detector_id": "init$ |detector.id|",
+        "scan_time_sec": 40,
+        "pda_messages": "$ |inputs.pda_messages|",
+        "subtask": true
+    }
+    ]
+}

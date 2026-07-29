@@ -1,0 +1,58 @@
+{
+	"WTF_VERSION": "4.3",
+	"description": {
+		"locations": ["$ 'st_' .. |scan.zone| .. '_name'"]
+	},
+	"preconditions": [
+		"$ not has_alife_info(|CACHE.quest_info_portion|)",
+		"$ db.actor:object('detector_simple') ~= nil",
+		"$ get_actor_true_community() == 'ecolog'",
+		"$ db.actor:character_rank() <= 1000"
+	],
+    "frames": [
+    {
+		"src": "Community/detector_upgrade/anomaly_scan.json",
+		"zone": "$ wtf.shuffle(|CACHE.zones|)[1]",
+		"zone_ids": ["$ db.zone_by_name[|this.zone|]:id()"],
+		"pda_messages": {
+			"tg_id": "$ |CACHE.task_giver_id|",
+			"open_detector": "igi_task_text_anomaly_scan_open_detector",
+			"done": "igi_task_text_anomaly_scan_done",
+			"reset": "igi_task_text_anomaly_scan_reset",
+			"steps": [
+				[0.01, "igi_task_text_anomaly_scan_started"],
+				[0.4, "igi_task_text_anomaly_scan_bullshit_1"],
+				[0.8, "igi_task_text_anomaly_scan_bullshit_2"]
+			] 
+		},
+		"link_id": "scan"
+    },
+
+	{
+		"entities": [{
+			"id": "init$ |scan.detector_id|",
+			"CONTROLLER": "@$ igi_target_return.Return"
+		},{
+			"section_name": "detector_simple",
+			"CONTROLLER": "@$ igi_target_fetch.Fetch"
+		}]
+	}
+
+	
+    ],
+	"zones": [
+		"yan_smart_terrain_5_3_anomaly_spot",
+		"yan_smart_terrain_4_2_anomaly_spot",
+		"yan_2c_01_cd_anomaly_spot"
+	],
+	"rewards": {
+		"money": 2000,
+		"goodwill": 50
+	},
+	"reward_detector": "on_complete$ igi_helper.give_to_actor('detector_advanced')",
+	"quest_done": "on_complete$ give_info(|CACHE.quest_info_portion|) or 1",
+	"quest_info_portion": "igi_yantar_detector_upgrade_easy_done",
+	"quest_givers": [
+		{"Ecolog": true, "Leader": true, "Yantar": true}
+	]
+}

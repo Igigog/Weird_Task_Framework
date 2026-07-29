@@ -447,6 +447,8 @@
         "modxml_wtf",
         "igi_target_kill",
         "igi_target_assault",
-        "igi_task_manager"
+        "igi_task_manager",
+        "disable_info",
+        "tasks_measure"
     ]
 }
