@@ -50,7 +50,7 @@
     }
     ],
 	"rewards": {
-		"money": "@$ |frame.finished_in_time| and 16000 or 8000",
+		"money": "@$ |frame.finished_in_time| and 10000 or 7000",
 		"goodwill": 50
 	}
 }

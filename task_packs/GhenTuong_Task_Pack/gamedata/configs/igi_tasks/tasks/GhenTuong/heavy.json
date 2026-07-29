@@ -18,7 +18,7 @@
 	],
 	"icon": "ui_inGame2_PD_master_boevih_sistem",
 	"rewards": {
-		"money": "$ 2000 + 400 * |frame.max_squad_size|",
+		"money": "$ 4000 + 400 * |frame.max_squad_size|",
 		"goodwill": "$ 20 + 4 * |frame.max_squad_size|"
 	},
 	"quest_givers": [

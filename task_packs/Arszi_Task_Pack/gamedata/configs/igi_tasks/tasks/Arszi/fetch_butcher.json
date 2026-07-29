@@ -18,7 +18,7 @@
 	}
 	],
 	"rewards": {
-		"money": "$ igi_target_fetch.calculate_cost(|item.section_name|, |item.amount|)",
+		"money": "$ igi_target_fetch.calculate_cost(|item.section_name|, |item.amount|) * 2",
 		"goodwill": 30
 	},
 	"quest_givers": [
