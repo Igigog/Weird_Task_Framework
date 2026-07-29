@@ -10,7 +10,7 @@
 		"src": "GhenTuong/kill_squad.json",
 		"smart_id": "?$ wtf.shuffle(igi_finder.get_smarts(1,1))[1]",
 		"section_name":"$ 'gt_stalker_heavy_' .. wtf_gt_tasks.scale_to_player() .. '_' .. |this.faction|",
-		"squad_size": 3,
+		"max_squad_size": "$ igi_helper.squad_size_bounds(|this.section_name|)[2]",
 		"link_id": "frame",
 
 		"faction":"$ igi_macros.Faction(|CACHE.task_giver_id|, 'enemy of actor and enemy of taskgiver')"
@@ -18,8 +18,8 @@
 	],
 	"icon": "ui_inGame2_PD_master_boevih_sistem",
 	"rewards": {
-		"money": "@$ 2000 + 400 * |frame.squad_size|",
-		"goodwill": "@$ 20 + 4 * |frame.squad_size|"
+		"money": "$ 2000 + 400 * |frame.max_squad_size|",
+		"goodwill": "$ 20 + 4 * |frame.max_squad_size|"
 	},
 	"quest_givers": [
 		{"Mechanic": true}

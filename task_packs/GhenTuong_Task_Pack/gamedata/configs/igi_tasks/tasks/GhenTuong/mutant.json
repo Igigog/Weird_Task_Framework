@@ -10,15 +10,15 @@
 		"smart_id": "?$ wtf.shuffle(igi_finder.get_smarts(1,1))[1]",
 		"section_name":"$ igi_utils.random_table_value(|this.sections|)",
 
-		"squad_size": 3,
+		"max_squad_size": "$ igi_helper.squad_size_bounds(|this.section_name|)[2]",
 		"mutants_section": "$ 'gt_mutant_'..wtf_gt_tasks.scale_to_player()",
 		"sections": "@$ igi_helper.db_ini:collect_section(|this.mutants_section|)",
 		"link_id": "frame"
 	}
 	],
 	"rewards": {
-		"money": "@$ 3000 + 200 * |frame.squad_size|",
-		"goodwill": "@$ 30 + 2 * |frame.squad_size|"
+		"money": "$ 3000 + 200 * |frame.max_squad_size|",
+		"goodwill": "$ 30 + 2 * |frame.max_squad_size|"
 	},
 	"icon": "ui_iconsTotal_mutant",
 	"quest_givers": [

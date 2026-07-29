@@ -22,8 +22,8 @@
 	],
 	"icon": "ui_inGame2_Sdelka",
 	"rewards": {
-		"money": "@$ 6000 + 400 * |frame.enemies_count|",
-		"goodwill": "@$ 60 + 4 * |frame.enemies_count|"
+		"money": 9000,
+		"goodwill": 90
 	},
 	"quest_givers": [
 		{"Mechanic": true}
