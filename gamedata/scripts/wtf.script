@@ -81,6 +81,12 @@ ScriptedSquad = {
 
         se_obj.force_online = true
         sim_offline_combat.task_squads[entity.id] = true
+
+        entity._squad_members = {}
+        for se_member in se_obj:squad_members() do
+            entity._squad_members[#entity._squad_members + 1] = se_member.id
+            se_save_var(se_member.id, nil, "dont_release", true)
+        end
     end,
 
     on_del = function (entity)
@@ -89,6 +95,10 @@ ScriptedSquad = {
         local se_obj = alife_object(entity.id)
         if se_obj then
             se_obj.force_online = false
+        end
+
+        for _, id in pairs(entity._squad_members) do
+            se_save_var(id, nil, "dont_release", nil)
         end
     end
 }
