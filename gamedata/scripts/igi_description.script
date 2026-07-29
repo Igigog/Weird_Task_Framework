@@ -104,12 +104,15 @@ end
 function get_raw_task_text(desc_key, field, tg_id)
 	desc_key = desc_key or ""
 	local se_tg = alife_object(tg_id)
-	local tg_name = se_tg:section_name() ~= "m_trader" and se_tg:section_name() or se_tg:name()
 
-	-- returns exclusive task text if exists
-	local text_id = desc_key.."_"..tg_name.."_"..field
-	local text = game.translate_string(text_id)
-	if text ~= text_id then return text end
+	if se_tg then
+		local tg_name = se_tg:section_name() ~= "m_trader" and se_tg:section_name() or se_tg:name()
+		-- returns exclusive task text if exists
+		local text_id = desc_key.."_"..tg_name.."_"..field
+		local text = game.translate_string(text_id)
+		if text ~= text_id then return text end
+	end
+	
 
 	-- fallback to basic field for this task type
 	local basic_text_id = desc_key.."_"..field
