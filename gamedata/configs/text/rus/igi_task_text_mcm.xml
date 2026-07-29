@@ -94,9 +94,6 @@
 	<string id="ui_mcm_igi_tasks_devzone">
 		<text>Инструменты разработчика</text>
 	</string>
-	<string id="ui_mcm_igi_tasks_rewards">
-		<text>Награды</text>
-	</string>
 	<string id="ui_mcm_igi_tasks_Options_flush_logs">
 		<text>Flush logs</text>
 	</string>

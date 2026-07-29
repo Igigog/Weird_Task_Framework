@@ -10,11 +10,9 @@ function get_rewards(cache_rewards, CACHE)
 		rewards[k] = igi_text_processor.eval_maybe_macro(v, CACHE)
 	end
 	rewards.money = math.ceil(rewards.money
-			* igi_mcm.get_options_value("money_reward_coeff")
 			* igi_mcm.get_task_value(CACHE.quest_id, "money_reward_coeff"))
 
 	rewards.goodwill = math.ceil(rewards.goodwill
-			* igi_mcm.get_options_value("goodwill_reward_coeff")
 			* igi_mcm.get_task_value(CACHE.quest_id, "goodwill_reward_coeff"))
 	return rewards
 end
