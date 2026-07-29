@@ -26,14 +26,14 @@
 	{
 		"section_name":"$ igi_helper.db_ini:r_value('gt_guard', |inputs.enemy_faction|)",
 		"smart_id": "$ |inputs.smart_id|",
-		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline"],
+		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ScriptedSquad"],
 		"link_id": "enemy"
 	},
 
 	{
 		"section_name":"$ igi_helper.db_ini:r_value('gt_guard', |inputs.friend_faction|)",
 		"smart_id": "$ |inputs.smart_id|",
-		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline", "@$ wtf.ChangeFaction(|inputs.enemy_faction|)"],
+		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ScriptedSquad", "@$ wtf.ChangeFaction(|inputs.enemy_faction|)"],
 		"link_id": "traitor"
 	}
     ]
