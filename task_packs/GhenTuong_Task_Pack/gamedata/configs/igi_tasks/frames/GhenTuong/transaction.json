@@ -18,23 +18,30 @@
 		"id": "init$ igi_helper.create_on_smart(|inputs.treasure_section|, |inputs.smart_id|)",
 		"HELPERS": ["@$ wtf.MapIcon('treasure_unique')"]
 	},
-    {
-		"id": "$ |inputs.smart_id|",
-		"CONTROLLER":"@$ igi_target_assault.Assault"
-	},
 
 	{
 		"section_name":"$ igi_helper.db_ini:r_value('gt_guard', |inputs.enemy_faction|)",
 		"id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
-		"HELPERS": ["@$ wtf.ScriptedSquad"],
+		"HELPERS": ["@$ wtf.ScriptedSquad", "@$ wtf.PinToSmart"],
 		"link_id": "enemy"
 	},
 
 	{
 		"section_name":"$ igi_helper.db_ini:r_value('gt_guard', |inputs.friend_faction|)",
 		"id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
-		"HELPERS": ["@$ wtf.ScriptedSquad", "@$ wtf.ChangeFaction(|inputs.enemy_faction|)"],
+		"HELPERS": ["@$ wtf.ScriptedSquad", "@$ wtf.PinToSmart", "@$ wtf.ChangeFaction(|inputs.enemy_faction|)"],
 		"link_id": "traitor"
+	},
+
+	{
+		"ara_enabled": "$ igi_mcm.get_options_value('realistic_assassinations')",
+		"id":"init$ |this.ara_enabled| and |enemy.id| or |inputs.smart_id|",
+		"CONTROLLER": "@$ igi_target_visit.Visit"
+	},
+
+	{
+		"id": "$ |inputs.smart_id|",
+		"CONTROLLER":"@$ igi_target_assault.Assault"
 	}
     ]
 }
