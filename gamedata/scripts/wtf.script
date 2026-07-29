@@ -72,6 +72,27 @@ function extend(tbl, tbl2)
     return tbl
 end
 
+ScriptedSquad = {
+    on_init = function (entity)
+        igi_helper.trace_assert(type(entity.id) == "number", "id is not a number", entity)
+        local se_obj = alife_object(entity.id)
+
+        igi_helper.trace_assert(se_obj ~= nil, "no server object for given id", entity)
+
+        se_obj.force_online = true
+        sim_offline_combat.task_squads[entity.id] = true
+    end,
+
+    on_del = function (entity)
+        sim_offline_combat.task_squads[entity.id] = nil
+
+        local se_obj = alife_object(entity.id)
+        if se_obj then
+            se_obj.force_online = false
+        end
+    end
+}
+
 CreateSquad = {
     on_init = function (entity)
         igi_helper.trace_assert(type(entity.section_name) == "string", "section_name is not a string", entity)
@@ -89,37 +110,6 @@ CreateSquad = {
         if se_obj then
             se_obj.scripted_target = nil
         end
-    end
-}
-
-ForceOnline = {
-    on_init = function (entity)
-        igi_helper.trace_assert(type(entity.id) == "number", "id is not a number", entity)
-        local se_obj = alife_object(entity.id)
-
-        igi_helper.trace_assert(se_obj ~= nil, "no server object for given id", entity)
-        se_obj.force_online = true
-    end,
-
-    on_del = function (entity)
-        local se_obj = alife_object(entity.id)
-        if se_obj then
-            se_obj.force_online = false
-        end
-    end,
-}
-
-NoOfflineCombat = {
-    on_init = function (entity)
-        igi_helper.trace_assert(type(entity.id) == "number", "id is not a number", entity)
-        local se_obj = alife_object(entity.id)
-
-        igi_helper.trace_assert(se_obj ~= nil, "no server object for given id", entity)
-        sim_offline_combat.task_squads[entity.id] = true
-    end,
-
-    on_del = function (entity)
-        sim_offline_combat.task_squads[entity.id] = nil
     end
 }
 

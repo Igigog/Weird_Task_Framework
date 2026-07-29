@@ -8,7 +8,7 @@
     {
         "id": "$ |inputs.squad_id|",
         "se_obj": "@$ alife_object(|this.id|)",
-        "HELPERS": ["@$ wtf.ForceOnline", "@$ wtf.NoOfflineCombat", "@$ wtf.PinToSmart"],
+        "HELPERS": ["@$ wtf.ScriptedSquad", "@$ wtf.PinToSmart"],
         "link_id": "friend_squad"
     },
 

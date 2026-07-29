@@ -10,8 +10,7 @@
     {
         "id": "$ |inputs.squad_id|",
         "HELPERS": [
-            "@$ wtf.ForceOnline",
-            "@$ wtf.NoOfflineCombat",
+            "@$ wtf.ScriptedSquad",
             "@$ wtf.PinToSmart",
             "@$ wtf.Dead"
         ],

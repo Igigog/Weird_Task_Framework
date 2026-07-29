@@ -18,7 +18,7 @@
             "section_name":"merc_sim_squad_advanced",
             "smart_id": "init$ |inputs.smart|",
             "se_obj": "@$ alife_object(|this.id|) or false",
-            "HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ForceOnline", "@$ wtf.NoOfflineCombat", "@$ wtf.PinToSmart"],
+            "HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ScriptedSquad", "@$ wtf.PinToSmart"],
             "link_id": "friend_squad"
         },
 
