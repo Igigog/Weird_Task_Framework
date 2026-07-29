@@ -25,15 +25,15 @@
 
 	{
 		"section_name":"$ igi_helper.db_ini:r_value('gt_guard', |inputs.enemy_faction|)",
-		"smart_id": "$ |inputs.smart_id|",
-		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ScriptedSquad"],
+		"id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
+		"HELPERS": ["@$ wtf.ScriptedSquad"],
 		"link_id": "enemy"
 	},
 
 	{
 		"section_name":"$ igi_helper.db_ini:r_value('gt_guard', |inputs.friend_faction|)",
-		"smart_id": "$ |inputs.smart_id|",
-		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ScriptedSquad", "@$ wtf.ChangeFaction(|inputs.enemy_faction|)"],
+		"id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
+		"HELPERS": ["@$ wtf.ScriptedSquad", "@$ wtf.ChangeFaction(|inputs.enemy_faction|)"],
 		"link_id": "traitor"
 	}
     ]

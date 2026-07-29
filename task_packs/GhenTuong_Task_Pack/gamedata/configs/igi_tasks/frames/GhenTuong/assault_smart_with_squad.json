@@ -11,8 +11,8 @@
     {
 		"mutants_section": "$ 'gt_mutant_'..wtf_gt_tasks.scale_to_player()",
 		"section_name":"$ igi_utils.random_table_value(igi_helper.db_ini:collect_section(|this.mutants_section|))",
-		"smart_id": "$ |inputs.smart_id|",
-		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ScriptedSquad"],
+		"id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
+		"HELPERS": ["@$ wtf.ScriptedSquad"],
 		"link_id": "squad"
 	},
 

@@ -10,8 +10,8 @@
 	"entities": [
 	{
 		"section_name":"$ |inputs.section_name|",
-		"smart_id": "$ |inputs.smart_id|",
-		"HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ScriptedSquad"],
+		"id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
+		"HELPERS": ["@$ wtf.ScriptedSquad"],
 		"CONTROLLER":"@$ igi_target_kill.Kill",
 		"link_id": "squad"
 	}

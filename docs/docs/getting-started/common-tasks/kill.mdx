@@ -13,7 +13,8 @@
     {
         "section_name":"bandit_sim_squad_alpha",
         "smart_id": "?$ wtf.shuffle(igi_finder.get_smarts(1,1))[1]",
-        "HELPERS": ["@$ wtf.CreateSquad", "@$ wtf.ScriptedSquad"],
+        "id": "init$ igi_helper.spawn_squad(|this.section_name|, |this.smart_id|)",
+        "HELPERS": ["@$ wtf.ScriptedSquad"],
         "CONTROLLER":"@$ igi_target_kill.Kill",
         "squad_size": 3,
         "link_id": "squad"
@@ -30,6 +31,6 @@
 }
 ```
 
-Ah, the classic kill-type quest. You have one job: go to wherever the enemy squad is and ensure that it doesn't exist anymore. We use `?$` optional macro to ensure there exists a smart we want to place the enemy on, and we use `wtf.CreateSquad` helper to create it. After that, you're all set.
+Ah, the classic kill-type quest. You have one job: go to wherever the enemy squad is and ensure that it doesn't exist anymore. We use `?$` optional macro to ensure there exists a smart we want to place the enemy on, and we use `igi_helper.spawn_squad` helper to create it. After that, you're all set.
 
 Setting up rewards requires a bit of nudging. Since the squad sizes are randomized on creation, you can't know squad size when accepting the task. Instead, we'll approximate the size at first; `wtf.CreateSquad` overrides it after squad creation.

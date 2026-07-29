@@ -184,3 +184,13 @@ function pda_message(msg, sender_id, sound)
 	local icon = se_obj:character_icon()
 	dynamic_news_helper.send_tip(msg, name, nil, 7, icon, sound, 'npc')
 end
+
+function spawn_squad(section_name, smart_id)
+	igi_helper.trace_assert(type(section_name) == "string", "section_name is not a string")
+	igi_helper.trace_assert(igi_helper.is_valid_section(section_name), "section does not exist")
+	igi_helper.trace_assert(type(smart_id) == "number", "smart_id is not a number")
+	igi_helper.trace_assert(SIMBOARD.smarts[smart_id], "no smart with this smart id")
+
+	local smart = SIMBOARD.smarts[smart_id].smrt
+	return SIMBOARD:create_squad(smart, section_name).id
+end

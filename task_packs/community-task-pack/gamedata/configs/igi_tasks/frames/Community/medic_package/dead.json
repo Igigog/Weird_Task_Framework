@@ -28,8 +28,8 @@
     {
         "section_name": "army_sim_squad_alpha",
         "smart_id":"$ |inputs.smart_id|",
+        "id": "init$ igi_helper.spawn_squad(|this.section_name|, |this.smart_id|)",
         "HELPERS": [
-            "@$ wtf.CreateSquad",
             "@$ wtf.PinToSmart"
         ],
         "link_id": "enemy_squad"
