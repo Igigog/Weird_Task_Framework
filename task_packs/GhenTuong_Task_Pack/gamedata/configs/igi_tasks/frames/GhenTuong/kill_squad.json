@@ -9,9 +9,14 @@
 	},
 	"entities": [
 	{
+		"ara_enabled": "$ igi_mcm.get_options_value('realistic_assassinations')",
+		"id":"init$ |this.ara_enabled| and |squad.id| or |inputs.smart_id|",
+		"CONTROLLER": "@$ igi_target_visit.Visit"
+	},
+	{
 		"section_name":"$ |inputs.section_name|",
 		"id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
-		"HELPERS": ["@$ wtf.ScriptedSquad"],
+		"HELPERS": ["@$ wtf.ScriptedSquad", "@$ wtf.PinToSmart"],
 		"CONTROLLER":"@$ igi_target_kill.Kill",
 		"link_id": "squad"
 	}

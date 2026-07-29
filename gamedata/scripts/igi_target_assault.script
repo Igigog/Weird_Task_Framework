@@ -1,10 +1,6 @@
 local trace_assert = igi_helper.trace_assert
 local TASK_STATUSES = igi_subtask.TASK_STATUSES
 
-local function ara_enabled()
-	return igi_mcm.get_options_value("realistic_assassinations")
-end
-
 local function is_legit_squad(se_squad)
 	local section = se_squad:section_name()
 	if section:find("tushkano") or section:find("rat") then return false end
@@ -74,10 +70,6 @@ function Assault.on_init(entity)
 	trace_assert(alife_object(entity.id), "Assault: no server object for this id", entity)
 	trace_assert(SIMBOARD.smarts[entity.id], "Assault: entity.id is not a smart", entity)
 	add_target_squads(entity)
-
-	if ara_enabled() then
-		igi_ara.Ara.on_init(entity)
-	end
 end
 
 local function mark_distant_squads(entity)
@@ -100,12 +92,6 @@ end
 
 function Assault.status(entity)
 	mark_distant_squads(entity)
-	if entity.ara_to_kill and ara_enabled() then
-		local ara_status = igi_ara.Ara.status(entity)
-		if ara_status ~= TASK_STATUSES.COMPLETED then
-			return ara_status
-		end
-	end
 	if is_completed(entity) then return TASK_STATUSES.COMPLETED end
 	return TASK_STATUSES.RUNNING
 end

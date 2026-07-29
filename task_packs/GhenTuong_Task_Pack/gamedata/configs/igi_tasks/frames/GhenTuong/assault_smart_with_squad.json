@@ -8,11 +8,17 @@
 		"squad_size": "init$ wtf.iter_size(alife_object(|squad.id|):squad_members())"
 	},
 	"entities": [
+	{
+		"ara_enabled": "$ igi_mcm.get_options_value('realistic_assassinations')",
+		"id":"init$ |this.ara_enabled| and |squad.id| or |inputs.smart_id|",
+		"CONTROLLER": "@$ igi_target_visit.Visit"
+	},
+
     {
 		"mutants_section": "$ 'gt_mutant_'..wtf_gt_tasks.scale_to_player()",
 		"section_name":"$ igi_utils.random_table_value(igi_helper.db_ini:collect_section(|this.mutants_section|))",
 		"id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
-		"HELPERS": ["@$ wtf.ScriptedSquad"],
+		"HELPERS": ["@$ wtf.ScriptedSquad", "@$ wtf.PinToSmart"],
 		"link_id": "squad"
 	},
 
