@@ -194,3 +194,13 @@ function spawn_squad(section_name, smart_id)
 	local smart = SIMBOARD.smarts[smart_id].smrt
 	return SIMBOARD:create_squad(smart, section_name).id
 end
+
+function squad_size_bounds(section_name)
+	igi_helper.trace_assert(is_valid_section(section_name), "not a valid section:", section_name)
+
+	local count = ini_sys:r_string_ex(section_name,"npc_in_squad") or "1,2"
+	count = str_explode(count,",")
+	count[1] = count[1] and tonumber(count[1])
+	count[2] = count[2] and tonumber(count[2]) or count[1]
+	return count
+end
