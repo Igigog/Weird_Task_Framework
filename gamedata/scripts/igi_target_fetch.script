@@ -117,11 +117,11 @@ function calculate_cost(section_name, amount, ids)
 	local scaled_by_condition = is_scaled_by_condition(section_name)
 	if ids and next(ids) and scaled_by_condition then
 		local money = 0
-		for id in pairs(ids) do
+		for id, count in pairs(ids) do
 			local obj = get_object_by_id(id)
 			if obj then
 				local condition = obj:condition()
-				money = money + base_cost * condition * condition
+				money = money + base_cost * condition * condition * count
 			end
 		end
 		return money
