@@ -1,0 +1,109 @@
+AnomalyScan = {}
+
+local function distance(position_1, position_2)
+	local x = position_1.x - position_2.x
+    local z = position_1.z - position_2.z
+	return x*x + z*z
+end
+
+function AnomalyScan.on_init(entity)
+    igi_helper.trace_assert(type(entity.id) == "number", "space_restrictor is not a number (needs se_obj id)")
+    igi_helper.trace_assert(alife_object(entity.id):section_name() == "space_restrictor", "object is not a space restrictor")
+
+    igi_helper.trace_assert(type(entity.range) == "number", "range is not a number")
+    igi_helper.trace_assert(type(entity.detector_id) == "number", "detector_id is not a number")
+    igi_helper.trace_assert(entity.scan_time_sec == nil or type(entity.scan_time_sec) == "number", "scan_time_sec is not a number")
+
+    entity.pda_messages = entity.pda_messages or {}
+    entity.scan_time_sec = entity.scan_time_sec or 20
+    entity._zone_name = alife_object(entity.id):name()
+    entity._infoportion = tostring(math.random())
+    entity._measuring = false
+    entity._pda_step = "open_detector"
+end
+
+function start_measure(entity)
+    if (not entity._measuring) and tasks_measure.get_UI().step == 0 then
+        local measure_ui = tasks_measure.get_UI()
+        entity._measure_timer_before = measure_ui.timer
+        measure_ui.timer = (entity.scan_time_sec * 1000) / measure_ui.step_tot
+        entity._measuring = time_global()
+        tasks_measure.start_measurement_hud(entity._infoportion)
+    end
+end
+
+function reset_measure(entity)
+    if entity._measuring then
+        entity._pda_step = 1
+        if (entity.pda_messages.reset) then
+            igi_helper.pda_message(entity.pda_messages.reset, entity.pda_messages.tg_id)
+        end
+        tasks_measure.get_UI().timer = entity._measure_timer_before
+        entity._measuring = false
+        tasks_measure.close_measurement_hud()
+    end
+end
+
+function send_next_pda_message(entity)
+    if entity.pda_messages.steps and entity.pda_messages.steps[entity._pda_step] then
+        local step = entity.pda_messages.steps[entity._pda_step]
+        if (time_global() - entity._measuring) / (entity.scan_time_sec * 1000) > step[1] then
+            entity._pda_step = entity._pda_step + 1
+            igi_helper.pda_message(step[2], entity.pda_messages.tg_id)
+        end
+    end
+end
+
+function send_done_pda_message(entity)
+    entity._pda_step = "done"
+    if entity.pda_messages.done then
+        igi_helper.pda_message(entity.pda_messages.done, entity.pda_messages.tg_id)
+    end
+end
+
+function AnomalyScan.status(entity)
+    if has_alife_info(entity._infoportion .. "_measurment_finished") then
+        if entity._pda_step ~= "done" then
+            send_done_pda_message(entity)
+        end
+        return igi_subtask.TASK_STATUSES.COMPLETED
+    end
+
+    if not db.zone_by_name[entity._zone_name] then
+        reset_measure(entity)
+        return igi_subtask.TASK_STATUSES.RUNNING
+    end
+
+    local target = alife_object(entity.id)
+    local actor = alife_object(0)
+
+    if entity._pda_step == "open_detector" and distance(target.position, actor.position) < (entity.range + 10) * (entity.range + 10) then
+        entity._pda_step = 1
+        if entity.pda_messages.open_detector then
+            igi_helper.pda_message(entity.pda_messages.open_detector, entity.pda_messages.tg_id)
+        end
+    end
+
+	if distance(target.position, actor.position) > entity.range * entity.range then
+        reset_measure(entity)
+		return igi_subtask.TASK_STATUSES.RUNNING
+	end
+
+    local active_detector = db.actor:active_detector()
+    if (not active_detector) or (active_detector:id() ~= entity.detector_id) then
+        reset_measure(entity)
+        return igi_subtask.TASK_STATUSES.RUNNING
+    end
+
+    start_measure(entity)
+    send_next_pda_message(entity)
+    return igi_subtask.TASK_STATUSES.RUNNING
+end
+
+function AnomalyScan.on_del(entity)
+    disable_info(entity._infoportion .. "_measurment_finished")
+end
+
+function AnomalyScan.quest_target(entity)
+    return entity.id
+end
