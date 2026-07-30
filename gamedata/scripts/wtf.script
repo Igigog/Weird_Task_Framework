@@ -104,10 +104,24 @@ ScriptedSquad = {
 }
 
 PinToSmart = {
+    on_init = function (entity)
+        local se_obj = alife_object(entity.id)
+        if se_obj then
+            se_obj.scripted_target = se_obj.smart_id
+        end
+    end,
+
     status = function (entity)
         local se_obj = alife_object(entity.id)
         if se_obj then
             se_obj.stay_time = game.get_game_time()
+        end
+    end,
+
+    on_del = function (entity)
+        local se_obj = alife_object(entity.id)
+        if se_obj then
+            se_obj.scripted_target = nil
         end
     end
 }
