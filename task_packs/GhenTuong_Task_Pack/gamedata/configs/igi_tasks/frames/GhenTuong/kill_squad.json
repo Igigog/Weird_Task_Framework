@@ -6,8 +6,7 @@
     },
 	"entities": [
 	{
-		"ara_enabled": "$ igi_mcm.get_options_value('realistic_assassinations')",
-		"id":"init$ |this.ara_enabled| and |squad.id| or |inputs.smart_id|",
+		"id":"init$ |inputs.smart_id|",
 		"CONTROLLER": "@$ igi_target_visit.Visit"
 	},
 	{
