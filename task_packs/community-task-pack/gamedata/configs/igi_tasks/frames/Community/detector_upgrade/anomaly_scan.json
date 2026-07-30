@@ -12,7 +12,7 @@
     {
         "section_name":"detector_anomaly",
         "id": "init$ igi_helper.give_to_actor(|this.section_name|)",
-        "CONTROLLER":"@$ igi_target_return.Return",
+        "CONTROLLER":"@$ igi_target_get.Get",
         "link_id": "detector"
     },
 

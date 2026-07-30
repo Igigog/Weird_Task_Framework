@@ -1,5 +1,6 @@
 {
 	"WTF_VERSION": "4.3",
+	"tg_community": "$ igi_helper.get_community_by_id(|CACHE.task_giver_id|)",
 	"description": {
 		"locations": "$ wtf.map(|scan.zone_ids|, function(x) return 'st_' .. alife_object(x):name():gsub('_spot', '_name_land') end)"
 	},
@@ -7,21 +8,19 @@
 		"$ not has_alife_info(|CACHE.quest_info_portion|)",
 		"$ db.actor:object('detector_elite') ~= nil",
 		"$ get_actor_true_community() == 'ecolog'",
-		"$ db.actor:character_rank() >= 5000"
+		"$ db.actor:community_goodwill(|CACHE.tg_community|) >= 2000"
 	],
     "frames": [
     {
 		"src": "Community/detector_upgrade/anomaly_scan.json",
 		"zone_ids": "$ wtf.map(|CACHE.zones|, function(x) return db.zone_by_name[x]:id() end)",
 		"pda_messages": {
-			"tg_id": "$ |CACHE.task_giver_id|",
-			"open_detector": "igi_task_text_anomaly_scan_open_detector",
-			"done": "igi_task_text_anomaly_scan_done",
-			"reset": "igi_task_text_anomaly_scan_reset",
+			"tg_id": "$ get_story_object_id('jup_b6_scientist_tech')",
+			"open_detector": "igi_task_text_anomaly_scan_open_detector_hard",
+			"done": "igi_task_text_anomaly_scan_done_hard",
+			"reset": "igi_task_text_anomaly_scan_reset_hard",
 			"steps": [
-				[0.01, "igi_task_text_anomaly_scan_started"],
-				[0.4, "igi_task_text_anomaly_scan_bullshit_1"],
-				[0.8, "igi_task_text_anomaly_scan_bullshit_2"]
+				[0.01, "igi_task_text_anomaly_scan_started_hard"]
 			] 
 		},
 		"link_id": "scan"
