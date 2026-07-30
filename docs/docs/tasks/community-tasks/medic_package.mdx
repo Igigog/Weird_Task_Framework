@@ -8,7 +8,17 @@ import {TaskView} from "@site/src/components/Tasks";
 
 <TaskView taskPack="community-task-pack" task="Community/medic_package.json" substitutions={{
           "db.actor:community_goodwill(|CACHE.tg_community|)": "Goodwill with faction",
-          "|frame.finished_in_time|": "Managed to save target",
+          "|frame.finished_in_time|": "Made it in time",
           "and": "?",
             "or": ":"
 }}/>
+
+<br />
+
+BLAP is the quest where I tried out branching and conditional logic in WTF... And failed miserably. WTF 4.2 was _not_ ready for any branching, so this quest died a simple death at first. Well, the preconditions are so specific no one probably knew it existed anyway.
+
+I have reworked this quest in WTF 4.3. Your quest is to get a package from a group of mercenaries on a nearby location. Normally, you can do it peacefully and without bloodshed, which makes it quite an easy mission.
+
+Two things might go wrong though. If you're too late, the mercenaries will be killed by the military and the package stolen. Task giver will be quite mad at you and will reduce the reward, but you will find the military guys and get the package from them.
+
+Or, you might forget the password.
