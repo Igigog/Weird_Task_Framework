@@ -2,19 +2,51 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://igigog.github.io/Weird_Task_Framework/blog</id>
     <title>Weird Task Framework Blog</title>
-    <updated>2026-06-21T00:00:00.000Z</updated>
+    <updated>2026-07-30T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://igigog.github.io/Weird_Task_Framework/blog"/>
     <subtitle>Weird Task Framework Blog</subtitle>
     <entry>
-        <title type="html"><![CDATA[New documentation!]]></title>
-        <id>https://igigog.github.io/Weird_Task_Framework/blog/new-site</id>
-        <link href="https://igigog.github.io/Weird_Task_Framework/blog/new-site"/>
-        <updated>2026-06-21T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[arstarst]]></summary>
-        <content type="html"><![CDATA[<p>arstarst</p>
+        <title type="html"><![CDATA[WTF 4.3 needs testers]]></title>
+        <id>https://igigog.github.io/Weird_Task_Framework/blog/need-testers</id>
+        <link href="https://igigog.github.io/Weird_Task_Framework/blog/need-testers"/>
+        <updated>2026-07-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[WTF 4.3 needs testers! Maybe that's you.]]></summary>
+        <content type="html"><![CDATA[<p>WTF 4.3 needs testers! Maybe that's you.</p>
 <!-- -->
-<p>asatrastars</p>]]></content>
+<p>Hello frens! We haven't seen each other in quite a while. Please don't look around on this website, most of it is very much under construction still.</p>
+<p>WTF 4.3 is ready to be released, so it's time for the traditional test round. You'll find your copy of WTF 4.3rc1 in <a href="https://github.com/Igigog/Weird_Task_Framework/releases" target="_blank" rel="noopener noreferrer" class="">Releases</a> section of Github.</p>
+<p>4.3 comes with a shitton of improvements. You'll get better and more balanced rewards, better descriptions, new quests, and obviously an infinite amount of improvements in the backend for the quest makers.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="quests">Quests<a href="https://igigog.github.io/Weird_Task_Framework/blog/need-testers#quests" class="hash-link" aria-label="Direct link to Quests" title="Direct link to Quests" translate="no">​</a></h3>
+<ol>
+<li class="">GhenTuong's <em>Neutralization</em> and <em>Eliminate dangerous mutants</em> got a rebalance - they now require you to go to the location regardless of whether the squad got killed offline or not. You just need to confirm it with your eyes to make sure the quest is actually done. This rework replaces MCM option <em>Arszi's Realistic Assassinations</em>.</li>
+<li class="">Community's <em>Between Law And Profit</em> got a full rework - this is the first branching quest in WTF, where the way it plays depend on how long did it took to get to it.</li>
+<li class="">New quests for Ecologists, <em>Onboarding</em> and <em>Big Measuring Contest</em>. Both of them play around with an anomaly field measuring mechanic, and both of them will improve your artifact detector on completion.</li>
+</ol>
+<p>You can find task descriptions <a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/gt-tasks">here</a>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="general-improvements">General improvements<a href="https://igigog.github.io/Weird_Task_Framework/blog/need-testers#general-improvements" class="hash-link" aria-label="Direct link to General improvements" title="Direct link to General improvements" translate="no">​</a></h3>
+<ol>
+<li class="">Rewards are brought in-line with vanilla Anomaly balance. Well, as good as I could. I removed WTF-wide Reward sliders from MCM, but you can still configure them per task</li>
+<li class="">Location descriptions in RUS localization now show the level of location, just like it's done in ENG.</li>
+<li class="">Fixed a bug where GT's <em>Eliminate dangerous mutants</em> didn't finish after killing all the mutants</li>
+<li class=""><em>Utjan's Fetch Thing</em> MCM option is now removed. The functionality will continue to work, I just don't see a reason to disable it.</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="backend">Backend<a href="https://igigog.github.io/Weird_Task_Framework/blog/need-testers#backend" class="hash-link" aria-label="Direct link to Backend" title="Direct link to Backend" translate="no">​</a></h3>
+<p>I can't even start to describe the work made in the backend. WTF 4.3 introduces multi-stage quests and branching, better reward and action handling, better descriptions and so, so much more. Aside from fancier, more fleshed out quests, normal players shouldn't see any difference, to be honest. If you plan to use WTF for quest making, at least wait until I wrote the docs.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-now">What now?<a href="https://igigog.github.io/Weird_Task_Framework/blog/need-testers#what-now" class="hash-link" aria-label="Direct link to What now?" title="Direct link to What now?" translate="no">​</a></h3>
+<p>Here's what I'm looking for, specifically:</p>
+<ol>
+<li class="">Bugs and problems</li>
+<li class="">General improvement suggestions, including balance, game experience and whatever</li>
+<li class="">Does it still work with PDA Taskboard?</li>
+<li class="">Does it work on GAMMA?</li>
+<li class="">Just tell me your thoughts</li>
+</ol>
+<p>You can find me on Anomaly and GAMMA discord. I would prefer you to write your thoughts in WTF's forum post in Anomaly discord, but I'll also take normal pings.</p>
+<p>Take care and good hunting, cuties.</p>
+<ul>
+<li class="">Igi</li>
+</ul>]]></content>
         <author>
             <name>Igigog</name>
             <uri>https://github.com/igigog</uri>
