@@ -45,7 +45,7 @@ function reset_measure(entity)
 end
 
 function send_next_pda_message(entity)
-    if entity.pda_messages.steps and entity.pda_messages.steps[entity._pda_step] then
+    if entity._measuring and entity.pda_messages.steps and entity.pda_messages.steps[entity._pda_step] then
         local step = entity.pda_messages.steps[entity._pda_step]
         if (time_global() - entity._measuring) / (entity.scan_time_sec * 1000) > step[1] then
             entity._pda_step = entity._pda_step + 1
