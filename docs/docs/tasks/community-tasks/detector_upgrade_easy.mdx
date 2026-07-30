@@ -1,0 +1,27 @@
+---
+description: ''
+---
+
+import {TaskView} from "@site/src/components/Tasks";
+
+# Onboarding
+
+<TaskView taskPack="community-task-pack" task="Community/detector_upgrade_easy.json" substitutions={{
+	"get_actor_true_community()": "Faction",
+	"not has_alife_info(|CACHE.quest_info_portion|)": "Quest was never done before",
+	"db.actor:object('detector_simple') ~= nil": "Actor has Echo detector in inventory",
+	"db.actor:character_rank()": "Rank",
+	"==": "is",
+}}/>
+
+<br />
+
+I kinda hate how the only difference between factions in Anomaly is how many people shoot at you. To somewhat change the status quo, I'm creating missions targeted to specifically one single faction - Ecologists, in this case.
+
+The idea behind this quest is that Ecologists need good detectors to do their work; as such, their investors _have_ to provide them. There is no real reason a new hire should go around the Zone, killing mutants and people just to get a half decent artifact detector. So, Sakharov just provides one.
+
+The mission will swap your Echo detector with a Bear one. To do that, you'll need to do a measurement of an anomalous field with a special measurement device. That's basically it. You measure things, you give Sakharov your Echo, he gives Bear back.
+
+Fun thing about this mission is that after I started implementing it, I found out there is literally the same anomaly measuring mechanic/quest in the base game. As such, I could reuse the measurement device, which made stuff extra fancy.
+
+This quest and it's bigger brother, [Big Measuring Contest](/tasks/community-tasks/detector_upgrade_hard), were made in about 4-5 hours total, which is insane for stalker questmaking. I love WTF.

@@ -1,0 +1,21 @@
+---
+description: ''
+---
+
+import {TaskView} from "@site/src/components/Tasks";
+
+# Big Measuring Contest
+
+<TaskView taskPack="community-task-pack" task="Community/detector_upgrade_hard.json" substitutions={{
+	"get_actor_true_community()": "Faction",
+	"not has_alife_info(|CACHE.quest_info_portion|)": "Quest was never done before",
+	"db.actor:object('detector_elite') ~= nil": "Actor has Veles detector in inventory",
+	"db.actor:community_goodwill(|CACHE.tg_community|)": "Goodwill",
+	"==": "is",
+}}/>
+
+<br />
+
+This quest is a big brother of [Onboarding](/tasks/community-tasks/detector_upgrade_easy), with the same mechanic, but bigger scope and bigger rewards. Instead of measuring one simple anomaly in somewhat safe Yantar, you'll need to measure ALL anomalies in stupidly big, chimera-ridden and beloved by Monolith Jupiter.
+
+For that, Hermann swaps your Veles detector with a Svarog.
