@@ -2,8 +2,6 @@ TASKS_VERSION = "4.3"
 TASK_SETUP = {}
 TASKS_CACHE = {}
 
-local trace_dbg = igi_helper.trace_dbg
-local trace_assert = igi_helper.trace_assert
 local TASK_STATUSES = igi_subtask.TASK_STATUSES
 local last_tasks_version
 
@@ -43,24 +41,24 @@ end
 
 function process_macros(task_id, macro_level)
 	local CACHE = get_cache(task_id)
-	trace_assert(CACHE and macro_level, "No CACHE or macro_level in process_macros call")
-	trace_assert(macro_level ~= "@", "@$ macros may not be processed manually.")
+	igi_helper.trace_assert(CACHE and macro_level, "No CACHE or macro_level in process_macros call")
+	igi_helper.trace_assert(macro_level ~= "@", "@$ macros may not be processed manually.")
 
-	trace_dbg("Before processing macros", macro_level, CACHE)
+	igi_helper.trace_dbg("Before processing macros", macro_level, CACHE)
 	igi_text_processor.resolve_and_link_cache(CACHE, macro_level)
-    trace_dbg("After processing macros", macro_level, CACHE)
+    igi_helper.trace_dbg("After processing macros", macro_level, CACHE)
 
 	return CACHE
 end
 ---------------------------< Precondition >---------------------------
 function try_prepare_quest(task_id, task_data, tg_id)
-	trace_dbg("validate "..task_id, task_data)
-	trace_assert(task_data, "WTF: validate_task: no task data")
+	igi_helper.trace_dbg("validate "..task_id, task_data)
+	igi_helper.trace_assert(task_data, "WTF: validate_task: no task data")
 
 	local CACHE = igi_taskdata.finalize_task_cache(task_data, task_id, tg_id)
 	local failed = igi_text_processor.resolve_and_link_cache(CACHE, "")
 	if failed then
-		trace_dbg("Can't prepare task because macro resolution failed: "..task_id, CACHE)
+		igi_helper.trace_dbg("Can't prepare task because macro resolution failed: "..task_id, CACHE)
 		return
 	end
 
@@ -76,14 +74,14 @@ function try_prepare_quest(task_id, task_data, tg_id)
 	end
 
 	for k, frame in pairs(CACHE.frames) do
-		trace_assert(type(frame.entities) == "table" or igi_taskdata.get_frame(frame.src), "Frame not found", frame)
+		igi_helper.trace_assert(type(frame.entities) == "table" or igi_taskdata.get_frame(frame.src), "Frame not found", frame)
 		frame.FRAME_ID = k
 	end
 
-	trace_dbg("setup "..task_id, task_data)
+	igi_helper.trace_dbg("setup "..task_id, task_data)
 	CACHE.preconditions = nil	-- not needed anymore
 	TASK_SETUP[task_id] = CACHE
-	trace_dbg("CACHE after setup "..task_id, TASK_SETUP[task_id])
+	igi_helper.trace_dbg("CACHE after setup "..task_id, TASK_SETUP[task_id])
 	return TASK_SETUP[task_id]
 end
 
