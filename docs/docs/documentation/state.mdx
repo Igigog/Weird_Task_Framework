@@ -1,0 +1,93 @@
+---
+sidebar_position: 0
+---
+
+# Defining quests
+
+The state in WTF is _explicit_, _declarative_ and mostly _immutable_. You declare all the state your quest will need in a task json configuration. Every quests consists of one _Quest configuration_, which contains zero or more _Frames_, which contains zero or more _Entities_.
+
+## Quest configuration
+
+In quest configuration, you set up everything that is not runtime _logic_: icons, descriptions, rewards, preconditions and requirements, quest givers etc. Every quest configuration describes exactly one quest, though you may define multiple quest givers. 
+
+```json
+{
+    "WTF_VERSION": "4.3",
+    "icon": "ui_iconsTotal_found_thing",
+    "entities": [],
+    "rewards": {
+        "money": 2000,
+        "goodwill": 40
+    },
+    "quest_givers": [
+        {"Sidorovich": true},
+        {"Sakharov": true}
+    ]
+}
+```
+
+## Frames
+
+Think of frames as quest stages in your quest. Multi-frame quests were introduced in WTF 4.3 and are still experimental. As such, I won't document the exact syntax of multi-frame quests.
+
+Every frame describes its set of entities. For a single-frame quests, you may use `entities` field of quest json to define entities directly. Its lifecycle is kinda funky, I might remove this shortcut in future WTF releases.
+
+## Entities
+
+Entity is the smallest piece of your quest. In its essence, it's just a blob of data with an optional _Controller_. WTF uses _Controllers_ to get the status of the quest.
+
+Conceptually, all entities inside a frame are independent and exist at the same time. Their order only matters for the map marker: PDA task marker will point to the first entity, which _Controller_ status returns `RUNNING`. 
+
+Here's a few quest entities for you:
+
+```json title="sid_bribery.json"
+[
+{
+    "section_name":"drx_sl_quest_item_2",
+    "id": "init$ igi_helper.give_to_actor(|this.section_name|)",
+    "release": "del$ alife_release_id(|this.id|) or 1",
+    "link_id": "package"
+},
+
+{
+    "id": "init$ alife_create('script_zone', |this.pos|, |this.lvid|, |this.gvid|).id",
+    "release": "del$ alife_release_id(|this.id|) or 1",
+    
+    "pos": "@$ vector():set(-100, -30, -397)",
+    "gvid": 449,
+    "lvid": 162028,
+    "link_id": "zone"
+},
+
+{
+    "CONTROLLER":"@$ wtf_target_deliver.Deliver",
+    "id": "init$ |package.id|",
+    "where": "init$ |zone.id|"
+}
+]
+```
+
+We have three entities. First entity gives a quest item to the player when quest is accepted and releases it on quest finish. Second entity creates a `script_zone` server object at given coordinates. Finally, third entity binds it all together with `CONTROLLER: wtf_target_deliver.Deliver`, which add the logic to the quest.
+
+There is only one controller in this example, but you can have multiple at the same time:
+
+```json title="tracking_shot.json"
+[
+{
+    "section_name":"wpn_igi_ks23_ecolog",
+    "id": "init$ igi_helper.give_to_actor(|this.section_name|)",
+    "bullet": "init$ igi_helper.give_to_actor('ammo_23_igi_eco')",
+    "CONTROLLER":"@$ igi_target_get.Get",
+    "link_id": "gun"
+},
+{
+    "section_name":"simulation_flesh",
+    "id": "init$ igi_helper.spawn_squad(|this.section_name|, |inputs.smart_id|)",
+    "HELPERS": ["@$ wtf.ScriptedSquad"],
+    "CONTROLLER":"@$ igi_target_shoot.Shoot",
+    "weapon": "wpn_igi_ks23_ecolog"
+}
+]
+```
+
+Here, normally your PDA marker points to the enemy you need to shoot, but if you drop the weapon, `igi_target_get.Get` will change status from `COMPLETED` to `RUNNING`, and the map marker will move to the weapon instead.

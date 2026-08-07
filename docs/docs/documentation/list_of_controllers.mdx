@@ -1,0 +1,155 @@
+---
+sidebar_position: 2
+---
+
+# List of WTF Controllers
+
+<details>
+    <summary>igi_target_assault.Assault</summary>
+
+    Kill all enemy squads on a given smart. Squads are calculated and cached in `on_init`; that was for ARA, probably not needed anymore.
+
+    Expects:
+
+    - `entity.id` - id of a smart
+</details>
+
+
+<details>
+    <summary>igi_target_escort.Escort</summary>
+
+    Unused and probably bad anyway. To remove in WTF 4.4.
+</details>
+
+<details>
+    <summary>igi_target_fetch.Fetch</summary>
+
+    Collect items with given `section_name`. As a side effect, it will remove these items from player inventory on quest completion; side effect will probably be removed in WTF 4.4.
+
+    Expects:
+
+    - `entity.section_name` - string, valid section name
+
+    Optional:
+
+    - `entity.amount` - integer, amount of items. Default is 1.
+    - `entity.min_condition` - number from 0 to 1, minimum condition of fetched item. Default is 0.
+    - `entity.max_condition` - number from 0 to 1, maximum condition of fetched item. Default is 1.
+</details>
+
+<details>
+    <summary>igi_target_get.Get</summary>
+
+    Item with given id should be in player inventory. Fails if there is no server object for given id.
+
+    Expects:
+
+    - `entity.id` - number, id of server object
+</details>
+
+<details>
+    <summary>igi_target_kill.Kill</summary>
+
+    Kill every member of a squad.
+
+    Expects:
+
+    - `entity.id` - number, id of server object
+</details>
+
+<details>
+    <summary>igi_target_return.Return</summary>
+
+    This is `igi_target_get.Get`, but as a side effect, it will remove the item from player inventory on quest completion. This Controller will probably be removed in WTF 4.4
+
+    Expects:
+
+    - `entity.id` - number, id of server object
+</details>
+
+<details>
+    <summary>igi_target_shoot.Shoot</summary>
+
+    Shoot an NPC in a squad. Single hit will suffice.
+
+    Expects:
+
+    - `entity.id` - number, id of squad
+
+    Optional:
+
+    - `entity.weapon` - string, section name of a gun
+    - `entity.ammo_type` - string, section name of ammo
+    - `entity.only_commander` - boolean, only hit on a commander counts
+</details>
+
+<details>
+    <summary>igi_target_visit.Visit</summary>
+
+    Come close to an object. Distance is hardcoded to 50 meters as of WTF 4.3, I'll add config in WTF 4.4.
+
+    Expects:
+    - `entity.id` - number, id of entity
+</details>
+
+## Helpers
+
+<details>
+    <summary>wtf.ScriptedSquad</summary>
+
+    Disables offline combat, forces squad online (relevant for nocturnal mutants), and makes the bodies not despawn. You probably want to have this on all your squads.
+
+    Expects:
+    - `entity.id` - number, id of the squad
+</details>
+
+<details>
+    <summary>wtf.PinToSmart</summary>
+
+    Sets scripted target of a squad to its current smart.
+
+    Expects:
+    - `entity.id` - number, id of the squad
+</details>
+
+<details>
+    <summary>wtf.MapIcon</summary>
+
+    Adds map icon to the server object.
+
+    Expects:
+    - `arg1` - string, key from `map_spots.xml`
+
+    Usage: `"HELPERS": ["@$ wtf.MapIcon('treasure_unique')"]`
+</details>
+
+<details>
+    <summary>wtf.ChangeFaction</summary>
+
+    Changes faction of a squad.
+
+    Expects:
+    - `entity.id` - number, id of the squad
+    - `arg1` - string, name of new faction
+
+    Usage: `"HELPERS": ["@$ wtf.ChangeFaction('ecolog')"]`
+</details>
+
+<details>
+    <summary>wtf.Repair</summary>
+
+    Repairs the item.
+
+    Expects:
+    - `entity.id` - number, id of the item
+    - `arg1` - new condition
+</details>
+
+<details>
+    <summary>wtf.Dead</summary>
+
+    Kills the squad and makes the bodies not despawn.
+
+    Expects:
+    - `entity.id` - number, id of the squad
+</details>

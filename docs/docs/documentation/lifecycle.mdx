@@ -1,0 +1,31 @@
+---
+sidebar_position: 98
+---
+
+# Lifecycle
+
+There are 5 lifecycle phases in every WTF quest: _Setup_, _Generation_, _Initialization_, _Run_ and _Finish_. In single-frame quests, these come one after the other.
+
+## Setup
+
+Quests need to do things before accepting them. In _Setup_ phase, you resolve all the preconditions, roll the dice, prepare the description and rewards and define initial state. This is where setup macros `$` are resolved.
+
+## Generation
+
+Sometimes you can't statically know the scope of the quest. Take for example Mercenary quest in Dead City, where you need to clear all the mutants on the map: you can't know the amount of mutant squads beforehand, and so you can't just write an entity with `Kill` controller for each one. Your options will be either to write a new controller, or generate entities at runtime. WTF supports both use cases.
+
+In _Generation_ phase, WTF uses `GEN` field of entity to resolve a generator, which then can create one or more entities.
+
+## Initialization
+
+After the quest is accepted, _Initialization_ phase happens. At this stage, for every entity, initialization macros `init$` are evaluated, `on_init` methods on _Helpers_ are called, and finally, `on_init` _Controller_ method is called.
+
+## Run
+
+At _Run_ phase, WTF concedes control over to _Controllers_. At this point, no more macros will be evaluated. WTF calls `status` method on every entity _Controller_, and once the quest is completed or failed, WTF moves to _Finish_ phase.
+
+## Finish
+
+_Finish_ phase mirrors _Initialization_ phase, but in reverse order: for every entity, `on_del` method on _Controller_ is called, then `on_del` method on _Helpers_, and finally, finalization macros `del$` are evaluated.
+
+Lastly, quest rewards are paid, and quest object is marked as "completed" or "failed" and removed from player's PDA.
