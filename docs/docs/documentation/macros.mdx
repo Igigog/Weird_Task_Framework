@@ -1,0 +1,130 @@
+---
+sidebar_position: 10
+---
+
+# Setup phase
+
+_Setup_ phase is the first phase in task lifecycle. _Setup_ comes at the point where you need to show task description; at this phase preconditions, description and rewards are computed. The main mechanism in WTF by which you can do that is a Macro.
+
+## Macros
+
+Macros are pieces of inline lua, which you add to your quest configuration. Upon evaluation, macros replace themselves with the result of their evaluation. There are multiple macro types, which are evaluated depending on lifecycle phase and have some additional rules.
+
+You can recognize a macro string by a symbol `$` followed by a piece of inline lua:
+
+```json
+{"curr_level": "$ level.name()"}
+```
+
+The phase, at which macro is evaluated, is written before `$`. Empty string, like here, denotes _Setup_ phase; _Initialization_ phase macros look like `init$`. In this case, the macro (`$ level.name()`) will be replaced with level name of player. That means, after _Setup_ phase, the code will see the following:
+
+```json
+{"curr_level": "l01_escape"}
+```
+
+In this case, because the code returns a string, the macro was replaced with a string with level name. The same logic works with numbers and complex tables; whatever the code returns replaces the macro string.
+
+### Linking
+
+Macros may refer to fields in current or other entities:
+
+```json
+{
+    "number": 3,
+    "number_str": "$ tostring(|this.number|)"
+}
+```
+
+Links look like `|link_id.field|`, where `link_id = this` refer to current entity. To link to a field in another entity, you need to explicitly set its `link_id`:
+
+```json
+{
+    "number": 3,
+    "link_id": "num"
+},
+{
+    "number_str": "$ tostring(|num.number|)"
+}
+```
+
+### Linking to macros
+
+You may link macros to other macros. In this case, the macro which is linked in will be evaluated first, and the result of that evaluation will be linked:
+
+```json
+{
+    "number": "$ 3",
+    "number_str": "$ tostring(|this.number|)"
+}
+```
+
+Transforms into:
+
+```json
+{
+    "number": 3,
+    "number_str": "3"
+}
+```
+
+Linking between macros works only at the same level, meaning all the macros would have been evaluated in current phase anyway. That means, you can't link _Initialization_-phase macro inside a _Setup_-phase macro. This throws error:
+
+```json
+{
+    "number": "init$ 3",
+    "number_str": "$ tostring(|this.number|)"
+}
+```
+
+But you can link _Setup_-phase macro to a _Initialization_-phase macro, because at _Initialization_ phase all the _Setup_ macros are already replaced with their values.
+
+### Working with macros
+
+There are a few rules when working with macros. Macros may never return `nil` or `userdata` objects. Breaching this rule is a hard error, though there are special macro types which work around common pain points with this rule. I think that's important to make clear:
+
+_Macros may never return `nil` or `userdata` objects._
+
+Feel free to run `assert` or error out inside the functions you call in macros. Like everything else in WTF, crashes inside macro code will not crash to desktop; instead, the user will get a clear error message, the callstack will be logged, and the quest will be cancelled.
+
+### Macro types
+
+There are three macros for different lifecycle phases: `$` for _Setup_, `init$` for _Initialization_ and `del$` for _Finish_ phase. These are triggered automatically once the phase starts.
+
+`@$` is a special macro type which is _lazy_ and _transient_. _Lazy_ means it will only be evaluated if it's specifically called by WTF or is linked to. _Transient_ means the value won't replace the macro string. Since the value won't be saved, these macros can safely return `userdata` objects (though `nil` is still forbidden):
+
+```json title="sid_bribery.json"
+{
+    "id": "init$ alife_create('script_zone', |this.pos|, |this.lvid|, |this.gvid|).id",
+    "pos": "@$ vector():set(-100, -30, -397)",
+    "gvid": 449,
+    "lvid": 162028,
+}
+```
+
+`?$` is the same as `$`, except in can return `nil`. If it returns `nil`, _Setup_ phase ends, as if a precondition has failed. This is quite nice for some object searching functions:
+
+```json
+{
+    "CONTROLLER":"@$ igi_target_get.Get",
+    "ids": "$ igi_finder.find_objects_in_world(...)",
+    "id": "?$ |this.ids|[1]",
+}
+```
+
+Here, if no object is found, `?$ |this.ids|[1]` will return `nil`, meaning the quest will fail its precondition and exit cleanly.
+
+## Generation
+
+Macros are intended to fill an entity with data, but what if you don't know how many entities you need? Think of mercenary task in Dead City, where you need to clear the whole location of mutant squads. You could write a custom Controller for that, or you could create an entity for every squad with Controller `igi_target_kill.Kill`. WTF supports both approaches.
+
+Generation step comes right after _Setup_ phase macro evaluation. To generate entities based on some template, create an entity and add field `GEN` to it:
+
+```json
+{
+    "ids": "$ get_every_squad_on_map()",
+    "CONTROLLER": "@$ igi_target_kill.Kill",
+    "GEN": "@$ igi_generate.Split('ids', 'id')"
+}
+```
+
+`igi_generate.Split` will create one entity for each item in `ids` and will put that item in `id`.
