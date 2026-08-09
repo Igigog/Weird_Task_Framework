@@ -1,5 +1,5 @@
 {
-	"WTF_VERSION": "4.2",
+	"WTF_VERSION": "4.3",
 	"CREDITS": "Aoldri - idea and initial implementation",
 	"preconditions": [
 		"$ has_alife_info(|CACHE.tg_name| .. '_upgrade_tier_3')",

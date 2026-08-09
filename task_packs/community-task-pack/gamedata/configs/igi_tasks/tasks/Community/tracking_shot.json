@@ -1,5 +1,5 @@
 {
-	"WTF_VERSION": "4.2",
+	"WTF_VERSION": "4.3",
 	"CREDITS": "\\nNerkokant - idea\\nIgigog - scripting\\nMich - KS23 Blowgun\\nBilly, Medic - descriptions",
 	"description": {
 		"targets": ["monster_vegetarian"],

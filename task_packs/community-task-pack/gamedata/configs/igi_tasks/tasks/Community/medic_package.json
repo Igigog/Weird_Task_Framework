@@ -1,5 +1,5 @@
 {
-    "WTF_VERSION": "4.2",
+    "WTF_VERSION": "4.3",
 	"icon": "ui_iconsTotal_found_thing",
     "quest_givers": [
 		{"Mercenary": true, "Medic": true}

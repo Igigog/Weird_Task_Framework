@@ -1,5 +1,5 @@
 {
-	"WTF_VERSION": "4.2",
+	"WTF_VERSION": "4.3",
 	"CREDITS": "GhenTuong - idea and initial implementation\\nIgigog - support",
 	"description": {
 		"locations": ["$ igi_description.get_smart_name_by_id(|frame.smart_id|)"]

@@ -79,9 +79,6 @@ end
 
 function supported_wtf_versions()
 	return {
-		["4.0"] = true,
-		["4.1"] = true,
-		["4.2"] = true,
 		["4.3"] = true,
 	}
 end

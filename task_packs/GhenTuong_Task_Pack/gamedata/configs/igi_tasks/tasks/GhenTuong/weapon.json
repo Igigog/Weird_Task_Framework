@@ -1,5 +1,5 @@
 {
-	"WTF_VERSION": "4.2",
+	"WTF_VERSION": "4.3",
 	"CREDITS": "GhenTuong - idea and initial implementation\\nIgigog - support",
 	"preconditions": [
 		"$ db.actor:community_goodwill(igi_helper.get_community_by_id(|CACHE.task_giver_id|)) >= 300"

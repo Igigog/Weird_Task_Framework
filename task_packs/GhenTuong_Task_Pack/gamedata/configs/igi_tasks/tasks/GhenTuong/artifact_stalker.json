@@ -1,5 +1,5 @@
 {
-	"WTF_VERSION": "4.2",
+	"WTF_VERSION": "4.3",
 	"CREDITS": "GhenTuong - idea and initial implementation\\nIgigog - support",
 	"preconditions": [
 		"$ db.actor:community_goodwill(|CACHE.tg_community|) >= 1000"
