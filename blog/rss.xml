@@ -4,10 +4,80 @@
         <title>Weird Task Framework Blog</title>
         <link>https://igigog.github.io/Weird_Task_Framework/blog</link>
         <description>Weird Task Framework Blog</description>
-        <lastBuildDate>Thu, 30 Jul 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 09 Aug 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[WTF 4.3 Release Party!]]></title>
+            <link>https://igigog.github.io/Weird_Task_Framework/blog/4-3-release</link>
+            <guid>https://igigog.github.io/Weird_Task_Framework/blog/4-3-release</guid>
+            <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Hello frens!]]></description>
+            <content:encoded><![CDATA[<p>Hello frens!</p>
+<p>More than a year passed since the release of WTF 4.2.2 in May 2025. I won't lie to you - I didn't do anything this last year, then conjured WTF 4.3 into existence in about a week.</p>
+<!-- -->
+<p>Still, I was happy to see WTF gets about 50-60 downloads a day even after a year. WTF 4.2.2 marked a milestone in WTF history, bringing more quests than ever, while being incredibly stable and free of bugs. I should mention, these 50-60 downloads come while WTF is famously banned in GAMMA discord - they literally have a bot command asking people not to install WTF at all costs. I consider it a personal achievement of mine.</p>
+<p>Anyway, let's talk WTF 4.3.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="quests">Quests<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#quests" class="hash-link" aria-label="Direct link to Quests" title="Direct link to Quests" translate="no">​</a></h2>
+<p>Ecologists are eating good with this release. WTF brings two new quests for Ecologists, reworks an older Mercenary quest and changes the way <em>Realistic Assassinations</em> work:</p>
+<ul>
+<li class="">
+<p><a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/community-tasks/detector_upgrade_easy"><em>Onboarding</em></a> is a single-time quest for new Ecologists, where you learn the routine of Ecologists by measuring an anomaly around Yantar. Aside from normal rewards, Sakharov takes a pity on you and swaps your Echo detector with a Bear detector - as expected from their faction, Ecologists get an easier way to start collecting artifacts early on.</p>
+</li>
+<li class="">
+<p><a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/community-tasks/detector_upgrade_hard"><em>Big Measuring Contest</em></a> plays with the formula of <em>Onboarding</em>, but is intended for late-game Ecologist runs. When you've proven yourself a professional, Hermann in Jupiter asks you to measure all the anomalies on the whole Jupiter map. For that feat, alongside conventional rewards, Hermann improves your Veles detector into Svarog.</p>
+</li>
+<li class="">
+<p><a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/community-tasks/medic_package"><em>Between Law And Profit</em></a> got a rework. Now, you have finite time to meet your contact, and if you don't manage it in time, you'll find the package stolen and your contact dead.</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="arszis-realistic-assassinations">Arszi's Realistic Assassinations<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#arszis-realistic-assassinations" class="hash-link" aria-label="Direct link to Arszi's Realistic Assassinations" title="Direct link to Arszi's Realistic Assassinations" translate="no">​</a></h3>
+<p>WTF 4.3 marks the removal of <em>Arszi's Realistic Assassinations</em> option. Now, instead of your quest failing randomly when someone else kills your target, you are still able to complete the quest. There is a twist, though: you're not a psychic and you can't know if your target is dead. As such, you still need to go to the location and confirm the dead enemies with your own eyes.</p>
+<p>I think this mechanic works both narratively and from game design perspective. It is now always enabled in GT Pack's <a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/gt-tasks/heavy"><em>Neutralization</em></a> and <a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/gt-tasks/mutant"><em>Eliminate dangerous mutants</em></a> quests.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="rewards">Rewards<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#rewards" class="hash-link" aria-label="Direct link to Rewards" title="Direct link to Rewards" translate="no">​</a></h3>
+<p>WTF 4.3 rebalances and changes the logic of quest rewards.</p>
+<ul>
+<li class="">The rewards were brought in line with vanilla Anomaly; I tried my best to keep original game's reward balance.</li>
+<li class="">WTF now respects the game's progression settings in the rewards.</li>
+<li class="">Global reward modifiers were removed from WTF's MCM menu, though you can still modify rewards of single tasks.</li>
+<li class="">Reward definitions were greatly simplified in backend, making them easier to understand for both players and questmakers</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="descriptions">Descriptions<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#descriptions" class="hash-link" aria-label="Direct link to Descriptions" title="Direct link to Descriptions" translate="no">​</a></h3>
+<ul>
+<li class="">Level names were added to location descriptions in RUS localization.</li>
+<li class="">Dynamic descriptions of some quests were cleaned up to keep the objective clearer.</li>
+<li class="">Quest rewards are not shown in PDA description anymore. They weren't always correct anyway - fetch weapon quests where reward depends on condition can't really show static reward. Rewards are still shown in the task dialogue.</li>
+<li class="">Dynamic descriptions are now set explicitly, giving quest makers more control over what's show and what's not.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="frames">Frames<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#frames" class="hash-link" aria-label="Direct link to Frames" title="Direct link to Frames" translate="no">​</a></h2>
+<p>The biggest improvement in WTF 4.3 is the experimental support for multi-stage quests. They work using <em>Frames</em> - essentially, every quest stage is its own sub-quest. This abstraction proved to be expressive and easy to work with, though somewhat boilerplate-y. I am sure that frames will be used extensively in future WTF quests, though I am yet working out all the smaller implementation details.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="documentation">Documentation<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#documentation" class="hash-link" aria-label="Direct link to Documentation" title="Direct link to Documentation" translate="no">​</a></h2>
+<p>Hey, look at this fancy website! I have a little <a class="" href="https://igigog.github.io/Weird_Task_Framework/blog">Blog</a> here to dump my thoughts like this, documentation for every quest in <a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/gt-tasks">Tasks</a>, first steps working with WTF in <a class="" href="https://igigog.github.io/Weird_Task_Framework/getting-started/intro">Getting Started</a> and detailed nitty-gritty in <a class="" href="https://igigog.github.io/Weird_Task_Framework/documentation/state">Documentation</a>. It was never more fancy than this, right?</p>
+<p><em>Damn fancy.</em></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="future-of-wtf">Future of WTF<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#future-of-wtf" class="hash-link" aria-label="Direct link to Future of WTF" title="Direct link to Future of WTF" translate="no">​</a></h2>
+<p>When I started WTF, I didn't expect to make a whole-ass task pack of my own, with quests more diverse and polished than both GhenTuong and Arszi's packs WTF was born out of. There are more questmakers in the community now than there were in the days WTF was born; quests and questlines are more diverse as ever, and I celebrate that. It's just nice, you know? I love quests, that's why I do that. Anyway, here's my thoughts on where I want to bring WTF next.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="awkward-scenario-engine">Awkward Scenario Engine<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#awkward-scenario-engine" class="hash-link" aria-label="Direct link to Awkward Scenario Engine" title="Direct link to Awkward Scenario Engine" translate="no">​</a></h3>
+<p>Once you have a hammer, everything kinda looks like a nail, right? WTF is a task framework, but over time I started seeing potential for more. The same systems that power quest stages can be reused for cutscenes, or randomized game events, or just literally any actions in the game. In the end, what is a quest if not a cutscene with some player input and a task marker?</p>
+<p>I want to separate WTF from task manager and use it more generically for any types of game events. It is a task framework now, but I want to evolve it into a scenario engine; tasks will be just a special case of scenarios. I don't know yet what exactly I want to do with that newfound power, but... It's about the journey too, you know? ;)</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="anomaly-requesting-project">Anomaly ReQuesting Project<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#anomaly-requesting-project" class="hash-link" aria-label="Direct link to Anomaly ReQuesting Project" title="Direct link to Anomaly ReQuesting Project" translate="no">​</a></h3>
+<p>Current quests in WTF task packs are just a dump of random dynamic tasks. They are very much missing any common direction or guidelines; they were born independently. I think it is time to change that.</p>
+<p>The direction of Community Task Pack showed that I like creating small unique quests. <a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/community-tasks/orders_army"><em>Orders!</em></a> series, <a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/community-tasks/medic_package"><em>Between Law and Profit</em></a>, <a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/community-tasks/sid_bribery"><em>The More You Know</em></a> and both new Ecologist quests, <a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/community-tasks/detector_upgrade_easy"><em>Onboarding</em></a> and <a class="" href="https://igigog.github.io/Weird_Task_Framework/tasks/community-tasks/detector_upgrade_hard"><em>Big Measuring Contest</em></a> are small quests unique to a single task giver, sometimes available to only a single faction. I love all of them. I want more of this. And I also can make more of this - every single one of these quests was created in one evening, about 3-5 hours total per quest.</p>
+<p>So, I am starting a project to replace all of Anomaly's dynamic quests with ones of my own, deeper and more polished, with a single coherent direction. What I want to achieve is:</p>
+<ul>
+<li class="">Unique quests for every faction. Playthrough for a different faction should <em>feel</em> different, <em>progress</em> different, and have unique mechanics.</li>
+<li class="">One faction per release. I'm starting with Ecologists, since I already have 3 quests for them.</li>
+<li class="">20-40 quests per faction. All of them should represent the faction in some way, and at least half of them should only be accessible to players of the faction.</li>
+</ul>
+<p>I haven't decided my course of actions yet. You might help me.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="discord">Discord<a href="https://igigog.github.io/Weird_Task_Framework/blog/4-3-release#discord" class="hash-link" aria-label="Direct link to Discord" title="Direct link to Discord" translate="no">​</a></h3>
+<p>WTF Discord server is back babyyyyyyyy! Here you go! <a href="https://discord.gg/GCRUnHy4HP" target="_blank" rel="noopener noreferrer" class="">Discord</a>.</p>
+<p>It's quite empty there now, we'll see how it goes. Keep in mind that my motivation proved to be very sporadic - the server might be inactive for months, or it might be full of activity, I don't know. Your presence helps me keep my motivation though.</p>
+<hr>
+<p>That's it! WTF is strong as ever, the plans are monumental, and the motivation is... it exists, anyway! So that's nice.</p>
+<p>Take care.</p>
+<p>- Igi</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[WTF 4.3 needs testers]]></title>
             <link>https://igigog.github.io/Weird_Task_Framework/blog/need-testers</link>

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([["1833"],{5513(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"WTF 4.3 needs testers","permalink":"/Weird_Task_Framework/blog/need-testers","unlisted":false,"date":"2026-07-30T00:00:00.000Z"}]}')}}]);
