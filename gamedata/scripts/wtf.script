@@ -189,8 +189,8 @@ Repair = function (new_condition)
             if entity._repair_done then return end
             local item = get_object_by_id(entity.id)
             if not item then return false end
-            if item:condition() < (new_condition / 100) then
-                get_object_by_id(entity.id):set_condition(new_condition)
+            if item:condition() < (new_condition) then
+                item:set_condition(new_condition)
                 entity._repair_done = true
             end
         end

@@ -12,7 +12,7 @@
 	"entities": [
 	{
 		"ids": "$ igi_finder.find_items_in_enemy(1, 2, igi_helper.db_ini:collect_section('f_gt_weapon_' .. tostring(wtf_gt_tasks.scale_to_player())))",
-		"condition_after": "$ igi_random.rand(70, 90)",
+		"condition_after": "$ igi_random.rand(70, 90) / 100",
 		"id": "?$ wtf.shuffle(|this.ids|)[1]",
 		"se_parent": "@$ alife_object(alife_object(|this.id|).parent_id)",
 		"CONTROLLER": "@$ igi_target_get.Get",
