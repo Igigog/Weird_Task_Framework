@@ -11,10 +11,15 @@
     },
     "entities": [
     {
+        "id":"init$ |smart.id|",
+        "CONTROLLER": "@$ igi_target_visit.Visit"
+    },
+
+    {
         "section_name":"simulation_mix_dogs",
         "id": "init$ igi_helper.spawn_squad(|this.section_name|, |smart.id|)",
         "HELPERS": ["@$ wtf.ScriptedSquad"],
-        "squad_size": 4,
+        "max_squad_size": "$ igi_helper.squad_size_bounds(|this.section_name|)[2]",
         "link_id": "squad"
     },
 
@@ -25,14 +30,20 @@
     }
     ],
     "rewards": {
-        "money": "@$ 3000 + 200 * |squad.squad_size|",
-        "goodwill": "@$ 30 + 2 * |squad.squad_size|"
+        "money": "@$ 3000 + 200 * |squad.max_squad_size|",
+        "goodwill": "@$ 30 + 2 * |squad.max_squad_size|"
     },
     "icon": "ui_iconsTotal_mutant",
     "quest_givers": [
-        {"Mechanic": true}
+        {}
     ]
 }
 ```
 
 Assault-type quests are pretty much [Kill](/getting-started/common-tasks/kill)-type quests, but instead of killing a specific squad, you need to clear a location of all enemies. As such, we'll need two entities - `smart` is the location to be cleared, and `squad` is some enemy we spawn there. Notice that `squad` entity has no controller - we don't need to do anything with this _concrete_ squad, it's just spawned on a smart we need to clear.
+
+Reward and `Visit` entity rationale is the same as in [Kill](/getting-started/common-tasks/kill):
+
+Setting up rewards requires a bit of nudging. Since the squad sizes are randomized on creation, you can't know squad size when accepting the task. Instead, we'll use maximum possible squad size; if it will be smaller, no biggie.
+
+I also added a `Visit`-type entity. This way, even if the target was killed by anything else without the player, he'll still need to go to the location and confirm the squad is killed. `wtf.ScriptedSquad` disables offline combat, so that problem is unlikely anyway.

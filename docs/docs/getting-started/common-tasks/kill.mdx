@@ -11,26 +11,33 @@
     },
     "entities": [
     {
+        "id":"init$ |squad.smart_id|",
+        "CONTROLLER": "@$ igi_target_visit.Visit"
+    },
+
+    {
         "section_name":"bandit_sim_squad_alpha",
         "smart_id": "?$ wtf.shuffle(igi_finder.get_smarts(1,1))[1]",
         "id": "init$ igi_helper.spawn_squad(|this.section_name|, |this.smart_id|)",
-        "HELPERS": ["@$ wtf.ScriptedSquad"],
+        "HELPERS": ["@$ wtf.ScriptedSquad", "@$ wtf.PinToSmart"],
         "CONTROLLER":"@$ igi_target_kill.Kill",
-        "squad_size": 3,
+        "max_squad_size": "$ igi_helper.squad_size_bounds(|this.section_name|)[2]",
         "link_id": "squad"
     }
     ],
     "icon": "ui_inGame2_PD_master_boevih_sistem",
     "rewards": {
-        "money": "@$ 2000 + 400 * |squad.squad_size|",
-        "goodwill": "@$ 20 + 4 * |squad.squad_size|"
+        "money": "@$ 2000 + 400 * |squad.max_squad_size|",
+        "goodwill": "@$ 20 + 4 * |squad.max_squad_size|"
     },
     "quest_givers": [
-        {"Mechanic": true}
+        {}
     ]
 }
 ```
 
 Ah, the classic kill-type quest. You have one job: go to wherever the enemy squad is and ensure that it doesn't exist anymore. We use `?$` optional macro to ensure there exists a smart we want to place the enemy on, and we use `igi_helper.spawn_squad` helper to create it. After that, you're all set.
 
-Setting up rewards requires a bit of nudging. Since the squad sizes are randomized on creation, you can't know squad size when accepting the task. Instead, we'll approximate the size at first; `wtf.CreateSquad` overrides it after squad creation.
+Setting up rewards requires a bit of nudging. Since the squad sizes are randomized on creation, you can't know squad size when accepting the task. Instead, we'll use maximum possible squad size; if it will be smaller, no biggie.
+
+I also added a `Visit`-type entity. This way, even if the target was killed by anything else without the player, he'll still need to go to the location and confirm the squad is killed. `wtf.ScriptedSquad` disables offline combat, so that problem is unlikely anyway.
