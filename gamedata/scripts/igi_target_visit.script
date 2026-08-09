@@ -26,7 +26,7 @@ function Visit.status(entity)
 
 	local actor = alife_object(0)
 	if get_level_id(target) ~= get_level_id(actor) then
-		return false end
+		return igi_subtask.TASK_STATUSES.RUNNING end
 	if distance(target.position, actor.position) < MAX_DISTANCE_SQR then
 		entity._visited = true
 		return igi_subtask.TASK_STATUSES.COMPLETED
