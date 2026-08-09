@@ -90,3 +90,12 @@ end
 ```
 
 This _Helper_ is a bit more fancy, but the core functionality is clear: it will repair an item, it trigger exactly once and only when an item comes online.
+
+## Lifecycle hooks
+
+`on_init` and `on_del` methods are called by the framework once the entity enters its respective lifecycle phase (_Initialization_ or _Finish_).
+
+- `on_init` is called after `init$` macros are resolved, first in-order for all the _Helpers_, then for the _Controller_
+- `on_del` is called in reverse order, first for _Controller_, then for _Helpers_ in reverse order, and only then `del$` macros are resolved
+
+As an implementation detail, at the _Initialization_ stage, the framework goes through entities in-order, and at the _Finish_ stage in reverse order.

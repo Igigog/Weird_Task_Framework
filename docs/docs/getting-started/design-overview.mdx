@@ -10,67 +10,36 @@ Weird Task Framework was born out of a procedural quest pack, and this procedura
 
 The answer, it turns out, is complicated. There are stupidly many inter-interacting parts in a quest: *setup*, *logic*, *success and failure conditions*, *rewards*, *description*, *dialogues*, etc. All of these parts may interact with each other; for example, *description* needs to show *rewards*, which depend on *logic* of the quest and initial conditions in *setup*. In short, it is a pain to get them all moving.
 
-WTF employs a row of tricks to reduce complexity of this self-suffocating mess. Let's look at an example:
 
-```json title="sid_bribery.json"
-{
-...
-    "entities": [
-    {
-        "section_name":"drx_sl_quest_item_2",
-        "id": "init$ igi_helper.give_to_actor(|this.section_name|)",
-        "release": "on_finish$ alife_release_id(|this.id|) or 1",
-        "link_id": "package"
-    },
+## Structure of a quest
 
-    {
-        "id": "init$ alife_create('script_zone', |this.pos|, |this.lvid|, |this.gvid|).id",
-        "release": "del$ alife_release_id(|this.id|) or 1",
-		
-        "pos": "@$ vector():set(-100, -30, -397)",
-        "gvid": 449,
-        "lvid": 162028,
-        "link_id": "zone"
-    },
+To work around the infinite complexity of human imagination, WTF splits quests into _frames_, and _frames_ into entities. Each _frame_ can be thought of as a single task stage, while entities represent single conditions for finishing the stage.
 
-    {
-        "CONTROLLER":"@$ wtf_target_deliver.Deliver",
-        "id": "init$ |package.id|",
-        "where": "init$ |zone.id|"
-    }
-    ],
-    ...
-}
-```
+To define these conditions, WTF uses _controllers_ - small pieces of logic, which can access the data in their entity and run code. Controllers are more than just a status function though - they have access to entity lifecycle and can define additional methods for special quest needs.
 
-### Inline Lua
+Multiple entities can work in parallel to define complex logic inside a single quest stage. This way you can build your quest from simple and composable parts, while keeping everything comprehensive and independently verifiable.
 
-Inline lua is used heavily in WTF. You can express a lot in a single line of lua; you can express much more in six. This makes the state very explicit - you can read what happens in the whole quest in these poor 6 lines of lua. 
+## Quest Lifecycle
 
-### Independent Entities
+Just checking conditions is not enough - you need to prepare the quest, create game objects and clear everything up afterwards. For that, quests, frames and single entities have their own lifecycle.
 
-Quests in WTF are built around entities - blobs of data with optional logic glued on top. In this quest there are 3 entities, but only one of them has a controller, meaning only one has any logic to run. Regardless of amount, once the logic starts running, controller can only access its own entity - other ones are completely inaccessible to it.
+While the lifecycles are independent, the phases are the same for everything: _Setup_, _Initialization_, _Run_ and _Finish_:
+- _Setup_ is used to prepare data
+- _Initialization_ is meant to create game objects
+- _Run_ is where the player goes through the quest
+- _Finish_ is for cleaning up after you're done
 
-### Macros and Linking
+## State and Macros
 
-Inline lua runs using a macro system. These things with `$` before inline lua define when, and how, the code will be run. Links allow the results of macros to be interconnected; macro system is the only thing that can move values between entities.
+The whole state of a quest lives in a single table. This makes the quest inspectable, trivializes save logic and makes the logging simple. You define quest state in a _json_ configuration and use _macros_ for dynamic data loading.
 
-### Controllers
+_Macros_ are pieces of inline lua you write in your configuration. This way, the data structure of your quest becomes obvious from the config, and you're free to use the whole power of lua for your needs.
 
-Single lines of inline lua can't run your quest - trust me, I tried. Controllers are written in actual `.script` files and take care of the whole subtask lifecycle - they define success and failure conditions, run status functor and have their own initialization and shutdown logic.
+## Developer tooling
 
-### More Macros
+WTF provides a set of functionality to make quest development more enjoyable.
 
-```json title="heavy.json"
-    ...
-    "description": {
-        "locations": ["$ igi_description.get_smart_name_by_id(|frame.smart_id|)"],
-        "factions": ["$ |frame.faction|"]
-    },
-    "rewards": {
-        "money": "@$ 2000 + 400 * |frame.squad_size|",
-        "goodwill": "@$ 20 + 4 * |frame.squad_size|"
-    },
-```
-
-Once you get a hammer, you build a framework around it. Entities are not the only thing enjoying benefits of procedural generation - all the systems of WTF are built around macros, inline lua and controllers. Once you grasp these, you're all set.
+- _CTD protection_ lets you iterate faster, because you don't need to restart the game after every mistake
+- _Debug-mode logging_ provides logs for every action the framework does
+- When using MO2, both scripts and task configurations reload after loading a savefile
+- MCM integration adds more debug options, like disabling preconditions for _blazingly fast_ testing
