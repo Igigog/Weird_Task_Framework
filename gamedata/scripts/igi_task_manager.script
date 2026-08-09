@@ -270,7 +270,7 @@ IgiTask = {
 			return
 		end
 		if self.current_title ~= t_title then
-			-- igi_helper.trace_dbg("task_updated: title", self.current_title, t_title)
+			igi_helper.trace_dbg("task_updated: title", self.current_title, t_title)
 			task_updated = true
 			self.current_title = t_title
 			self.t:set_title(t_title)
@@ -282,7 +282,7 @@ IgiTask = {
 			return
 		end
 		if self.current_descr ~= t_descr then
-			-- igi_helper.trace_dbg("task_updated: current_descr", self.current_descr, t_descr)
+			igi_helper.trace_dbg("task_updated: current_descr", self.current_descr, t_descr)
 			task_updated = true
 			self.current_descr = t_descr
 			self.t:set_description(t_descr)
@@ -294,7 +294,7 @@ IgiTask = {
 			return
 		end
 		if (self.current_target ~= t_targets[1]) then
-			-- igi_helper.trace_dbg("task_updated: current_target", self.current_target, t_targets[1])
+			igi_helper.trace_dbg("task_updated: current_target", self.current_target, t_targets[1])
 			task_updated = true
 			self.current_target = t_targets[1]
 			if not self.current_target then
@@ -305,7 +305,7 @@ IgiTask = {
 		end
 
 		if self:update_temp_tasks(t_targets) then
-			-- igi_helper.trace_dbg("task_updated: temp tasks")
+			igi_helper.trace_dbg("task_updated: temp tasks")
 			task_updated = true
 		end
 
