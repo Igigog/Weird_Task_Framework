@@ -16,8 +16,8 @@
 	}
 	],
 	"rewards": {
-		"money": "$ 200 + 100 * #|frame.ids|",
-		"goodwill": "$ 10 + 5 * #|frame.ids|"
+		"money": "$ 1000 + 250 * #|frame.ids|",
+		"goodwill": "$ 20 + 5 * #|frame.ids|"
 	},
 	"quest_givers": [
 		{"Leader": true, "Agroprom": true, "Army": true},
