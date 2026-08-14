@@ -37,6 +37,41 @@ function process_subtasks(CACHE)
 	return CACHE.status
 end
 
+function process_subtask_progress(entity, new_progress, CACHE)
+	if not entity.ON_PROGRESS or not new_progress then return end
+	if entity.progress == new_progress then return end
+	if new_progress < (entity.progress or 0) then
+		if entity.ON_PROGRESS.reset then
+			igi_text_processor.eval_logic_macro(
+				entity.ON_PROGRESS.reset,
+				igi_text_processor.get_link_context(CACHE, entity)
+			)
+		else
+			return
+		end
+	end
+
+	if entity.ON_PROGRESS.steps then
+		for _, step in ipairs(entity.ON_PROGRESS.steps) do
+			if step[1] > (entity.progress or 0) and step[1] <= (new_progress) then
+				igi_text_processor.eval_logic_macro(
+					step[2],
+					igi_text_processor.get_link_context(CACHE, entity)
+				)
+			end
+ 		end
+	end
+
+	if entity.status == TASK_STATUSES.FAILED and entity.ON_PROGRESS.fail then
+		igi_text_processor.eval_logic_macro(
+			entity.ON_PROGRESS.fail,
+			igi_text_processor.get_link_context(CACHE, entity)
+		)
+	end
+
+	entity.progress = new_progress
+end
+
 function get_quest_target(entities, CACHE)
 	local got_first = false
 	local targets = {}
@@ -81,10 +116,11 @@ function update_entity_status(entity, CACHE)
 
 	local controller = igi_taskdata.get_controller(entity, CACHE)
 	if not controller.status then return false end
-	local new_status = controller.status(entity)
-	if new_status == entity.status then return false end
+	local old_status = entity.status
+	local new_status, progress = controller.status(entity)
 	entity.status = new_status
-	return true
+	process_subtask_progress(entity, progress, CACHE)
+	return old_status == new_status
 end
 
 local function get_frame_with_entities(frame, CACHE)
