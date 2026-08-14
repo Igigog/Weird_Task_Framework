@@ -203,6 +203,7 @@ function activate_next_frame(CACHE)
 		igi_helper.trace_dbg("on_entity_init", CACHE, entity)
 	end
 
+	igi_callbacks.register_callbacks(CACHE)
 	process_subtasks(CACHE)
 	CACHE.current_frame = new_frame
     igi_helper.trace_dbg("Enable: after run", CACHE)
@@ -229,6 +230,7 @@ function disable_entities(CACHE)
 		end
 	end
 
+	igi_callbacks.unregister_callbacks(CACHE)
 	empty_table(CACHE.entities)
 
 	local frame = CACHE.frames[CACHE.current_frame]

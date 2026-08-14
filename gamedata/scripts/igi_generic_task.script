@@ -19,6 +19,14 @@ function actor_on_first_update()
 			.. " -> " .. TASKS_VERSION)
 		news_manager.send_tip(db.actor, "WTF: Update complete. Glad to see you here. Welcome to WTF " .. TASKS_VERSION, nil, nil, 30000)
 	end
+
+	for _, CACHE in pairs(TASKS_CACHE) do
+		local ok, err = igi_helper.pcall(igi_callbacks.register_callbacks, CACHE)
+		if not ok then
+			igi_helper.trace_error("Registering callbacks for quest failed", err, CACHE)
+			task_manager.get_task_manager():set_task_failed(CACHE.task_id)
+		end
+	end
 end
 
 function save_state(m_data)

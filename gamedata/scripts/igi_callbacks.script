@@ -1,0 +1,51 @@
+
+callbacks = {
+    -- name -> task_id -> callback_f[]
+}
+
+function forwarding(callback_tbl)
+    return function (...)
+        for task_id, callbacks in pairs(callback_tbl) do
+            for _, callback in pairs(callbacks) do
+                if callback(...) then
+                    task_manager.get_task_manager().task_info[task_id].last_update_time = 0
+                end
+            end
+        end
+    end
+end
+
+function add_callback(task_id, name, callback_f)
+    if not callbacks[name] then
+        callbacks[name] = {}
+        RegisterScriptCallback(name, forwarding(callbacks[name]))
+    end
+
+    callbacks[name][task_id] = callbacks[name][task_id] or {}
+    table.insert(callbacks[name][task_id], callback_f)
+end
+
+local function partial(callback_f, entity)
+    return function (...)
+        return callback_f(entity, ...)
+    end
+end
+
+
+function register_callbacks(CACHE)
+    for _, entity in pairs(CACHE.entities) do
+        local controller = igi_taskdata.get_controller(entity, CACHE)
+        if controller.register_callbacks then
+            local callbacks = controller.register_callbacks(entity)
+            for name, callback_f in pairs(callbacks) do
+               add_callback(CACHE.task_id, name, partial(callback_f, entity))
+            end
+        end
+    end
+end
+
+function unregister_callbacks(CACHE)
+    for _, by_task_id in pairs(callbacks) do
+        by_task_id[CACHE.task_id] = nil
+    end
+end

@@ -449,6 +449,7 @@
         "igi_target_assault",
         "igi_task_manager",
         "disable_info",
-        "tasks_measure"
+        "tasks_measure",
+        "igi_callbacks"
     ]
 }
