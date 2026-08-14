@@ -171,7 +171,7 @@ ChangeFaction = function (faction)
                 local se_squad = alife_object(entity.id)
                 if not se_squad or not se_squad.squad_members then return end
                 for npc in se_squad:squad_members() do
-                    local member = get_object_by_id(npc.id)
+                    local member = igi_helper.game_object_by_id(npc.id)
                     if member then
                         member:set_character_community(faction, 0, 0)
                     end
@@ -187,7 +187,7 @@ Repair = function (new_condition)
     return {
         status = function (entity)
             if entity._repair_done then return end
-            local item = get_object_by_id(entity.id)
+            local item = igi_helper.game_object_by_id(entity.id)
             if not item then return false end
             if item:condition() < (new_condition) then
                 item:set_condition(new_condition)
@@ -218,7 +218,7 @@ Dead = {
         end
 
         for _, se_member in pairs(members) do
-            local npc = get_object_by_id(se_member.id)
+            local npc = igi_helper.game_object_by_id(se_member.id)
             if npc then
                 npc:kill(npc)
                 se_save_var(se_member.id, nil, "dont_release", true)

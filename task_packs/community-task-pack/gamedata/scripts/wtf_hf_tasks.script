@@ -3,7 +3,7 @@ local function parent_section(sec)
 end
 
  function set_item_condition(id, min_condition, max_condition)
-	local item = get_object_by_id(id)
+	local item = igi_helper.game_object_by_id(id)
     igi_helper.trace_assert(item and IsWeapon(item) and not IsMelee(item))
 	
 	-- Set overall item condition to low
@@ -22,7 +22,7 @@ end
 Break = {
     status = function (entity)
         if entity._break_done then return end
-        if get_object_by_id(entity.id) ~= nil then
+        if igi_helper.game_object_by_id(entity.id) ~= nil then
            entity._break_done = true
            set_item_condition(entity.id, 10, 40)
         end

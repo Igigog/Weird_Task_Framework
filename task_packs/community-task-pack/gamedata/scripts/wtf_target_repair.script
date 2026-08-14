@@ -1,7 +1,7 @@
 local TASK_STATUSES = igi_subtask.TASK_STATUSES
 
 function ready_to_finish(se_obj)
-    local item = get_object_by_id(se_obj.id)
+    local item = igi_helper.game_object_by_id(se_obj.id)
 	if not item then return false end
 
     local threshold = 90

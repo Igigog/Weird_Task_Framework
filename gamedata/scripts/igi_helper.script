@@ -204,3 +204,8 @@ function squad_size_bounds(section_name)
 	count[2] = count[2] and tonumber(count[2]) or count[1]
 	return count
 end
+
+function game_object_by_id(id)
+	igi_helper.trace_assert(type(id) == "number", "id is not a number", id)
+	return db.storage[id] and db.storage[id].object or level.object_by_id(id)
+end
