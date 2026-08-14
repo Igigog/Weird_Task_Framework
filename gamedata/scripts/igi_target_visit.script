@@ -18,20 +18,20 @@ function Visit.on_init(entity)
 end
 
 function Visit.status(entity)
-	if entity._visited then return igi_subtask.TASK_STATUSES.COMPLETED end
+	if entity._visited then return igi_subtask.TASK_STATUSES.COMPLETED, 1 end
 	local target = alife_object(entity.id)
 	if target == nil then
-		return igi_subtask.TASK_STATUSES.FAILED
+		return igi_subtask.TASK_STATUSES.FAILED, -1
 	end
 
 	local actor = alife_object(0)
 	if get_level_id(target) ~= get_level_id(actor) then
-		return igi_subtask.TASK_STATUSES.RUNNING end
+		return igi_subtask.TASK_STATUSES.RUNNING, 0 end
 	if distance(target.position, actor.position) < MAX_DISTANCE_SQR then
 		entity._visited = true
-		return igi_subtask.TASK_STATUSES.COMPLETED
+		return igi_subtask.TASK_STATUSES.COMPLETED, 1
 	end
-    return igi_subtask.TASK_STATUSES.RUNNING
+    return igi_subtask.TASK_STATUSES.RUNNING, 0
 end
 
 function Visit.quest_target(entity)

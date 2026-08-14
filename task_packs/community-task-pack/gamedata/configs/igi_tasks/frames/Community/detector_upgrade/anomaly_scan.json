@@ -1,7 +1,9 @@
 {
     "inputs": {
         "zone_ids": "table",
-        "pda_messages": "table"
+        "scan_on_progress": "table",
+        "visit_on_progress": "table",
+        "sender": "number"
     },
 
     "outputs": {
@@ -23,8 +25,16 @@
         "CONTROLLER": "@$ wtf_target_anomaly_scan.AnomalyScan",
         "detector_id": "init$ |detector.id|",
         "scan_time_sec": 40,
-        "pda_messages": "$ |inputs.pda_messages|",
+
+        "ON_PROGRESS": "$ |inputs.scan_on_progress|",
         "subtask": true
+    },
+
+    {
+        "ids": "$ |inputs.zone_ids|",
+        "GEN": "@$ igi_generate.Split('ids', 'id')",
+        "CONTROLLER": "@$ igi_target_visit.Visit",
+        "ON_PROGRESS": "$ |inputs.visit_on_progress|"
     }
     ]
 }

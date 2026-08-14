@@ -19,7 +19,6 @@ function AnomalyScan.on_init(entity)
     entity._zone_name = alife_object(entity.id):name()
     entity._infoportion = tostring(math.random())
     entity._measuring = false
-    entity._pda_step = "open_detector"
 end
 
 function start_measure(entity)
@@ -27,77 +26,46 @@ function start_measure(entity)
         local measure_ui = tasks_measure.get_UI()
         entity._measure_timer_before = measure_ui.timer
         measure_ui.timer = (entity.scan_time_sec * 1000) / measure_ui.step_tot
-        entity._measuring = time_global()
+        entity._measuring = true
         tasks_measure.start_measurement_hud(entity._infoportion)
     end
 end
 
 function reset_measure(entity)
     if entity._measuring then
-        entity._pda_step = 1
-        if (entity.pda_messages.reset) then
-            igi_helper.pda_message(entity.pda_messages.reset, entity.pda_messages.tg_id)
-        end
         tasks_measure.get_UI().timer = entity._measure_timer_before
         entity._measuring = false
         tasks_measure.close_measurement_hud()
     end
 end
 
-function send_next_pda_message(entity)
-    if entity._measuring and entity.pda_messages.steps and entity.pda_messages.steps[entity._pda_step] then
-        local step = entity.pda_messages.steps[entity._pda_step]
-        if (time_global() - entity._measuring) / (entity.scan_time_sec * 1000) > step[1] then
-            entity._pda_step = entity._pda_step + 1
-            igi_helper.pda_message(step[2], entity.pda_messages.tg_id)
-        end
-    end
-end
-
-function send_done_pda_message(entity)
-    entity._pda_step = "done"
-    if entity.pda_messages.done then
-        igi_helper.pda_message(entity.pda_messages.done, entity.pda_messages.tg_id)
-    end
-end
-
 function AnomalyScan.status(entity)
     if has_alife_info(entity._infoportion .. "_measurment_finished") then
-        if entity._pda_step ~= "done" then
-            send_done_pda_message(entity)
-        end
-        return igi_subtask.TASK_STATUSES.COMPLETED
+        return igi_subtask.TASK_STATUSES.COMPLETED, 1
     end
 
     if not db.zone_by_name[entity._zone_name] then
         reset_measure(entity)
-        return igi_subtask.TASK_STATUSES.RUNNING
+        return igi_subtask.TASK_STATUSES.RUNNING, 0
     end
 
     local target = alife_object(entity.id)
     local actor = alife_object(0)
 
-    if entity._pda_step == "open_detector" and distance(target.position, actor.position) < (entity.range + 10) * (entity.range + 10) then
-        entity._pda_step = 1
-        if entity.pda_messages.open_detector then
-            igi_helper.pda_message(entity.pda_messages.open_detector, entity.pda_messages.tg_id)
-        end
-    end
-
 	if distance(target.position, actor.position) > entity.range * entity.range then
         reset_measure(entity)
-		return igi_subtask.TASK_STATUSES.RUNNING
+		return igi_subtask.TASK_STATUSES.RUNNING, 0
 	end
 
     local active_detector = db.actor:active_detector()
     if (not active_detector) or (active_detector:id() ~= entity.detector_id) then
         reset_measure(entity)
-        return igi_subtask.TASK_STATUSES.RUNNING
+        return igi_subtask.TASK_STATUSES.RUNNING, 0
     end
 
     start_measure(entity)
-    send_next_pda_message(entity)
-    return igi_subtask.TASK_STATUSES.RUNNING
+    local measure_ui = tasks_measure.get_UI()
+    return igi_subtask.TASK_STATUSES.RUNNING, measure_ui.step / (measure_ui.step_tot + 0.01)
 end
 
 function AnomalyScan.on_del(entity)

@@ -14,13 +14,17 @@
     {
 		"src": "Community/detector_upgrade/anomaly_scan.json",
 		"zone_ids": "$ wtf.map(|CACHE.zones|, function(x) return db.zone_by_name[x]:id() end)",
-		"pda_messages": {
-			"tg_id": "$ get_story_object_id('jup_b6_scientist_tech')",
-			"open_detector": "igi_task_text_anomaly_scan_open_detector_hard",
-			"done": "igi_task_text_anomaly_scan_done_hard",
-			"reset": "igi_task_text_anomaly_scan_reset_hard",
+		"sender": "$ get_story_object_id('jup_b6_scientist_tech')",
+		"visit_on_progress": {
 			"steps": [
-				[0.01, "igi_task_text_anomaly_scan_started_hard"]
+			[1, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_open_detector_hard', |inputs.sender|) or 1"]
+			]
+		},
+		"scan_on_progress": {
+			"reset": "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_reset_hard', |inputs.sender|) or 1",
+			"steps": [
+			[0.01, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_started_hard', |inputs.sender|) or 1"],
+			[1, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_done_hard', |inputs.sender|) or 1"]
 			] 
 		},
 		"link_id": "scan"
