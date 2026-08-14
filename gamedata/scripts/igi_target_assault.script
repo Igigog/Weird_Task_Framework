@@ -91,8 +91,12 @@ local function mark_distant_squads(entity)
 end
 
 function Assault.status(entity)
+	if entity._completed then return igi_subtask.TASK_STATUSES.COMPLETED end
 	mark_distant_squads(entity)
-	if is_completed(entity) then return TASK_STATUSES.COMPLETED end
+	if is_completed(entity) then
+		entity._completed = true
+		return TASK_STATUSES.COMPLETED
+	end
 	return TASK_STATUSES.RUNNING
 end
 
