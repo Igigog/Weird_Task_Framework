@@ -37,18 +37,3 @@ end
 function Visit.quest_target(entity)
 	return entity.id
 end
-
-function Visit.test(entity)
-	local assert_test = igi_tests.assert_test
-	entity._test_stage = (entity._test_stage or 0) + 1
-
-	if entity._test_stage == 1 then
-		local se_obj = alife_object(entity.id)
-		assert_test(se_obj, "Entity does not exist")
-		db.actor:set_actor_position(se_obj.position)
-
-	elseif entity._test_stage == 2 then
-		assert_test(entity.status == "COMPLETED", "Quest did not complete")
-		return true
-	end
-end

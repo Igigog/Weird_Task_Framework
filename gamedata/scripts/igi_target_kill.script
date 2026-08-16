@@ -16,31 +16,3 @@ end
 function Kill.quest_target(entity)
 	return entity.id
 end
-
-function Kill.test(entity)
-	local assert_test = igi_tests.assert_test
-	entity._test_stage = (entity._test_stage or 0) + 1
-
-	if entity._test_stage == 1 then
-		local se_obj = alife_object(entity.id)
-		assert_test(se_obj, "Kill entity does not exist")
-		assert_test(se_obj:squad_members(), "Kill entity is not a squad")
-		if igi_mcm.get_options_value("fast_tests") then
-			igi_tests.teleport_to_player(se_obj)
-		else
-			igi_tests.travel_to_se_obj(se_obj)
-		end
-
-	elseif entity._test_stage == 2 then
-		local se_obj = alife_object(entity.id)
-		for se_npc in se_obj:squad_members() do
-			local npc = assert(get_object_by_id(se_npc.id))
-			npc:kill(db.actor)
-		end
-		get_object_by_id(se_obj:commander_id()):kill(db.actor)
-
-	elseif entity._test_stage == 4 then
-		assert_test(entity.status == "COMPLETED", "Quest did not complete after killing")
-		return true
-	end
-end

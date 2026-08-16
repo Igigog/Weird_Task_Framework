@@ -31,15 +31,3 @@ function Escort.on_del(entity)
     local se_squad = alife_object(entity.id)
     local _ = se_squad and axr_companions.dismiss_special_squad(se_squad)
 end
-
-function Escort.test(entity)
-	local assert_test = igi_tests.assert_test
-	local se_squad = alife_object(entity.id)
-	for member in se_squad:squad_members() do
-		local se_npc = alife_object(member.id)
-		assert_test(
-			se_load_var(se_npc.id, se_npc:name(), "companion"), "Not in actor's squad")
-	end
-	assert_test(entity.status == "READY_TO_FINISH", "Quest did not complete")
-	return true
-end

@@ -22,26 +22,3 @@ function Get.quest_target(obj_data)
 		return se_obj.parent_id
 	end
 end
-
-function Get.test(entity)
-	local assert_test = igi_tests.assert_test
-	entity._test_stage = (entity._test_stage or 0) + 1
-	if not entity._test_stage == 1 then
-		local se_obj = alife_object(entity.id)
-		assert_test(se_obj, "Entity does not exist")
-		if igi_mcm.get_options_value("fast_tests") then
-			igi_tests.teleport_to_player(se_obj)
-		else
-			igi_tests.travel_to_se_obj(se_obj)
-		end
-
-	elseif entity._test_stage == 2 then
-		local se_obj = alife_object(entity.id)
-		local obj = get_object_by_id(se_obj.id)
-		db.actor:transfer_item(obj, db.actor)
-
-	elseif entity._test_stage == 3 then
-		assert_test(entity.status == "COMPLETED", "Quest did not complete")
-		return true
-	end
-end
