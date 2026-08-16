@@ -81,12 +81,13 @@ Macro       = {
 
     new = function(self, str)
 		if type(str) ~= "string" then return end
-        local level, is_auto, macro = string.match(str, "([^%$%@]*)(%@?)%$(.*)")
+        local level, is_auto, macro = string.match(str, "([^%$%@%>]*)([%@%>]?)%$(.*)")
         if not macro then return end
 
         local t = {
             level = level ~= '?' and level or '',
             is_auto = is_auto ~= '',
+			is_effect = is_auto == '>',
 			is_nullable = level == '?',
             macro = macro,
 			orig = str
@@ -112,7 +113,7 @@ Macro       = {
 		Macro.link_context = link_context
 		local out = eval(self:_without_links())
 
-		if out == nil then
+		if out == nil and not self.is_effect then
 			trace_assert(self.is_nullable, "Macro returned nil", self.orig)
 			igi_helper.trace_dbg("Failed macro resolution: macro returned nil", self.orig)
 			return nil, true
@@ -129,6 +130,11 @@ Macro       = {
 	assert_level = function (self, level)
 		local is_empty_auto = self.is_auto and self.level == ""
 		igi_helper.trace_assert(self.level == level or is_empty_auto, "Macro is of wrong level", level, self.orig)
+		return self
+	end,
+
+	assert_not_effect = function (self)
+		igi_helper.trace_assert(not self.is_effect, "Cannot link to effect macro", level, self.orig)
 		return self
 	end,
 
@@ -191,7 +197,7 @@ local function resolve_all_links(links, level, link_context, transient_fields)
 
         local macro = Macro:new(before)
         if macro then
-            macro:assert_level(level)
+            macro:assert_level(level):assert_not_effect()
 			local this_before = link_context.this
 			local out, failed = macro:resolve(link_context:set_this(tbl))
 			if failed then
