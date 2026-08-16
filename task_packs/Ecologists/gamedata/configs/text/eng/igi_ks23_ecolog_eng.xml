@@ -33,23 +33,23 @@
 		<text>This ammunition was developed by ChAZ Research Institute according to the special order from Professors Herman and Ozersky, after a successful series of studies in the center of the zone in 2012.  It is a 23mm caliber dart with an ampoule filled with organic liquid crystals synthesized under a strong vacuum.  Because of extreme complexity and high cost of manufacturing, these darts are highly valued by research groups deployed on the territory of ChAZ. Their only disadvantage is the extremely fragile construction, requiring careful handling.</text>
 	</string>
 
-	<string id="igi_task_text_community_tracking_shot_name">
+	<string id="igi_task_text_ecologists_tracking_shot_name">
 		<text>Beacon of Science</text>
 	</string>
-	<string id="igi_task_text_community_tracking_shot_about">
+	<string id="igi_task_text_ecologists_tracking_shot_about">
 		<text>Young man, would you like to contribute to science? We are on the verge of a terrific discovery in the field of genetic research! We have the basic data to create the CHAZ Mutant Behaviorism Theory. In a nutshell: our research is based on the genetic information of the behavior of every living organism on the planet. That being said, yes, we have a job for you. You will have to travel out to a certain location and locate the mutant species we want. In addition, you will be issued registered equipment in the form of a special rifle with a telescopic sight and a few syringe darts to mark the target. Again, to mark, but not to kill. Upon completion of the assignment, you will be required to return the rifle and shells.  Please note that this ammunition is not live ammunition. This is a valuable one-of-a-kind piece made to order at the ChAZ Research Institute and the distance of the shot is very important. So I have a convincing request to mark the targets at the longest possible distance, otherwise the capsule containing the substance may break and fail to mark the mutant organism.</text>
 	</string>
-	<string id="igi_task_text_community_tracking_shot_text">
+	<string id="igi_task_text_ecologists_tracking_shot_text">
 		<text>The chief of scientists gave me the job of shooting a special ammunition, 
 			giving me a rifle and special liquid darts.
 			I am contractually obliged to move out according to the coordinates given to me. 
 			I need to mark a mutant species and try not to kill it.
 			The chief added: The longer the distance of the shot, the more likely it is that the capsule inside the dart will remain intact.</text>
 	</string>
-	<string id="igi_task_text_community_tracking_shot_finish">
+	<string id="igi_task_text_ecologists_tracking_shot_finish">
 		<text>Good job, stalker.</text>
 	</string>
-	<string id="igi_task_text_community_tracking_shot_pda_msg">
+	<string id="igi_task_text_ecologists_tracking_shot_pda_msg">
 		<text>Calibrating... We are getting the data! Thank you very much, stalker, come back to get your reward.</text>
 	</string>
 
