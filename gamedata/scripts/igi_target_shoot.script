@@ -2,7 +2,6 @@ local TASK_STATUSES = igi_subtask.TASK_STATUSES
 local trace_assert = igi_helper.trace_assert
 
 function on_before_hit(entity, npc, shit)
-    igi_helper.trace_dbg("shoot: callback: id", npc:id())
     if not entity.target_ids[npc:id()] then return end
     if shit.draftsman:id() ~= 0 then return end
 
