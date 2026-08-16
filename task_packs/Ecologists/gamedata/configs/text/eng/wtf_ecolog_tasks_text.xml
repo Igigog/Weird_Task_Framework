@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+
+		<!-- Orders! Ecolog -->
+	<string id="igi_task_text_community_orders_ecolog_name">
+		<text>Order! Daily Research</text>
+	</string>
+	<string id="igi_task_text_community_orders_ecolog_text">
+		<text>I should research the anomaly and bring any anomalous substances to Sakharov.</text>
+	</string>
+	<string id="igi_task_text_community_orders_ecolog_about">
+		<text>Attention, all researchers! The emission has finally subsided, and our instruments indicate an immense surge in psionic energy. Immediate action is required - proceed at once to survey the anomalous zones and conduct rigorous measurements. Any artefacts recovered must be brought to my bunker without delay. We cannot afford to squander this unique opportunity for scientific advancement!</text>
+	</string>
+	<string id="igi_task_text_community_orders_ecolog_finish">
+		<text>Ah, this is what you've found? Yes... splendid - excellent work! I'll analyze the attributes of this new artefact; hopefully, it will provide us with fresh insights into the emissions and their effects on anomalies. Take your payment as a token of appreciation for your efforts, dear colleague.</text>
+	</string>
+
+	<!-- Detector Upgrade: Yantar -->
+	<string id="igi_task_text_community_detector_upgrade_easy_name">
+		<text>Onboarding</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_easy_text">
+		<text>Sakharov promised to upgrade my Echo detector if I scan an anomaly for him.</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_easy_about">
+		<text>Ah, new soul in our science bunker! Are you just coming from the Big Land, colleague? Professor Sakharov is my name, and I am the one doing research here. Would you be willing to help me out in a research of a nearby anomalous field? That would get you started nicely. I see you're using an older model of the artifact detector - I might switch it for a newer one for your help. </text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_easy_finish">
+		<text>With this, the formal welcome is done. I'm looking forward to your research, colleague; as promised, here's your detector. It is not the newest model, but it is better than that terribly outdated version you were using.</text>
+	</string>
+
+	<string id="igi_task_text_anomaly_scan_open_detector">
+		<text>You are coming close to an anomalous field. Prepare your Anomalous measurement device and come closer, I'll be right here reading the data.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_done">
+		<text>And... We're done here. I've got the data.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_reset">
+		<text>Seems like data transmission got disrupted. Let us start again.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_started">
+		<text>The transmission started. The bunker computer is getting the measurements.</text>
+	</string>
+
+	<string id="igi_task_text_anomaly_scan_bullshit_1">
+		<text>We've got temperature, radiation, relative pressure and psy-field flux.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_bullshit_2">
+		<text>The reading of torsion and tachyon field are complete. Zero-Point energy matrix incoming.</text>
+	</string>
+
+	<!-- Detector Upgrade: Jupiter -->
+	<string id="igi_task_text_community_detector_upgrade_hard_name">
+		<text>Big Measuring Contest</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_hard_text">
+		<text>Hermann asked me to scan all anomalous fields in Jupiter for a new detector.</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_hard_about">
+		<text>The word of your professional attitude and successful research came to this bunker. I'm planning a big scanout of the anomalous fields in the Jupiter territory; your assistance would be most welcome. Of course, we've got the budget to pay you for your invaluable time. I will also ask professor Tukarev to upgrade your artifact detector to the newest model known to science.</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_hard_finish">
+		<text>I didn't except any less from you. The reward is well deserved; as promised, Tukarev made a few upgrades to your detector.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_open_detector_hard">
+		<text>I see you're around the anomaly. We're ready here in the bunker.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_done_hard">
+		<text>The data is collected, you may leave the anomalous field now.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_reset_hard">
+		<text>Are you playing around with the measurement device? Very unprofessional.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_started_hard">
+		<text>We're getting the data. Get yourself a hot drink and relax.</text>
+	</string>
+
+</string_table>

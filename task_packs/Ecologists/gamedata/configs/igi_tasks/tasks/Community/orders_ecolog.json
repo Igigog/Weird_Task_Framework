@@ -16,8 +16,8 @@
 	"entities": [
 		{
 			"link_id": "arti",
-			"artefacts": "$ wtf_community_tasks.keys(bind_anomaly_zone.parent_zones_by_artefact_id)",
-			"on_player_level": "$ wtf_community_tasks.filter_on_player_level(|this.artefacts|)",
+			"artefacts": "$ wtf.keys(bind_anomaly_zone.parent_zones_by_artefact_id)",
+			"on_player_level": "$ wtf_ecolog_tasks.filter_on_player_level(|this.artefacts|)",
 			"id": "?$ igi_utils.get_random_items(|this.on_player_level|, 1)[1]"
 		},
 

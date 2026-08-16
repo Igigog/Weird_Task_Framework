@@ -1,0 +1,35 @@
+function on_game_start()
+    RegisterScriptCallback("actor_on_interaction", actor_on_interaction)
+end
+
+function actor_on_interaction(key, _, key2)
+    if key ~= "anomalies" or (key2 ~= "emission_end" and key2 ~= "psi_storm_end") then
+        return
+    end
+    local tasks = task_manager.get_task_manager().task_info
+    if (not tasks['hide_from_surge']) and (not tasks['hide_from_psi_storm']) then
+        return
+    end
+
+    CreateTimeEvent('wtf_community', 'emission_quest', 5, function ()
+        local tg = get_story_se_object("yan_stalker_sakharov")
+        local task_id = tg and igi_task_manager.validate_task({"community", "orders_ecolog"}, tg.id)
+        if task_id then
+            task_manager.get_task_manager():give_task(task_id)
+            news_manager.send_tip(db.actor, "igi_task_text_community_orders_ecolog_about", nil, tg, 10000)
+        end
+        return true
+    end)
+end
+
+function filter_on_player_level(zones)
+    local actor_level_id = igi_helper.get_object_level_id(alife():object(0))
+    local out = {}
+    for _, zone_id in ipairs(zones) do
+        local se_obj = alife_object(zone_id)
+        if se_obj and igi_helper.get_object_level_id(se_obj) == actor_level_id then
+            out[#out+1] = zone_id
+        end
+    end 
+    return out
+end

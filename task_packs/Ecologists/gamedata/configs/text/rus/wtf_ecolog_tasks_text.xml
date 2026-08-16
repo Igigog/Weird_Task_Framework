@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+			<!-- Orders! Ecolog -->
+	<string id="igi_task_text_community_orders_ecolog_name">
+		<text>Приказ! Исследование аномалии</text>
+	</string>
+	<string id="igi_task_text_community_orders_ecolog_text">
+		<text>Я должен исследовать аномалию и принести найденные образцы Сахарову.</text>
+	</string>
+	<string id="igi_task_text_community_orders_ecolog_about">
+		<text>Внимание, все исследователи! Выброс наконец ослаб, и наши приборы фиксируют огромный всплеск псионической энергии. Требуются немедленные действия — срочно отправляйтесь для обследования аномальных зон и проведения тщательных измерений. Все артефакты, которые будут найдены, необходимо доставить в мой бункер без промедления. Мы не можем позволить себе упустить эту уникальную возможность для научного прогресса!</text>
+	</string>
+	<string id="igi_task_text_community_orders_ecolog_finish">
+		<text>Ах, это то, что вы нашли? Да... великолепно — отличная работа! Я проанализирую характеристики этого нового артефакта; надеюсь, он даст нам новые сведения об эмиссиях и их воздействии на аномалии. Возьмите свою оплату как знак благодарности за ваши усилия, дорогой коллега.</text>
+	</string>
+
+		<!-- Detector Upgrade: Yantar -->
+	<string id="igi_task_text_community_detector_upgrade_easy_name">
+		<text>Онбординг</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_easy_text">
+		<text>Сахаров обещал улучшить мой детектор, если я помогу ему с сканированием аномальной зоны.</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_easy_about">
+		<text>О, новая душа в нашем научном бункере! Вы только что с Большой земли, коллега? Меня зовут профессор Сахаров, и я здесь занимаюсь исследованиями. Не хотели бы вы помочь мне с изучением аномального поля неподалёку? Это помогло бы вам отлично начать. Я смотрю, вы используете старую модель детектора артефактов — за вашу помощь я мог бы обменять её на более новую.</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_easy_finish">
+		<text>На этом официальная часть приветствия окончена. С нетерпением жду ваших исследований, коллега. Как и обещал, вот ваш детектор. Это не самая свежая модель, но она всё же лучше той ужасно устаревшей версии, что была у вас</text>
+	</string>
+
+	<string id="igi_task_text_anomaly_scan_open_detector">
+		<text>Вы приближаетесь к аномальному полю. Подготовьте устройство для замера аномалий и подойдите ближе — я считываю данные</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_done">
+		<text>И... на этом всё. Я получил данные.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_reset">
+		<text>Кажется, передача данных была нарушена. Давайте начнём сначала.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_started">
+		<text>Передача началась. Компьютер в бункере принимает показания.</text>
+	</string>
+
+	<string id="igi_task_text_anomaly_scan_bullshit_1">
+		<text>Так, у нас есть температура, радиация, относительное давление и поток пси-излучения.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_bullshit_2">
+		<text>Замер торсионного и тахионного полей завершён. Поступают данные матричной энергии нулевой точки.</text>
+	</string>
+
+	<!-- Detector Upgrade: Jupiter -->
+	<string id="igi_task_text_community_detector_upgrade_hard_name">
+		<text>Соревнование по замерам</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_hard_text">
+		<text>Герман попросил меня просканировать все аномальные поля на «Юпитере» ради нового детектора.</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_hard_about">
+		<text>Слухи о вашем профессионализме и успешных исследованиях дошли и до нашего бункера. Я планирую масштабное сканирование аномальных полей на территории «Юпитера», и ваша помощь была бы как нельзя кстати. Само собой, у нас есть бюджет, чтобы оплатить ваше бесценное время. Кроме того, я попрошу профессора Тукарева модернизировать ваш детектор артефактов до самой последней модели, известной науке.</text>
+	</string>
+	<string id="igi_task_text_community_detector_upgrade_hard_finish">
+		<text>Я от вас другого и не ждал. Награда абсолютно заслужена — как и было обещано, Тукарев внёс несколько улучшений в ваш детектор.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_open_detector_hard">
+		<text>Вижу, вы находитесь рядом с аномалией. Мы здесь, в бункере, готовы к приёму.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_done_hard">
+		<text>Данные собраны, можете покинуть аномальное поле.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_reset_hard">
+		<text>Вы играетесь с устройством для измерений? Крайне непрофессионально.</text>
+	</string>
+	<string id="igi_task_text_anomaly_scan_started_hard">
+		<text>Данные поступают. Налейте себе чего-нибудь горяченького и отдохните.</text>
+	</string>
+
+</string_table>
