@@ -6,13 +6,13 @@
 	{
 		"section_name":"drx_sl_quest_item_2",
 		"id": "init$ igi_helper.give_to_actor(|this.section_name|)",
-		"release": "on_finish$ alife_release_id(|this.id|) or 1",
+		"release": "on_finish>$ alife_release_id(|this.id|)",
 		"link_id": "package"
 	},
 
 	{
 		"id": "init$ alife_create('script_zone', |this.pos|, |this.lvid|, |this.gvid|).id",
-		"release": "del$ alife_release_id(|this.id|) or 1",
+		"release": "del>$ alife_release_id(|this.id|)",
 		
 		"pos": "@$ vector():set(-100, -30, -397)",
 		"gvid": 449,

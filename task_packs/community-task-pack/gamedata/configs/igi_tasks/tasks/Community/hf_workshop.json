@@ -30,8 +30,8 @@
 		"money": 0,
 		"goodwill": 30
 	},
-	"reward_workshop": "on_complete$ itms_manager.relocate_item_to_actor(db.actor, nil, |CACHE.workshop_section|) or 1",
-	"do_once": "on_complete$ give_info('wtf_hf_workshop_done') or 1",
+	"reward_workshop": "on_complete>$ itms_manager.relocate_item_to_actor(db.actor, nil, |CACHE.workshop_section|)",
+	"do_once": "on_complete>$ give_info('wtf_hf_workshop_done')",
 
 	"tg_name": "$ alife_object(|CACHE.task_giver_id|):section_name()",
 	"workshop_section": "workshop_item",

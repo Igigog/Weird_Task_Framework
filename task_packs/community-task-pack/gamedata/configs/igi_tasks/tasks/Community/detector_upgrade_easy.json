@@ -17,16 +17,16 @@
 		"sender": "$ |CACHE.task_giver_id|",
 		"visit_on_progress": {
 			"steps": [
-			[1, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_open_detector', |inputs.sender|) or 1"]
+			[1, ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_open_detector', |inputs.sender|)"]
 			]
 		},
 		"scan_on_progress": {
-			"reset": "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_reset', |inputs.sender|) or 1",
+			"reset": ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_reset', |inputs.sender|)",
 			"steps": [
-			[0.01, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_started', |inputs.sender|) or 1"],
-			[0.4, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_bullshit_1', |inputs.sender|) or 1"],
-			[0.8, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_bullshit_2', |inputs.sender|) or 1"],
-			[1, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_done', |inputs.sender|) or 1"]
+			[0.01, ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_started', |inputs.sender|)"],
+			[0.4, ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_bullshit_1', |inputs.sender|)"],
+			[0.8, ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_bullshit_2', |inputs.sender|)"],
+			[1, ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_done', |inputs.sender|)"]
 			] 
 		},
 		"link_id": "scan"
@@ -53,8 +53,8 @@
 		"money": 2000,
 		"goodwill": 50
 	},
-	"reward_detector": "on_complete$ igi_helper.give_to_actor('detector_advanced')",
-	"quest_done": "on_complete$ give_info(|CACHE.quest_info_portion|) or 1",
+	"reward_detector": "on_complete>$ igi_helper.give_to_actor('detector_advanced')",
+	"quest_done": "on_complete>$ give_info(|CACHE.quest_info_portion|)",
 	"quest_info_portion": "igi_yantar_detector_upgrade_easy_done",
 	"quest_givers": [
 		{"Ecolog": true, "Leader": true, "Yantar": true}

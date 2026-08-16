@@ -17,9 +17,9 @@
         "id": "$ |friend_squad.se_obj|:commander_id()",
 
         "package_in_npc": "@$ (alife_object(|package.id|) or {}).parent_id == |this.id|",
-        "give_package": "@$ get_object_by_id(|this.id|):transfer_item(get_object_by_id(|package.id|), db.actor) or 1",
-        "make_squad_enemy": "@$ |friend_squad.se_obj|:set_squad_relation('enemy') or 1",
-        "notify_give_package": "@$ news_manager.relocate_item(db.actor, 'out', |package.section_name|, 1) or 1"
+        "give_package": ">$ get_object_by_id(|this.id|):transfer_item(get_object_by_id(|package.id|), db.actor)",
+        "make_squad_enemy": ">$ |friend_squad.se_obj|:set_squad_relation('enemy')",
+        "notify_give_package": ">$ news_manager.relocate_item(db.actor, 'out', |package.section_name|, 1)"
     },
 
     {

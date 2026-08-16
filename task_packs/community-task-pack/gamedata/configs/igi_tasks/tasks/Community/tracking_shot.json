@@ -15,7 +15,7 @@
 		"src": "Community/tracking_shot/end.json",
 		"gun_id": "init$ |start.gun_id|",
 
-		"pda_msg": "init$ igi_helper.pda_message('igi_task_text_community_tracking_shot_pda_msg', |CACHE.task_giver_id|) or 1"
+		"pda_msg": "init>$ igi_helper.pda_message('igi_task_text_community_tracking_shot_pda_msg', |CACHE.task_giver_id|)"
 	}
 	],
 	"rewards": {

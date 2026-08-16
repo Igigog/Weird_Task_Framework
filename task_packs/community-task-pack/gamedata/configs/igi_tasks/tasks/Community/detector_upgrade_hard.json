@@ -17,14 +17,14 @@
 		"sender": "$ get_story_object_id('jup_b6_scientist_tech')",
 		"visit_on_progress": {
 			"steps": [
-			[1, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_open_detector_hard', |inputs.sender|) or 1"]
+			[1, ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_open_detector_hard', |inputs.sender|)"]
 			]
 		},
 		"scan_on_progress": {
-			"reset": "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_reset_hard', |inputs.sender|) or 1",
+			"reset": ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_reset_hard', |inputs.sender|)",
 			"steps": [
-			[0.01, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_started_hard', |inputs.sender|) or 1"],
-			[1, "@$ igi_helper.pda_message('igi_task_text_anomaly_scan_done_hard', |inputs.sender|) or 1"]
+			[0.01, ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_started_hard', |inputs.sender|)"],
+			[1, ">$ igi_helper.pda_message('igi_task_text_anomaly_scan_done_hard', |inputs.sender|)"]
 			] 
 		},
 		"link_id": "scan"
@@ -56,7 +56,7 @@
 		"goodwill": 100
 	},
 	"reward_detector": "on_complete$ igi_helper.give_to_actor('detector_scientific')",
-	"quest_done": "on_complete$ give_info(|CACHE.quest_info_portion|) or 1",
+	"quest_done": "on_complete>$ give_info(|CACHE.quest_info_portion|)",
 	"quest_info_portion": "igi_yantar_detector_upgrade_hard_done",
 	"quest_givers": [
 		{"Ecolog": true, "Leader": true, "Jupiter": true}

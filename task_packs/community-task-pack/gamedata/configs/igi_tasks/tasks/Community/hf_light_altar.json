@@ -23,6 +23,6 @@
 		"money": 0,
 		"goodwill": 30
 	},
-	"reward_altar": "on_complete$ itms_manager.relocate_item_to_actor(db.actor, nil, |CACHE.altar_section|) or 1",
+	"reward_altar": "on_complete>$ itms_manager.relocate_item_to_actor(db.actor, nil, |CACHE.altar_section|)",
 	"altar_section": "device_light_altar"
 }
