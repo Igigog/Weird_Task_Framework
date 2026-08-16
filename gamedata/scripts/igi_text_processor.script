@@ -104,7 +104,10 @@ Macro       = {
 	end,
 
     resolve = function(self, link_context)
-		igi_helper.trace_dbg("Resolving macro", self.orig)
+		local do_log = string.find(self.orig, '%(') -- if macro calls functions
+		if do_log then
+			igi_helper.trace_dbg("Resolving macro", self.orig)
+		end
 
 		Macro.link_context = link_context
 		local out = eval(self:_without_links())
@@ -116,7 +119,10 @@ Macro       = {
 		end
 		trace_assert(self.is_auto or type(out) ~= "userdata", "Macro returned userdata", self.orig)
 
-		igi_helper.trace_dbg("Resolved macro to", self.orig, type(out) == "userdata" and "userdata" or out)
+		if do_log then
+			igi_helper.trace_dbg(
+			"Resolved macro to", self.orig, type(out) == "userdata" and "userdata" or out)
+		end
 		return out
     end,
 

@@ -145,7 +145,6 @@ function quest_status(task_id)
 			local frame = igi_subtask.activate_next_frame(CACHE)
 		until CACHE.status ~= TASK_STATUSES.COMPLETED or frame == nil
 	end
-	igi_helper.trace_dbg("on_task_update", CACHE)
 
 	---------------------------<STAGE>----------------------
 	if CACHE.status == TASK_STATUSES.FAILED then return "fail" end

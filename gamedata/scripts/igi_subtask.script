@@ -120,7 +120,7 @@ function update_entity_status(entity, CACHE)
 	local new_status, progress = controller.status(entity)
 	entity.status = new_status
 	process_subtask_progress(entity, progress, CACHE)
-	return old_status == new_status
+	return old_status ~= new_status
 end
 
 local function get_frame_with_entities(frame, CACHE)
@@ -198,7 +198,7 @@ function activate_next_frame(CACHE)
 			controller.on_init(entity)
 		end
 
-		igi_helper.trace_dbg("on_entity_init", CACHE, entity)
+		igi_helper.trace_dbg("on_entity_init", entity)
 	end
 
 	igi_callbacks.register_callbacks(CACHE)
