@@ -152,20 +152,18 @@ local function get_frame_with_entities(frame, CACHE)
 end
 
 local function get_next_frame(CACHE)
-	if (CACHE.frames and CACHE.frames[CACHE.current_frame]) then
-		local current_frame = CACHE.frames[CACHE.current_frame]
-		local next_frame = igi_text_processor.eval_maybe_macro(current_frame.NEXT_FRAME, CACHE, current_frame)
-		if next_frame then return next_frame end
+	if CACHE.FORCED_FRAME then
+		return CACHE.FORCED_FRAME
 	end
 	return (CACHE.current_frame or 0) + 1
 end
 
 function activate_next_frame(CACHE)
+	disable_entities(CACHE)
 	local new_frame = get_next_frame(CACHE)
+	CACHE.FORCED_FRAME = nil
 	local frame = CACHE.frames[new_frame]
 	if frame == nil then return end
-
-	disable_entities(CACHE)
 
     igi_helper.trace_dbg("Enable: enable entities", new_frame, frame)
 	local entities_before = frame.entities
@@ -235,15 +233,15 @@ function disable_entities(CACHE)
 
 	local frame = CACHE.frames[CACHE.current_frame]
 	if frame then
-		local link_context = igi_text_processor.get_link_context(CACHE, frame)
-		igi_text_processor.resolve_table_macros(frame, "del", link_context)
-
 		if outputs_entity ~= nil then
 			outputs_entity.link_id = nil
 			for k, v in pairs(outputs_entity) do
 				frame[k] = v
 			end
 		end
+
+		local link_context = igi_text_processor.get_link_context(CACHE, frame)
+		igi_text_processor.resolve_table_macros(frame, "del", link_context)
 	end
 end
 

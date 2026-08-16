@@ -58,6 +58,19 @@ function process_macros(task_id, macro_level)
 
 	return CACHE
 end
+
+function goto_frame(task_id, frame_link)
+	local CACHE = get_cache(task_id)
+	local next_frame_id
+	for k, frame in pairs(CACHE.frames) do
+		if frame.link_id == frame_link then
+			next_frame_id = k
+			break
+		end
+	end
+	igi_helper.trace_assert(next_frame_id, "goto_frame: frame not found", task_id, frame_link)
+	CACHE.FORCED_FRAME = next_frame_id
+end
 ---------------------------< Precondition >---------------------------
 function try_prepare_quest(task_id, task_data, tg_id)
 	igi_helper.trace_dbg("validate "..task_id, task_data)
@@ -127,7 +140,7 @@ function quest_status(task_id)
 	local CACHE = get_cache(task_id)
 	---------------------------<ACTIONS>---------------------
 	igi_subtask.process_subtasks(CACHE)
-	if (CACHE.status == TASK_STATUSES.COMPLETED) then
+	if (CACHE.FORCED_FRAME or CACHE.status == TASK_STATUSES.COMPLETED) then
 		repeat
 			local frame = igi_subtask.activate_next_frame(CACHE)
 		until CACHE.status ~= TASK_STATUSES.COMPLETED or frame == nil

@@ -24,19 +24,15 @@
         "smarts": "$ wtf.shuffle(|this.all_smarts|)",
         "link_id": "frame",
 
-        "finished_in_time": true
-    },
-    {
-        "entities": [],
-        "NEXT_FRAME": "@$ |frame.finished_in_time| and |frame_alive.FRAME_ID| or |frame_dead.FRAME_ID|"
+        "finished_in_time": true,
+        "next_frame": "del$ igi_generic_task.goto_frame(|CACHE.task_id|, |frame.finished_in_time| and |frame_alive.link_id| or |frame_dead.link_id|) or 1"
     },
     {
         "src": "Community/medic_package/alive.json",
         "squad_id": "init$ |frame.squad_id|",
         "package_section": "special_delivery_case",
 
-        "link_id": "frame_alive",
-        "NEXT_FRAME": -1
+        "link_id": "frame_alive"
     },
     {
         "src": "Community/medic_package/dead.json",
